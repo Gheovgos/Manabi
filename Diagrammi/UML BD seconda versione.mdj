@@ -198,6 +198,7 @@
 											"model": {
 												"$ref": "AAAAAAF9izA91LR8d1A="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"left": 189,
 											"top": 130,
@@ -217,7 +218,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 189,
-											"top": 145,
+											"top": 130,
 											"width": 239,
 											"height": 13,
 											"text": "+punteggio: int",
@@ -228,7 +229,7 @@
 									"left": 184,
 									"top": 65,
 									"width": 249,
-									"height": 98
+									"height": 83
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -241,7 +242,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 184,
-									"top": 163,
+									"top": 148,
 									"width": 249,
 									"height": 10
 								},
