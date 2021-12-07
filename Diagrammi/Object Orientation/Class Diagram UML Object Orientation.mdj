@@ -1600,7 +1600,7 @@
 											"top": 350,
 											"width": 311,
 											"height": 13,
-											"text": "+NomeTest: {PK} int",
+											"text": "+NomeTest: {PK} String",
 											"horizontalAlignment": 0
 										},
 										{
@@ -2021,7 +2021,7 @@
 											"top": 635,
 											"width": 215,
 											"height": 13,
-											"text": "+idQuiz: {PK} int",
+											"text": "+idQuesito: {PK} int",
 											"horizontalAlignment": 0
 										},
 										{
@@ -4429,7 +4429,7 @@
 								"$ref": "AAAAAAF9jtnYe0ExJZg="
 							},
 							"name": "NomeTest",
-							"type": "{PK} int"
+							"type": "{PK} String"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4618,7 +4618,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF9jtuYbkQLhGg="
 							},
-							"name": "idQuiz",
+							"name": "idQuesito",
 							"type": "{PK} int"
 						},
 						{
