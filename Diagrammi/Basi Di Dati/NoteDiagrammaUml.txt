@@ -1,0 +1,32 @@
+I tipi di utenti disponibili alla registrazione sono studente e insegnante.
+La classe studente, oltre agli attributi necessari per il login all'applicazione, ha degli attributi che descrivono:
+- il punteggio totale ottenuto sommando quello di tutti i test svolti 
+- l'elenco dei test sostenuti
+- la media dei voti nelle varie categorie
+
+La classe insegnante, oltre agli attributi necessari per il login, contiene:
+- una foreign key che rimanda all'elenco corsi tenuti dall'insegnante
+- una foreign key che rimanda all'elenco dei test creati dall'insegnante
+- il numero di test da correggere rimasti
+- il numero ti test creati
+- un attributo che rimanda ad una classe enumerativa contenente le azioni che l'insegnante
+può eseguire su un test (crearlo, compilarlo, correggerlo e eseguire una prova di svolgimento)
+
+L'associazione tra studente e test è solo quella di compilazione del test, mentre nel
+caso dell'insegnante, tramite la classe enumerativa precedentemente citata, è possibile eseguire molteplici operazioni.
+La correzione delle domande a risposta multipla si svolgerà confrontando la risposta dello studente con le varie opzioni tramite una 
+verifica booleana, il voto verrà assegnato una volta fatto il conto del punteggio.
+Nel caso delle risposte aperte, sarà lo stesso insegnante a correggerle manualmente e assegnare il punteggioe  in seguito un voto.
+
+La classe quesito aperto possiede come attributi:
+- una stringa per esporre la domanda
+- il punteggio massimo che si può ottenere rispondendo correttamente alla domanda
+- la risposta che lo studente scriverà (che prima del test viene impostata a NULL)
+- l'eventuale commento che l'insegnante può aggiungere insieme alla correzione
+- è il codice id del quesito
+
+La classe quesito multiplo possiede:
+- un codice id per il quesito
+- una stringa per esporre la domanda
+- la risposta selezionata dallo studente
+
