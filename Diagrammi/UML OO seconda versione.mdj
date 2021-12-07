@@ -485,7 +485,7 @@
 											"top": 346,
 											"width": 198,
 											"height": 13,
-											"text": "+StampaRisultato(Test, ...)",
+											"text": "+StampaRisultato(TestArrayLIst)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -785,7 +785,7 @@
 											"top": 564,
 											"width": 199,
 											"height": 13,
-											"text": "+MostraTestCreati()",
+											"text": "+MostraTestCreati(TestArrayLIst)",
 											"horizontalAlignment": 0
 										}
 									],
@@ -1919,7 +1919,7 @@
 											"top": 463,
 											"width": 311,
 											"height": 13,
-											"text": "+AssegnaPunteggio(Studente, Quiz)",
+											"text": "+AssegnaPunteggio(Studente, QuizArrayLIst)",
 											"horizontalAlignment": 0
 										}
 									],
@@ -4259,6 +4259,19 @@
 							"width": 641,
 							"height": 337,
 							"text": "ANNOTAZIONE ELIMINAMI \n\nLa classe test ha un identificativo rappresentato da un intero univoco, un tempo che indica il tempo massimo da dedicare al test, un arrayList di Quiz (oggetti) che compongono il test, un arrayList di stringhe indica gli studenti che hanno svolto il test (è collegato a LOGIN di Studente!!). Contiene il metodo CreaQuiz che crea un quiz senza risposte e il metodo AssegnaPunteggio che assegna, appunto, un punteggio ad uno studente che è stato coinvolto nel test e che ha svolto i quiz\n\nLa classe Quiz ha una stringa che indica la domanda, un punteggio minimo (anche negativo) da assegnare in caso di risposta errata, un punteggio massimo da assegnare in caso di risposta esatta (eventualmente si potrebbe inserire un metodo che calcoli assegni 0 come punteggio in caso di risposta nulla), una stringa che registra la risposta dello studente, una stringa che salvi il login dello studente coinvolto, un tipoQuiz che identifica il tipo di Quiz (a risposta aperta), e un identificativo Quiz. Contiene i metodi \"Inserisci Risposta\" che fa inserire la risposta di un utente (a risposta aperta), \"VerificaRIsposta\" che controlla il valore booleano della risposta, e il metodo CreaRisposta che crea le risposte per quel test.\n\n\n\n\n\nLa classe risposta ha una stringa che indica una eventuale risposta (vuota se il quiz è a risposta aperta), un valore booleano che ne indica la correttezza, un intero che si riferisce al quiz che lo ha generato. Inoltre contiene il metodo \"AssignTrue\" che assegna il valore booleano all'attributo isTrue in base alla correttezza della risposta."
+						},
+						{
+							"_type": "UMLNoteView",
+							"_id": "AAAAAAF9k/+wEm1nV8Q=",
+							"_parent": {
+								"$ref": "AAAAAAFF+qBtyKM79qY="
+							},
+							"font": "Arial;13;0",
+							"left": 784,
+							"top": 504,
+							"width": 144.95361328125,
+							"height": 49,
+							"text": "ELIMINA LE ENUMERAZIONI!!!!!!!"
 						}
 					]
 				},
@@ -4451,17 +4464,7 @@
 									"_parent": {
 										"$ref": "AAAAAAF9juY/yFvyTBQ="
 									},
-									"name": "Test",
-									"type": ""
-								},
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAF9juakeVxUFDY=",
-									"_parent": {
-										"$ref": "AAAAAAF9juY/yFvyTBQ="
-									},
-									"name": "...",
-									"type": ""
+									"name": "TestArrayLIst"
 								}
 							]
 						},
@@ -4647,7 +4650,18 @@
 							"_parent": {
 								"$ref": "AAAAAAF9jtVZiz3yl3o="
 							},
-							"name": "MostraTestCreati"
+							"name": "MostraTestCreati",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAF9k/xSWmuBscM=",
+									"_parent": {
+										"$ref": "AAAAAAF9k+kAwWAoakE="
+									},
+									"name": "TestArrayLIst",
+									"type": ""
+								}
+							]
 						}
 					]
 				},
@@ -4816,8 +4830,7 @@
 									"_parent": {
 										"$ref": "AAAAAAF9juTHz1myjjQ="
 									},
-									"name": "Studente",
-									"type": ""
+									"name": "Studente"
 								},
 								{
 									"_type": "UMLParameter",
@@ -4825,8 +4838,7 @@
 									"_parent": {
 										"$ref": "AAAAAAF9juTHz1myjjQ="
 									},
-									"name": "Quiz",
-									"type": ""
+									"name": "QuizArrayLIst"
 								}
 							]
 						}
