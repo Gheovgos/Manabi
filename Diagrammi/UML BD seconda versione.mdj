@@ -3775,6 +3775,19 @@
 							"width": 104,
 							"height": 144,
 							"text": "puoi mettere TIME a Test"
+						},
+						{
+							"_type": "UMLNoteView",
+							"_id": "AAAAAAF9lRWY+fugE4s=",
+							"_parent": {
+								"$ref": "AAAAAAFF+qBtyKM79qY="
+							},
+							"font": "Arial;13;0",
+							"left": 184,
+							"top": 616,
+							"width": 136,
+							"height": 144,
+							"text": "ciao be"
 						}
 					]
 				},
@@ -3884,7 +3897,8 @@
 							"_parent": {
 								"$ref": "AAAAAAF9ic2wwTpNV84="
 							},
-							"name": "username {PK }String"
+							"name": "username {PK }String",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
