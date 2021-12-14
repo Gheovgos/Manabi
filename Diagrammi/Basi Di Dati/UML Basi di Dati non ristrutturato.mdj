@@ -135,7 +135,7 @@
 											"top": 54,
 											"width": 231,
 											"height": 13,
-											"text": "+username: {PK} String",
+											"text": "+username_s: {PK} String",
 											"horizontalAlignment": 0
 										},
 										{
@@ -449,75 +449,7 @@
 											"top": 54,
 											"width": 246,
 											"height": 13,
-											"text": "+username: {PK} String",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
-											"_id": "AAAAAAF9svrfgTHhNJQ=",
-											"_parent": {
-												"$ref": "AAAAAAF9su0fzTGOTG8="
-											},
-											"model": {
-												"$ref": "AAAAAAF9svrffDHeK/g="
-											},
-											"font": "Arial;13;0",
-											"left": 261,
-											"top": 69,
-											"width": 246,
-											"height": 13,
-											"text": "+password: String",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
-											"_id": "AAAAAAF9svsYCTHoQaY=",
-											"_parent": {
-												"$ref": "AAAAAAF9su0fzTGOTG8="
-											},
-											"model": {
-												"$ref": "AAAAAAF9svsYBTHl4Oo="
-											},
-											"font": "Arial;13;0",
-											"left": 261,
-											"top": 84,
-											"width": 246,
-											"height": 13,
-											"text": "+nome: String",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
-											"_id": "AAAAAAF9svsyTjHvYgg=",
-											"_parent": {
-												"$ref": "AAAAAAF9su0fzTGOTG8="
-											},
-											"model": {
-												"$ref": "AAAAAAF9svsyPzHsrgI="
-											},
-											"font": "Arial;13;0",
-											"left": 261,
-											"top": 99,
-											"width": 246,
-											"height": 13,
-											"text": "+cognome: String",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
-											"_id": "AAAAAAF9svtb7TH2Jt0=",
-											"_parent": {
-												"$ref": "AAAAAAF9su0fzTGOTG8="
-											},
-											"model": {
-												"$ref": "AAAAAAF9svtb6DHzSCI="
-											},
-											"font": "Arial;13;0",
-											"left": 261,
-											"top": 114,
-											"width": 246,
-											"height": 13,
-											"text": "+corsi_tenuti: String 1...N",
+											"text": "+username_i: {PK} String",
 											"horizontalAlignment": 0
 										},
 										{
@@ -531,7 +463,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 261,
-											"top": 129,
+											"top": 69,
 											"width": 246,
 											"height": 13,
 											"text": "+test_creati: {FK} int 1...N",
@@ -548,10 +480,78 @@
 											},
 											"font": "Arial;13;0",
 											"left": 261,
-											"top": 144,
+											"top": 84,
 											"width": 246,
 											"height": 13,
 											"text": "+test_daCorreggere: {FK} int 1...N",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAF9svrfgTHhNJQ=",
+											"_parent": {
+												"$ref": "AAAAAAF9su0fzTGOTG8="
+											},
+											"model": {
+												"$ref": "AAAAAAF9svrffDHeK/g="
+											},
+											"font": "Arial;13;0",
+											"left": 261,
+											"top": 99,
+											"width": 246,
+											"height": 13,
+											"text": "+password: String",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAF9svsYCTHoQaY=",
+											"_parent": {
+												"$ref": "AAAAAAF9su0fzTGOTG8="
+											},
+											"model": {
+												"$ref": "AAAAAAF9svsYBTHl4Oo="
+											},
+											"font": "Arial;13;0",
+											"left": 261,
+											"top": 114,
+											"width": 246,
+											"height": 13,
+											"text": "+nome: String",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAF9svsyTjHvYgg=",
+											"_parent": {
+												"$ref": "AAAAAAF9su0fzTGOTG8="
+											},
+											"model": {
+												"$ref": "AAAAAAF9svsyPzHsrgI="
+											},
+											"font": "Arial;13;0",
+											"left": 261,
+											"top": 129,
+											"width": 246,
+											"height": 13,
+											"text": "+cognome: String",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAF9svtb7TH2Jt0=",
+											"_parent": {
+												"$ref": "AAAAAAF9su0fzTGOTG8="
+											},
+											"model": {
+												"$ref": "AAAAAAF9svtb6DHzSCI="
+											},
+											"font": "Arial;13;0",
+											"left": 261,
+											"top": 144,
+											"width": 246,
+											"height": 13,
+											"text": "+corsi_tenuti: String 1...N",
 											"horizontalAlignment": 0
 										},
 										{
@@ -971,7 +971,7 @@
 											"top": 495,
 											"width": 128.2861328125,
 											"height": 13,
-											"text": "QuizAperto"
+											"text": "QUIZ APERTO"
 										},
 										{
 											"_type": "LabelView",
@@ -1234,7 +1234,7 @@
 											"top": 487,
 											"width": 155.76513671875,
 											"height": 13,
-											"text": "QuizMultiplo"
+											"text": "QUIZ MULTIPLO"
 										},
 										{
 											"_type": "LabelView",
@@ -1514,7 +1514,7 @@
 											"top": 671,
 											"width": 191,
 											"height": 13,
-											"text": "Risposte Aperte User"
+											"text": "RISPOSTE APERTE"
 										},
 										{
 											"_type": "LabelView",
@@ -1603,7 +1603,7 @@
 											"top": 709,
 											"width": 191,
 											"height": 13,
-											"text": "+username: {FK} String {PK}",
+											"text": "+username_s: {FK} String {PK}",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1777,7 +1777,7 @@
 											"top": 663,
 											"width": 199,
 											"height": 13,
-											"text": "Risposte Chiuse User"
+											"text": "RISPOSTE MULTIPLE"
 										},
 										{
 											"_type": "LabelView",
@@ -1866,7 +1866,7 @@
 											"top": 701,
 											"width": 199,
 											"height": 13,
-											"text": "+username: {FK} String {PK}",
+											"text": "+username_s: {FK} String {PK}",
 											"horizontalAlignment": 0
 										},
 										{
@@ -3966,7 +3966,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF9sumkzzEnAOQ="
 							},
-							"name": "username",
+							"name": "username_s",
 							"type": "{PK} String"
 						},
 						{
@@ -4106,8 +4106,26 @@
 							"_parent": {
 								"$ref": "AAAAAAF9su0fyzGGfpw="
 							},
-							"name": "username",
+							"name": "username_i",
 							"type": "{PK} String"
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAF9svv0jTH6CYc=",
+							"_parent": {
+								"$ref": "AAAAAAF9su0fyzGGfpw="
+							},
+							"name": "test_creati",
+							"type": "{FK} int 1...N"
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAF9sv0ZszIBGd8=",
+							"_parent": {
+								"$ref": "AAAAAAF9su0fyzGGfpw="
+							},
+							"name": "test_daCorreggere",
+							"type": "{FK} int 1...N"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4144,24 +4162,6 @@
 							},
 							"name": "corsi_tenuti",
 							"type": "String 1...N"
-						},
-						{
-							"_type": "UMLAttribute",
-							"_id": "AAAAAAF9svv0jTH6CYc=",
-							"_parent": {
-								"$ref": "AAAAAAF9su0fyzGGfpw="
-							},
-							"name": "test_creati",
-							"type": "{FK} int 1...N"
-						},
-						{
-							"_type": "UMLAttribute",
-							"_id": "AAAAAAF9sv0ZszIBGd8=",
-							"_parent": {
-								"$ref": "AAAAAAF9su0fyzGGfpw="
-							},
-							"name": "test_daCorreggere",
-							"type": "{FK} int 1...N"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4282,7 +4282,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "QuizAperto",
+					"name": "QUIZ APERTO",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -4395,7 +4395,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "QuizMultiplo",
+					"name": "QUIZ MULTIPLO",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -4489,7 +4489,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Risposte Aperte User",
+					"name": "RISPOSTE APERTE",
 					"attributes": [
 						{
 							"_type": "UMLAttribute",
@@ -4506,7 +4506,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF9s6AvzDNMPeI="
 							},
-							"name": "username",
+							"name": "username_s",
 							"type": "{FK} String {PK}"
 						},
 						{
@@ -4552,7 +4552,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Risposte Chiuse User",
+					"name": "RISPOSTE MULTIPLE",
 					"attributes": [
 						{
 							"_type": "UMLAttribute",
@@ -4569,7 +4569,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF9s6GM1TPc1xw="
 							},
-							"name": "username",
+							"name": "username_s",
 							"type": "{FK} String {PK}"
 						},
 						{
