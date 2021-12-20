@@ -169,7 +169,7 @@
 											"top": 372,
 											"width": 183,
 											"height": 13,
-											"text": "+cognome: Stringa",
+											"text": "+cognome: String",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1238,7 +1238,7 @@
 											"top": 619,
 											"width": 155.76513671875,
 											"height": 13,
-											"text": "+punteggio_sbagliato: float",
+											"text": "+punteggio_errato: float",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1481,7 +1481,7 @@
 											"top": 543,
 											"width": 183,
 											"height": 13,
-											"text": "RISPOSTE APERTE"
+											"text": "RISPOSTA APERTE"
 										},
 										{
 											"_type": "LabelView",
@@ -1553,7 +1553,7 @@
 											"top": 566,
 											"width": 183,
 											"height": 13,
-											"text": "+id_rispostaA: int {PK}",
+											"text": "+idr_a: int {PK}",
 											"horizontalAlignment": 0
 										},
 										{
@@ -3253,7 +3253,7 @@
 											"top": 187,
 											"width": 231,
 											"height": 13,
-											"text": "+corretto: boolean {PK}",
+											"text": "+corretto: boolean",
 											"horizontalAlignment": 0
 										},
 										{
@@ -5149,7 +5149,7 @@
 								"$ref": "AAAAAAF9sumkzzEnAOQ="
 							},
 							"name": "cognome",
-							"type": "Stringa"
+							"type": "String"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -5675,7 +5675,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF9s58iyzL45vg="
 							},
-							"name": "punteggio_sbagliato",
+							"name": "punteggio_errato",
 							"type": "float"
 						},
 						{
@@ -5749,7 +5749,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "RISPOSTE APERTE",
+					"name": "RISPOSTA APERTE",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -5788,7 +5788,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF9s6AvzDNMPeI="
 							},
-							"name": "id_rispostaA",
+							"name": "idr_a",
 							"type": "int {PK}"
 						},
 						{
@@ -6011,7 +6011,7 @@
 								"$ref": "AAAAAAF9uEvxqedAv3U="
 							},
 							"name": "corretto",
-							"type": "boolean {PK}"
+							"type": "boolean"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -6031,6 +6031,40 @@
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
 					"name": "Interface1"
+				},
+				{
+					"_type": "UMLClass",
+					"_id": "AAAAAAF9106xInTXV+4=",
+					"_parent": {
+						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+					},
+					"name": "MATERIE",
+					"attributes": [
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAF9106/cXXT2U4=",
+							"_parent": {
+								"$ref": "AAAAAAF9106xInTXV+4="
+							},
+							"name": "id_mat"
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAF9107MxnasYHA=",
+							"_parent": {
+								"$ref": "AAAAAAF9106xInTXV+4="
+							},
+							"name": "matetria"
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAF9107kMHeFTg0=",
+							"_parent": {
+								"$ref": "AAAAAAF9106xInTXV+4="
+							},
+							"name": "username_i"
+						}
+					]
 				}
 			]
 		}
