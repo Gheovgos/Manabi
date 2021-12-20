@@ -203,7 +203,7 @@
 											"top": 114,
 											"width": 231,
 											"height": 13,
-											"text": "+test_sostenuti: {FK} int 1...N",
+											"text": "+test_sostenuti: int 1...N",
 											"horizontalAlignment": 0
 										},
 										{
@@ -237,7 +237,7 @@
 											"top": 144,
 											"width": 231,
 											"height": 13,
-											"text": "+corsi_seguiti: {FK} String 1...N",
+											"text": "+corsi_seguiti: String 1...N",
 											"horizontalAlignment": 0
 										},
 										{
@@ -466,7 +466,7 @@
 											"top": 69,
 											"width": 246,
 											"height": 13,
-											"text": "+test_creati: {FK} int 1...N",
+											"text": "+test_creati: int 1...N",
 											"horizontalAlignment": 0
 										},
 										{
@@ -483,7 +483,7 @@
 											"top": 84,
 											"width": 246,
 											"height": 13,
-											"text": "+test_daCorreggere: {FK} int 1...N",
+											"text": "+test_daCorreggere: int 1...N",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1111,7 +1111,7 @@
 											"top": 578,
 											"width": 128.2861328125,
 											"height": 13,
-											"text": "+id_test: {FK} int",
+											"text": "+id_test: int",
 											"horizontalAlignment": 0
 										}
 									],
@@ -1391,7 +1391,7 @@
 											"top": 585,
 											"width": 155.76513671875,
 											"height": 13,
-											"text": "+id_test: {FK} int",
+											"text": "+id_test: int",
 											"horizontalAlignment": 0
 										}
 									],
@@ -1586,7 +1586,7 @@
 											"top": 694,
 											"width": 191,
 											"height": 13,
-											"text": "+id_rispostaA: {FK} int {PK}",
+											"text": "+id_rispostaA: int {PK}",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1603,7 +1603,7 @@
 											"top": 709,
 											"width": 191,
 											"height": 13,
-											"text": "+username_s: {FK} String {PK}",
+											"text": "+username_s: String {PK}",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1849,7 +1849,7 @@
 											"top": 686,
 											"width": 199,
 											"height": 13,
-											"text": "+id_rispostaM: {FK} int {PK}",
+											"text": "+id_rispostaM: int {PK}",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1866,7 +1866,7 @@
 											"top": 701,
 											"width": 199,
 											"height": 13,
-											"text": "+username_s: {FK} String {PK}",
+											"text": "+username_s: String {PK}",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1883,7 +1883,7 @@
 											"top": 716,
 											"width": 199,
 											"height": 13,
-											"text": "+risposta_data: {FK} String",
+											"text": "+risposta_data: String",
 											"horizontalAlignment": 0
 										},
 										{
@@ -1900,7 +1900,7 @@
 											"top": 731,
 											"width": 199,
 											"height": 13,
-											"text": "+risposta_corretta: {FK} String",
+											"text": "+risposta_corretta: String",
 											"horizontalAlignment": 0
 										},
 										{
@@ -4003,7 +4003,7 @@
 								"$ref": "AAAAAAF9sumkzzEnAOQ="
 							},
 							"name": "test_sostenuti",
-							"type": "{FK} int 1...N"
+							"type": "int 1...N"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4021,7 +4021,7 @@
 								"$ref": "AAAAAAF9sumkzzEnAOQ="
 							},
 							"name": "corsi_seguiti",
-							"type": "{FK} String 1...N"
+							"type": "String 1...N"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4116,7 +4116,7 @@
 								"$ref": "AAAAAAF9su0fyzGGfpw="
 							},
 							"name": "test_creati",
-							"type": "{FK} int 1...N"
+							"type": "int 1...N"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4125,7 +4125,7 @@
 								"$ref": "AAAAAAF9su0fyzGGfpw="
 							},
 							"name": "test_daCorreggere",
-							"type": "{FK} int 1...N"
+							"type": "int 1...N"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4385,7 +4385,7 @@
 								"$ref": "AAAAAAF9s54rMTKrHmI="
 							},
 							"name": "id_test",
-							"type": "{FK} int"
+							"type": "int"
 						}
 					]
 				},
@@ -4479,7 +4479,7 @@
 								"$ref": "AAAAAAF9s58iyzL45vg="
 							},
 							"name": "id_test",
-							"type": "{FK} int"
+							"type": "int"
 						}
 					]
 				},
@@ -4498,7 +4498,7 @@
 								"$ref": "AAAAAAF9s6AvzDNMPeI="
 							},
 							"name": "id_rispostaA",
-							"type": "{FK} int {PK}"
+							"type": "int {PK}"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4507,7 +4507,7 @@
 								"$ref": "AAAAAAF9s6AvzDNMPeI="
 							},
 							"name": "username_s",
-							"type": "{FK} String {PK}"
+							"type": "String {PK}"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4561,7 +4561,7 @@
 								"$ref": "AAAAAAF9s6GM1TPc1xw="
 							},
 							"name": "id_rispostaM",
-							"type": "{FK} int {PK}"
+							"type": "int {PK}"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4570,7 +4570,7 @@
 								"$ref": "AAAAAAF9s6GM1TPc1xw="
 							},
 							"name": "username_s",
-							"type": "{FK} String {PK}"
+							"type": "String {PK}"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4579,7 +4579,7 @@
 								"$ref": "AAAAAAF9s6GM1TPc1xw="
 							},
 							"name": "risposta_data",
-							"type": "{FK} String"
+							"type": "String"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4588,7 +4588,7 @@
 								"$ref": "AAAAAAF9s6GM1TPc1xw="
 							},
 							"name": "risposta_corretta",
-							"type": "{FK} String"
+							"type": "String"
 						},
 						{
 							"_type": "UMLAttribute",
