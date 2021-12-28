@@ -1,5 +1,10 @@
-README Manabi
+Manabi
+------
+
+
 DBMS: PostgreSQL 10 con pgAdmin 4.
+
+
 Il file SQL è stato ideato per essere inserito in un DB vuoto con un comando "Restore" in pgAdmin.
 
 Di seguito riportati i commenti al codice SQL\PLPGSQL
