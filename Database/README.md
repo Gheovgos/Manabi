@@ -14,7 +14,7 @@ RIGA 651-710 VISTE
 --------------------------------------------------------------------------------------------
 CREAZIONE TABELLE
 
-
+```SQL
 CREATE TABLE INSEGNANTE(
 USERNAME_I VARCHAR(25) NOT NULL,
 PASSWORD_I VARCHAR(25) NOT NULL,
@@ -22,20 +22,23 @@ NOME VARCHAR(25),
 COGNOME VARCHAR(25),
 PRIMARY KEY (USERNAME_I)
 );
-
+```
 Tabella contenente varie stringhe di 25 caratteri (scelta una grandezza fittizia)
 
+```SQL
 CREATE TABLE STUDENTE(
-USERNAME_S VARCHAR(25) NOT NULL,
-PASSWORD_S VARCHAR(25) NOT NULL,
-NOME VARCHAR(25),
-COGNOME VARCHAR(25),
-PUNTEGGIO_TOT FLOAT DEFAULT 0,
+	USERNAME_S VARCHAR(25) NOT NULL,
+	PASSWORD_S VARCHAR(25) NOT NULL,
+	NOME VARCHAR(25),
+	COGNOME VARCHAR(25),
+	PUNTEGGIO_TOT FLOAT DEFAULT 0,
 PRIMARY KEY (USERNAME_S)
 );
+```
 
 Tabella contenente varie stringhe di 25 caratteri (scelta una grandezza fittizia) e un float
 
+```SQL
 CREATE TABLE TEST(
     ID_TEST INT NOT NULL,
     USERNAME_I VARCHAR(25) NOT NULL,
@@ -43,13 +46,13 @@ CREATE TABLE TEST(
     TEMPO_SVOLGIMENTO TIME,
     MATERIA_TEST VARCHAR(25),
     DESCRIZIONE VARCHAR(100) DEFAULT ‘Nessuna descrizione.’,
-    PRIMARY KEY (ID_TEST),	
-    FOREIGN KEY (USERNAME_I) REFERENCES INSEGNANTE (USERNAME_I)
+PRIMARY KEY (ID_TEST),	
+FOREIGN KEY (USERNAME_I) REFERENCES INSEGNANTE (USERNAME_I)
 );
-
+```
 Tabella per il test. Il tipo TIME è stato perlopiù sperimentale, dato che è stata la prima volta con cui ci siamo interfacciati con 
 questo tipo di dato.
-
+```SQL
  CREATE TABLE CORREZIONE(
     USERNAME_I VARCHAR(25) NOT NULL,
     USERNAME_S VARCHAR(25) NOT NULL,
@@ -61,10 +64,10 @@ FOREIGN KEY (USERNAME_I) REFERENCES INSEGNANTE (USERNAME_I),
 FOREIGN KEY (USERNAME_S) REFERENCES STUDENTE (USERNAME_S),
 FOREIGN KEY (ID_TEST) REFERENCES TEST (ID_TEST)
 );
-
+```
 Tabella contenente tutte le informazioni utili per la relazione test-insegnante-studente. Da qui si possono dedurre tutti i partecipanti 
 ad un test, tutti i voti, tutti i professori che hanno creato un test, i voti assegnati. I primi tre attributi formano la chiave primaria.
-
+```SQL
 CREATE TABLE QUESITO_APERTO(
     ID_A INT NOT NULL,
     ID_TEST INT NOT NULL,
@@ -74,10 +77,10 @@ CREATE TABLE QUESITO_APERTO(
 PRIMARY KEY (ID_A),
 FOREIGN KEY (ID_TEST) REFERENCES TEST (ID_TEST)	
 );
-
+```
 Tabella contenente le informazioni utili per un quesito aperto.
 
-
+```SQL
 CREATE TABLE RISPOSTA_APERTA(
 	IDR_A INT NOT NULL,
 	USERNAME_S VARCHAR(25) NOT NULL,
@@ -90,11 +93,12 @@ FOREIGN KEY (USERNAME_S) REFERENCES STUDENTE (USERNAME_S),
 FOREIGN KEY (USERNAME_I) REFERENCES INSEGNANTE (USERNAME_I),
 FOREIGN KEY (IDR_A) REFERENCES QUIZ_APERTO (ID_A)
 );
+```
 
 Tabella contenente informazioni riguardante le risposte degli utenti. Abbiamo deciso di usare la chiave esterna + username come chiave
 primaria per accentuare il legame con i quesiti e l'utente. Vale lo stesso ragionamento con le risposte multiple.
 
-
+```SQL
 CREATE TABLE QUESITO_MULTIPLO(
 	ID_M INT NOT NULL,
 	ID_TEST INT NOT NULL,
@@ -108,11 +112,11 @@ CREATE TABLE QUESITO_MULTIPLO(
 	R_CINQUE VARCHAR(50),
 PRIMARY KEY (ID_M),
 FOREIGN KEY (ID_TEST) REFERENCES TEST (ID_TEST)
-
+```
 Tabella contenente informazioni per i quesiti aperti. La risposta uno è sempre quella corretta, nell'applicativo dovrà essere messo
 in posizione casuale. Risposta tre, quattro e cinque saranno invece potenzialmente null per ridurre le risposte possibili ad un test.
 
-
+```SQL
 CREATE TABLE RISPOSTE_MULTIPLE(
 	IDR_M INT NOT NULL,
 	USERNAME_S VARCHAR(25) NOT NULL,
@@ -123,25 +127,29 @@ PRIMARY KEY (IDR_M, USERNAME_S),
 FOREIGN KEY (IDR_M) REFERENCES QUIZ_MULTIPLO (ID_M),
 FOREIGN KEY (USERNAME_S) REFERENCES STUDENTE (USERNAME_S)
 );	
-
+```
 Informazioni utili per le risposte multiple date dagli utenti.
 
 --------------------------------------------------------------------------------------------
 VINCOLI
-
+```SQL
     ALTER TABLE QUIZ_APERTO 
     ADD CONSTRAINT controllo_pa CHECK (PUNTEGGIO_MIN<PUNTEGGIO_MAX);
-    
+```   
 Controllo che il punteggio minimo di quesito aperto non superi il punteggio massimo.
 
+
+```SQL
 ALTER TABLE QUIZ_MULTIPLO
 ADD CONSTRAINT controllo_pm1 CHECK (PUNTEGGIO_CORRETTO>PUNTEGGIO_ERRATO),
 ADD CONSTRAINT controllo_pm2 CHECK (PUNTEGGIO_CORRETTO>0),
 ADD CONSTRAINT controllo_pm3 CHECK (PUNTEGGIO_ERRATO<=0)
-
+```
 Controllo che il punteggio corretto non sia inferiore a punteggio errato e inoltre si controlla se il primo sia positivo e il secondo non positivo.
 
 --------------------------------------------------------------------------------------------
+
+```SQL
 CREATE OR REPLACE FUNCTION controllo_tempo() RETURNS TRIGGER AS $controllo_tempo$
 DECLARE 
 tempo TIME;
@@ -162,11 +170,14 @@ $controllo_tempo$ LANGUAGE PLPGSQL;
 CREATE TRIGGER CONTROLLO_TEMPO AFTER INSERT OR UPDATE OF TEMPO_SVOLGIMENTO
 ON TEST
 FOR EACH ROW EXECUTE PROCEDURE controllo_tempo();
+```
 
-Si controlla che il tempo non sia null e che sia almeno di 15 minuti. Non siamo sicuri sulla gestione del tipo TIME, la documentazione
-ci ha riferito che viene trattato come una stringa di tale formato hh:mm:ss
+Si controlla che il tempo non sia null e che sia almeno di 15 minuti. Non siamo sicuri sulla gestione del tipo TIME, la documentazio
+la documentazione ci ha riferimtno che viene trattato come una stringa di tale formato: 'hh:mm:ss'.
+
 --------------------------------------------------------------------------------------------
 
+```SQL
 CREATE OR REPLACE FUNCTION controllo_lunghezza_stu() RETURNS TRIGGER AS $controllo_lunghezza_stu$
 DECLARE
 username STUDENTE.USERNAME_S%TYPE;
@@ -195,11 +206,13 @@ $controllo_lunghezza_stu$ LANGUAGE PLPGSQL;
 CREATE TRIGGER CONTROLLO_CREDENZIALI_STUDENTE AFTER INSERT
 ON STUDENTE
 FOR EACH ROW EXECUTE PROCEDURE controllo_lunghezza_stu();
+```
 
 Si controlla che l'username, il nome e il cognome di uno studente siano almeno di 8 caratteri.
 
 --------------------------------------------------------------------------------------------
 
+```SQL
 CREATE OR REPLACE FUNCTION controllo_lunghezza_ins() RETURNS TRIGGER AS $controllo_lunghezza_ins$
 DECLARE
 username INSEGNANTE.USERNAME_I%TYPE;
@@ -231,12 +244,14 @@ $controllo_lunghezza_ins$ LANGUAGE PLPGSQL;
 CREATE TRIGGER CONTROLLO_CREDENZIALI_INSEGNANTE AFTER INSERT
 ON INSEGNANTE
 FOR EACH ROW EXECUTE PROCEDURE controllo_lunghezza_ins();
-
+```
 
 Stessa identica funzione di sopra, ma dato che su plpgsql ai trigger\funzioni non si possono passare parametri, abbiamo sdoppiato
 la funzione per i due tipi di utente. Si procede analogamente per la password
 
 --------------------------------------------------------------------------------------------
+
+```SQL
 CREATE OR REPLACE FUNCTION verifica_ipassword() RETURNS TRIGGER AS $verifica_ipassword$
 DECLARE
 pass insegnante.password_i%type;
@@ -258,10 +273,13 @@ $verifica_ipassword$ LANGUAGE PLPGSQL;
 CREATE TRIGGER VERIFICA_IPASSWORD AFTER INSERT
 ON INSEGNANTE
 FOR EACH ROW EXECUTE PROCEDURE verifica_ipassword();
+```
 
 Si controlla che la password dell'insegnante sia almeno di 8 caratteri.
 
 --------------------------------------------------------------------------------------------
+
+```SQL
 CREATE OR REPLACE FUNCTION verifica_spassword() RETURNS TRIGGER AS $verifica_spassword$
 DECLARE
 spassword STUDENTE.PASSWORD_S%TYPE;
@@ -282,11 +300,14 @@ $verifica_spassword$ LANGUAGE PLPGSQL;
 CREATE TRIGGER VERIFICA_SPASSWORD AFTER INSERT
 ON STUDENTE
 FOR EACH ROW EXECUTE PROCEDURE verifica_spassword();
+```
 
 Si controlla che la password dello studente sia almeno di 8 caratteri.
 
 
 --------------------------------------------------------------------------------------------
+
+```SQL
 CREATE OR REPLACE FUNCTION controllo_risa ()
 RETURNS TRIGGER AS $controllo_risa$
 DECLARE
@@ -314,13 +335,14 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER CONTROLLO_RISA AFTER UPDATE OF PUNTEGGIO_RISA 
 ON RISPOSTA_APERTA
-FOR EACH ROW EXECUTE PROCEDURE controllo_risa();  
+FOR EACH ROW EXECUTE PROCEDURE controllo_risa(); 
+```
 
 Si controlla che il punteggio assegnato dal professore ad una risposta aperta non violi il range di punteggio possibile.
 
 --------------------------------------------------------------------------------------------
 
-
+```SQL
 CREATE OR REPLACE FUNCTION assegna_bool() RETURNS TRIGGER AS $assegna_bool$
 DECLARE
 Rispostad RISPOSTE_APERTE.RISPOSTA_DATA%type;
@@ -366,12 +388,14 @@ $assegna_bool$ LANGUAGE PLPGSQL;
 CREATE TRIGGER ASSEGNA_BOOL AFTER INSERT OR UPDATE OF RISPOSTA_DATA
 ON RISPOSTE_MULTIPLE
 FOR EACH ROW EXECUTE PROCEDURE assegna_bool();
+```
 
 Verifica la correttezza di una risposta assegnata da uno studente (vedendo se la stringa assegnata corrisponde alla stringa
 della risposta vera) e assegna il relativo punteggio alla risposta data da uno studente
 
 --------------------------------------------------------------------------------------------
 
+```SQL
 CREATE OR REPLACE FUNCTION controllo_risposta() RETURNS TRIGGER AS $controllo_risposta$
 DECLARE
 rispostaData RISPOSTE_MULTIPLE.RISPOSTA_DATA%type;
@@ -438,12 +462,13 @@ $controllo_risposta$ LANGUAGE PLPGSQL;
 CREATE TRIGGER CONTROLLO_RISPOSTA_VALIDA AFTER INSERT OR UPDATE OF RISPOSTA_DATA
 ON RISPOSTE_MULTIPLE
 FOR EACH ROW EXECUTE PROCEDURE controllo_risposta();
-
+```
 
 Controlla se la risposta data dall'utente rientri nelle risposte possibili del quiz.
+
 --------------------------------------------------------------------------------------------
 
-
+```SQL
 CREATE OR REPLACE FUNCTION controllo_username_i() RETURNS TRIGGER AS $controllo_username_i$
 DECLARE
 username_s VARCHAR(25);
@@ -500,10 +525,13 @@ $controllo_username_s$ LANGUAGE PLPGSQL;
 CREATE TRIGGER CONTROLLO_USERNAME_S AFTER INSERT OR UPDATE OF USERNAME_S
 ON STUDENTE
 FOR EACH ROW EXECUTE PROCEDURE controllo_username_s();
+```
 
 Si controlla che fra username ci siano username uguali.
+
 --------------------------------------------------------------------------------------------
 
+```SQL
 CREATE OR REPLACE FUNCTION verifica_insegnanteCorrezione() RETURNS TRIGGER AS $verifica_insegnanteCorrezione$
 DECLARE
 username INSEGNANTE.USERNAME_I%TYPE;
@@ -531,9 +559,13 @@ $verifica_insegnanteCorrezione$ LANGUAGE PLPGSQL;
 
 CREATE TRIGGER verifica_insegnanteCorrezione AFTER INSERT ON CORREZIONE
 FOR EACH ROW EXECUTE PROCEDURE verifica_insegnanteCorrezione();
+```
 
 Si verifica che un insegnante in correzione abbia effettivamente creato il test da correggere
+
 --------------------------------------------------------------------------------------------
+
+```SQL
 CREATE OR REPLACE FUNCTION aggiorna_voto_a() RETURNS TRIGGER AS $aggiorna_voto_a$ 
 DECLARE
 punteggio RISPOSTA_APERTA.PUNTEGGIO_RISA%TYPE;
@@ -571,11 +603,13 @@ $aggiorna_voto_a$ LANGUAGE PLPGSQL;
 CREATE TRIGGER AGGIORNA_VOTO_A AFTER UPDATE OF PUNTEGGIO_RISA 
 ON RISPOSTA_APERTA
 FOR EACH ROW EXECUTE PROCEDURE aggiorna_voto_a(); 
+```
 
 Trigger che somma automaticamente le risposte aperte al voto di un test di uno studente
 
 --------------------------------------------------------------------------------------------
 
+```SQL
 CREATE OR REPLACE FUNCTION somma_mul() RETURNS TRIGGER AS $somma_mul$ 
 DECLARE
 punteggio RISPOSTE_MULTIPLE.PUNTEGGIO_RM%TYPE;
@@ -613,9 +647,12 @@ $somma_mul$ LANGUAGE PLPGSQL;
 CREATE TRIGGER SOMMA_PUNTEGGIOM AFTER UPDATE OF PUNTEGGIO_RM
 ON RISPOSTE_MULTIPLE
 FOR EACH ROW EXECUTE PROCEDURE somma_mul();
+```
 
 Trigger che somma a voto il punteggio delle risposte aperte
+
 --------------------------------------------------------------------------------------------
+```SQL
 CREATE OR REPLACE FUNCTION aggiorna_punteggiotot() RETURNS TRIGGER AS $aggiorna_punteggiotot$
 DECLARE
 username STUDENTE.USERNAME_S%TYPE;
@@ -644,68 +681,77 @@ $aggiorna_punteggiotot$ LANGUAGE PLPGSQL;
 CREATE TRIGGER AGGIORNA_PUNTEGGIOTOT AFTER UPDATE OF VOTO_TEST
 ON CORREZIONE
 FOR EACH ROW EXECUTE PROCEDURE aggiorna_punteggiotot();  
+```
 
 Trigger che somma a punteggio totali di uno studente tutti i voti ottenuti
 
 --------------------------------------------------------------------------------------------
 VISTE
 
+```SQL
 CREATE OR REPLACE VIEW risposte_esatte (STUDENTE, ESATTE, TEST)
 AS (SELECT R.USERNAME_S, COUNT(R.PUNTEGGIO_RISA) + COUNT(W.CORRETTA), Q.ID_TEST
-	FROM RISPOSTA_APERTA AS R, QUESITO_APERTO AS Q, QUESITO_MULTIPLO AS M, 
-	RISPOSTE_MULTIPLE AS W, RISPOSTA_APERTA AS F, RISPOSTE_MULTIPLE AS Y 
-WHERE (R.PUNTEGGIO_RISA>PUNTEGGIO_MIN OR W.CORRETTA=TRUE) AND (R.USERNAME_S = W.USERNAME_S) AND
-(R.USERNAME_S = F.USERNAME_S) AND (W.USERNAME_S = Y.USERNAME_S) AND (Q.ID_TEST = M.ID_TEST) AND
-(M.ID_M = W.IDR_M) AND (R.IDR_A = Q.ID_A)
-	GROUP BY R.USERNAME_S, Q.ID_TEST)
+    FROM RISPOSTA_APERTA AS R, QUESITO_APERTO AS Q, QUESITO_MULTIPLO AS M, 
+	 RISPOSTE_MULTIPLE AS W, RISPOSTA_APERTA AS F, RISPOSTE_MULTIPLE AS Y 
+    WHERE (R.PUNTEGGIO_RISA>PUNTEGGIO_MIN OR W.CORRETTA=TRUE) AND (R.USERNAME_S = W.USERNAME_S) AND
+          (R.USERNAME_S = F.USERNAME_S) AND (W.USERNAME_S = Y.USERNAME_S) AND (Q.ID_TEST = M.ID_TEST) AND
+          (M.ID_M = W.IDR_M) AND (R.IDR_A = Q.ID_A)
+    GROUP BY R.USERNAME_S, Q.ID_TEST)
+```
 	
 Vista che raggruppa tutte le risposte esatte degli studenti
 
+--------------------------------------------------------------------------------------------
 
 
-
-
+```SQL
 CREATE OR REPLACE VIEW risposte_errate (STUDENTE, ERRATE, TEST)
 AS (SELECT R.USERNAME_S, COUNT(R.PUNTEGGIO_RISA) + COUNT(W.CORRETTA), Q.ID_TEST
-	FROM RISPOSTA_APERTA AS R, QUESITO_APERTO AS Q, QUESITO_MULTIPLO AS M, 
-	RISPOSTE_MULTIPLE AS W, RISPOSTA_APERTA AS F, RISPOSTE_MULTIPLE AS Y 
+    FROM RISPOSTA_APERTA AS R, QUESITO_APERTO AS Q, QUESITO_MULTIPLO AS M, 
+	 RISPOSTE_MULTIPLE AS W, RISPOSTA_APERTA AS F, RISPOSTE_MULTIPLE AS Y 
     WHERE (R.PUNTEGGIO_RISA = PUNTEGGIO_MIN OR W.CORRETTA=FALSE) AND 
-    (R.USERNAME_S = W.USERNAME_S) AND (R.USERNAME_S = F.USERNAME_S)
-	    AND (W.USERNAME_S = Y.USERNAME_S) AND (Q.ID_TEST = M.ID_TEST) AND (M.ID_M = W.IDR_M) AND
-	    (R.IDR_A = Q.ID_A)
-	    GROUP BY R.USERNAME_S, Q.ID_TEST)
+          (R.USERNAME_S = W.USERNAME_S) AND (R.USERNAME_S = F.USERNAME_S)
+	  AND (W.USERNAME_S = Y.USERNAME_S) AND (Q.ID_TEST = M.ID_TEST) AND (M.ID_M = W.IDR_M) AND (R.IDR_A = Q.ID_A)
+    GROUP BY R.USERNAME_S, Q.ID_TEST)
+```
 	    
 Vista che raggruppa tutte le risposte errate degli studenti
 
+--------------------------------------------------------------------------------------------
 
-
+```
 CREATE OR REPLACE VIEW visualizza_dati_studente (NOME_TEST, N_STUDENTI)
 AS (SELECT NOME_TEST, COUNT(USERNAME_S)
    FROM CORREZIONE AS C, TEST AS T
    WHERE C.ID_TEST = T.ID_TEST
    GROUP BY NOME_TEST)
+```
    
 Vista che permette la visualizzazione delle informazioni relative agli studenti
 
+--------------------------------------------------------------------------------------------
 
-
+```SQL
 CREATE OR REPLACE VIEW visualizza_risultati (NOME_STU, NOME_TEST, NOME_INS, RIS_ESATTE, RIS_ERRATE, VOTO)
 AS (SELECT C.USERNAME_S, T.NOME_TEST, C.USERNAME_I, E.ESATTE, R.ERRATE, C.VOTO_TEST,
    FROM CORREZIONE AS C, RISPOSTE_ESATTE AS E, RISPOSTE_ERRATE AS R, TEST AS T, TEST AS Y
    WHERE T.ID_TEST = Y.ID_TEST)
+```
    
    
 Vista che permette di visualizzare i risultati di un test dato uno studente
 
+--------------------------------------------------------------------------------------------
 
-
-
+```SQL
 CREATE OR REPLACE VIEW media_categoria (NOME_TEST, MATERIA, STUDENTE, MEDIA) AS
 (SELECT T.NOME_TEST, T.MATERIA_TEST, C.USERNAME_S, AVG(C.VOTO_TEST)
 FROM TEST AS T, TEST AS P, CORREZIONE AS C
 GROUP BY T.NOME_TEST, T.MATERIA_TEST, C.USERNAME_S, P.MATERIA_TEST
 HAVING T.MATERIA_TEST = P.MATERIA_TEST
 )
+```
 
 Vista che raggruppa le medie degli studenti
 
+--------------------------------------------------------------------------------------------
