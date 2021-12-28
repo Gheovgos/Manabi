@@ -5,8 +5,11 @@ Il file SQL è stato ideato per essere inserito in un DB vuoto con un comando "R
 Di seguito riportati i commenti al codice SQL\PLPGSQL
 
 BREVE INDICE
+
 RIGA 15-129 CREAZIONE TABELLE
+
 RIGA 130-658 VINCOLI E PROCEDURE
+
 RIGA 651-710 VISTE
 
 
