@@ -3,6 +3,8 @@ Sviluppo Applicativo Piattaforma di E-Learning Manabi.
 
 
 Giorgio Longobardo N86003571 gior.longobardo@studenti.unina.it
+
+
 Domitilla Giulia Simeoli N86003780 dom.simeoli@studenti.unina.it
 
 
