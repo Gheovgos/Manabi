@@ -782,7 +782,7 @@ INSERT INTO STUDENTE VALUES
 ('marcoPastazio', 'iLoveMogy','Marco', 'Pastore'),
 ('lucybrando','onedirection123','Lucia','Brando),
 ('Giandreotti', 'galimberti<3', 'Gianluigi', 'Capasso');
-``
+```
 
 --------------------------------------------------------------------------------------------`
 
