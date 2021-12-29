@@ -11,11 +11,13 @@ Di seguito riportati i commenti al codice SQL\PLPGSQL
 
 BREVE INDICE
 
-RIGA 15-129 CREAZIONE TABELLE
+RIGA 25-160 CREAZIONE TABELLE
 
-RIGA 130-658 VINCOLI E PROCEDURE
+RIGA 160-700 VINCOLI E PROCEDURE
 
-RIGA 651-710 VISTE
+RIGA 700-770 VISTE
+
+RIGA 770 POPOLAZIONE
 
 
 
@@ -31,7 +33,9 @@ COGNOME VARCHAR(25),
 PRIMARY KEY (USERNAME_I)
 );
 ```
-Tabella contenente varie stringhe di 25 caratteri (scelta una grandezza fittizia)
+Tabella contenente varie stringhe di 25 caratteri.
+
+--------------------------------------------------------------------------------------------
 
 ```SQL
 CREATE TABLE STUDENTE(
@@ -45,6 +49,8 @@ PRIMARY KEY (USERNAME_S)
 ```
 
 Tabella contenente varie stringhe di 25 caratteri (scelta una grandezza fittizia) e un float
+
+--------------------------------------------------------------------------------------------
 
 ```SQL
 CREATE TABLE TEST(
@@ -60,6 +66,9 @@ FOREIGN KEY (USERNAME_I) REFERENCES INSEGNANTE (USERNAME_I)
 ```
 Tabella per il test. Il tipo TIME è stato perlopiù sperimentale, dato che è stata la prima volta con cui ci siamo interfacciati con 
 questo tipo di dato.
+
+--------------------------------------------------------------------------------------------
+
 ```SQL
  CREATE TABLE CORREZIONE(
     USERNAME_I VARCHAR(25) NOT NULL,
@@ -75,26 +84,32 @@ FOREIGN KEY (ID_TEST) REFERENCES TEST (ID_TEST)
 ```
 Tabella contenente tutte le informazioni utili per la relazione test-insegnante-studente. Da qui si possono dedurre tutti i partecipanti 
 ad un test, tutti i voti, tutti i professori che hanno creato un test, i voti assegnati. I primi tre attributi formano la chiave primaria.
+
+--------------------------------------------------------------------------------------------
+
+
 ```SQL
 CREATE TABLE QUESITO_APERTO(
     ID_A INT NOT NULL,
     ID_TEST INT NOT NULL,
     PUNTEGGIO_MIN FLOAT NOT NULL,	
     PUNTEGGIO_MAX FLOAT NOT NULL,
-    DOMANDA VARCHAR(50) NOT NULL,
+    DOMANDA VARCHAR(150) NOT NULL,
 PRIMARY KEY (ID_A),
 FOREIGN KEY (ID_TEST) REFERENCES TEST (ID_TEST)	
 );
 ```
 Tabella contenente le informazioni utili per un quesito aperto.
 
+--------------------------------------------------------------------------------------------
+
 ```SQL
 CREATE TABLE RISPOSTA_APERTA(
 	IDR_A INT NOT NULL,
 	USERNAME_S VARCHAR(25) NOT NULL,
 	USERNAME_I VARCHAR(25) NOT NULL,
-	RISPOSTA_DATA VARCHAR(200),
-	COMMENTO VARCHAR(200) DEFUALT ‘Nessun commento.’,
+	RISPOSTA_DATA VARCHAR(500),
+	COMMENTO VARCHAR(500) DEFUALT ‘Nessun commento.’,
 	PUNTEGGIO_RISA FLOAT DEFAULT 0,
 PRIMARY KEY (IDR_A, USERNAME_S),
 FOREIGN KEY (USERNAME_S) REFERENCES STUDENTE (USERNAME_S),
@@ -106,6 +121,8 @@ FOREIGN KEY (IDR_A) REFERENCES QUIZ_APERTO (ID_A)
 Tabella contenente informazioni riguardante le risposte degli utenti. Abbiamo deciso di usare la chiave esterna + username come chiave
 primaria per accentuare il legame con i quesiti e l'utente. Vale lo stesso ragionamento con le risposte multiple.
 
+--------------------------------------------------------------------------------------------
+
 ```SQL
 CREATE TABLE QUESITO_MULTIPLO(
 	ID_M INT NOT NULL,
@@ -113,28 +130,31 @@ CREATE TABLE QUESITO_MULTIPLO(
 	PUNTEGGIO_CORRETTO FLOAT NOT NULL,
 	PUNTEGGIO_ERRATO FLOAT NOT NULL,
 	DOMANDA VARCHAR(200) NOT NULL,
-	R_UNOC VARCHAR(50) NOT NULL,
-	R_DUE VARCHAR(50) NOT NULL,
-	R_TRE VARCHAR(50),
+	R_UNOC VARCHAR(150) NOT NULL,
+	R_DUE VARCHAR(150) NOT NULL,
+	R_TRE VARCHAR(150),
 	R_QUATTRO VARCHAR(50),
 	R_CINQUE VARCHAR(50),
 PRIMARY KEY (ID_M),
 FOREIGN KEY (ID_TEST) REFERENCES TEST (ID_TEST)
+);
 ```
 Tabella contenente informazioni per i quesiti aperti. La risposta uno è sempre quella corretta, nell'applicativo dovrà essere messo
 in posizione casuale. Risposta tre, quattro e cinque saranno invece potenzialmente null per ridurre le risposte possibili ad un test.
+
+--------------------------------------------------------------------------------------------
 
 ```SQL
 CREATE TABLE RISPOSTE_MULTIPLE(
 	IDR_M INT NOT NULL,
 	USERNAME_S VARCHAR(25) NOT NULL,
-	RISPOSTA_DATA VARCHAR(50) NOT NULL,
+	RISPOSTA_DATA VARCHAR(150) NOT NULL,
 	CORRETTA BOOLEAN,
 	PUNTEGGIO_RM FLOAT DEFAULT 0,
 PRIMARY KEY (IDR_M, USERNAME_S),
 FOREIGN KEY (IDR_M) REFERENCES QUIZ_MULTIPLO (ID_M),
 FOREIGN KEY (USERNAME_S) REFERENCES STUDENTE (USERNAME_S)
-);	
+);		
 ```
 Informazioni utili per le risposte multiple date dagli utenti.
 
@@ -541,25 +561,11 @@ Si controlla che fra username ci siano username uguali.
 
 ```SQL
 CREATE OR REPLACE FUNCTION verifica_insegnanteCorrezione() RETURNS TRIGGER AS $verifica_insegnanteCorrezione$
-DECLARE
-username INSEGNANTE.USERNAME_I%TYPE;
-idTest TEST.ID_TEST%TYPE;
-f TEST.ID_TEST%TYPE;
-
 BEGIN
 	
-	SELECT INSEGNANTE.USERNAME_I, INSEGNANTE.ID_TEST INTO username, idTest
-	FROM CORREZIONE
-	WHERE INSEGNANTE.USERNAME_I = NEW.USERNAME_I;
-	
-	SELECT TEST.ID_TEST into f
-	FROM TEST
-	WHERE TEST.USERNAME_I = username AND TEST.ID_TEST = idTest;
-	
-IF (f is null) THEN
+IF NOT EXISTS (SELECT TEST.USERNAME_I FROM TEST, CORREZIONE WHERE TEST.USERNAME_I = NEW.USERNAME_I) 
 RAISE EXCEPTION '% non ha creato nessun test', username;
 END IF;
-
 
 RETURN NULL;
 END;
@@ -761,5 +767,187 @@ HAVING T.MATERIA_TEST = P.MATERIA_TEST
 ```
 
 Vista che raggruppa le medie degli studenti
+
+--------------------------------------------------------------------------------------------
+
+POPOLAZIONE
+
+STUDENTE
+
+```SQL
+INSERT INTO STUDENTE VALUES
+('giovgiodiapostgre', 'vamavvomavvone', 'Giorgio', 'Longobardo'),
+('patataviola','sonnoefame','Domitilla', 'Simeoli'),
+('primadispararePenza','ihatepostgre','Luigi, 'Penza'),
+('marcoPastazio', 'iLoveMogy','Marco', 'Pastore'),
+('lucybrando','onedirection123','Lucia','Brando),
+('Giandreotti', 'galimberti<3', 'Gianluigi', 'Capasso');
+``
+
+--------------------------------------------------------------------------------------------`
+
+INSEGNANTE
+
+```SQL
+INSERT INTO INSEGNANTE VALUES
+('perrielornitorinco','damnyouperrie','Heinz','Doofenshmirtz'),
+('iononesisto','pamelamylove','Marco','Caltagirone'),
+('deusexmachina','miPiaccionoICavalli', 'Gaio', 'Germanico'),
+('belialvortex','nonsonocomunista', 'Giuseppe', 'Messina'),
+('volarievia', 'arrivederci', 'Giovanna', 'Giorno'),
+('fireworks06', 'sonosveglia','Caterina', 'Perri'),
+('unamelaverde','fatalina','Antonio', 'Cartonio');
+```
+
+--------------------------------------------------------------------------------------------
+
+
+TEST
+
+```SQL
+INSERT INTO TEST VALUES
+(1,'perrielornitorinco','Cinema Contemporaneo','00:20:00', 'Cinema Uno'),
+(2, 'volarievia', 'I dinosauri', NULL,'scienze della terra'),
+(3, 'deusexmachina','Caligola', NULL, 'Storia Romana'),
+(4, 'iononesisto', 'storia dei videogiochi', '00:25:00', 'Game Design');
+```
+
+--------------------------------------------------------------------------------------------
+
+
+QUESITO APERTO
+
+```SQL
+INSERT INTO QUESITO_APERTO VALUES
+(101,4,0,10, 'SU QUALE IDEA FU SVILUPPATO IL POWER GLOVE DI ATARI?'),
+(102,4,0,10, 'PARLAMI DI COLOSSAL CAVE'),
+(103,4,0,8, 'QUALE FU IL PRIMO EASTER EGG DELLA STORIA?'),
+(104,3,0,5, 'COME FU ASSASSINATO CALIGOLA?'),
+(105,2,0,5, 'COSA STUDIA LA PALEONTOLOGIA?'),
+(106,1,0,4, 'PARLAMI DEL PIANO OLANDESE');
+```
+--------------------------------------------------------------------------------------------
+
+QUESITI MULTIPLI
+
+```SQL
+INSERT INTO QUESITO_MULTIPLO VALUES
+(1001,4,3,0, 'QUALE FU LA PRIMA CONSOLE?', 'MAGNAVOX ODYSSEY', 'PLAYSTATION', 'SEGA MEGA DRIVE', 'GAMEBOY','GAMEBOY COLOR'),
+(1002,4,4,0, 'COME SI CHIAMA IL PROTAGONISTA DELLA CELEBRE SERIE DI AVVENTURE GRAFICHE MONKEY ISLAND?','GUYBRUSH THREEPWOOD', 'CRASH BANDICOOT', 'NIKO BELLIC', 'BILBO BEGGINS',NULL),
+
+(1003,3,2,0, 'QUALE TRA QUESTI ERA IL NOME DEL CAVALLO DI CALIGOLA?', 'INCITATUS', 'ABURIUS', 'IGINUS','SCAPTIA',NULL),
+(1004,3,5,0, 'QUALI ATTEGGIAMENTI EBBE CALIGOLA NEI CONFRONTI DELLA PLEBE E DEL SENATO?', 'AVEVA SCARSA CONSIDERAZIONE DEL SENATO MA SI INTERESSAVA MOLTO ALLA PLEBE ALLA QUALE OFFRIVA GIOCHI CIRCENSI ED ELARGIZIONI DI DENARO E CIBO',
+'SI DISINTERESSAVA COMPLETAMENTE DELLA PLEBE TENENDO INVECE IN GRANDE CONSIDERAZIONE IL SENATO', 'CAPIVA CVHE IL SUO POTERE ERA BASATO SULLA CONSIDERAZIONE DI ENTRAMBI, PER QUESTO LI TENEVA SEMPRE MOLTO IN CONSIDERAZIONE',NULL,NULL),
+(1005,3,6,0, 'CALIGOLA FU UN IMPERATORE MOLTO CONTROVERSO, QUALE TRA QUESTI ERA IL MOTIVO?', 'A CAUSA DELL MOLTE LEGGENDE CHE CIRCOLAVANO SU DI LUI', 'TRASCURAVA PARTICOLARMENTE LA PLEBE', 'UCCISE IL PADRE TIBERIO PER SALIRE AL POTERE',NULL,NULL),
+(1006,3,5,0, 'PER QUANTI ANNI FU AL POTERE CALIGOLA?', '4', '2', '10', '5','12'),
+
+(1007,2,4,0, 'IN QUALE PERIODO DEL MESOZOICO SI ESTINSERO I DINOSAURI?', 'CRETACEO' ,'GIURASSICO', 'TRIRASSICO', 'DEVONIANO',NULL),
+(1008,2,2,0, 'COME SI CHIAMAVA IL GROSSO MAMMIFERO PREISTORICO CON LE ZANNE E IL FOLTO PELO?',' MAMMUT', 'GIGANTOSAURO' , 'GATTO' ,' OLIFANTE', 'PALEOFANTE'),
+(1009,2,3,0, 'QUALE DI QUESTI DINOSAURI ERA ERBIVORO?', 'STEGOSAURO' , 'ALLOSAURO', 'SPINOSAURO', 'DILOFOSAURO',NULL),
+(1010,2,2,0, 'QUALE DI QUESTI DINOSAURI HA IL NOME CHE SIGNIFICA "RETTILE CON IL TETTO"?', 'STREGOSAURO', 'APATOSAURO', 'MAIASAURO', 'EORAPTOR', 'TIRANNOSAURO'),
+(1011,2,5,0, 'IN QUALE DEI SEGUENTI PAESI NON SONO MAI STATI TROVATI RESTI DI DINOSAURI?', 'NESSUNA DELLE RISPOSTE', 'ITALIA', 'CINA', 'ARGENTINA',NULL),
+
+(1012,1,5,0, 'QUESTI FILM NON HANNO MAI VINTO OSCAR, TRANNE UNO, QUALE?', 'MAD MAX:FURY ROAD' , 'THE ELEPHANT MAN', 'LA SOTTILE LINEA ROSSA' , 'ALLA RICERCA DI NEMO',NULL),
+(1013,1,3,0, 'IN QUALE EPOCA VENNE INVENTATO IL CINEMATOGRAFO?', 'ALLA FINE DEL 1800', 'NEL 1700' ,'ALLA FINE DEL 1900', 'NEI PRIMI ANNI DEL 1800',NULL),
+(1014,1,5,0, 'CHI HA INVENTATO IL GENERE SPAGHETTI WESTERN?', 'SERGIO LEONE', 'BERNARDO BERTOLUCCI' , 'VITTORIO DE SICA', 'ROBERTO ROSSELINI',NULL),
+(1015,1,4,0, 'QUALE FU IL PRIMO FILM DI ANIMAZIONE A VINCERE IL PREMIO OSCAR?', 'BIANCANEVE E I SETTE NANI', 'SHREK', 'FANTASIA', 'LA CITTÁ INCANTATA',NULL),
+(1016,1,4,0, '(IL MONDO SI DIVIDE IN DUE: CHI HA LA PISTOLA CARICA E CHI SCAVA! TU SCAVI!), IN QUALE FILM VIENE PRONUNCIATA LA SEGUENTE FRASE?', 'IL BUONO, IL BRUTTO E IL CATTIVO', 'PER UN PUGNO DI DOLLARI', 'STAR WARS', 'GRAND BUDAPEST HOTEL', 'DJANGO'),
+(1017,1,7,0, 'QUALE TRA QUESTI É IL NOME DEL PERSONAGGIO INTERPRETATO DA TOM HANKS IN UN FILM DEL 1994?', 'FORREST GUMP', 'CHUCK NOLAND', 'BUBBA', 'ANDY BECKETT',NULL);
+```
+
+--------------------------------------------------------------------------------------------
+
+RISPOSTE APERTE
+
+```SQL
+INSERT INTO RISPOSTA_APERTA VALUES
+(101, 'patataviola', 'iononesisto','Avere un utilizzo quanto più immersivo possibile dell’utente all’interno del videogioco.
+ Il power glove si basa su due tecnologie: la prima serviva a rilevare la chiusura delle dita,
+ la seconda a rilevare la posizione della mano nello spazio. Il guanto però non vendette quasi nulla in quanto il
+ prodotto finale risultò goffo e poco preciso.', NULL, 8),
+(101, 'giovgiodiapostgre','iononesisto','Fare in modo che la persona che giocava ad un determinato videogioco potesse trovare
+  l esperienza più realistica possibile.', NULL, NULL),
+(102,'patataviola','iononesisto','É stato il primo gioco di avventura testuale, Colossal Cave (o Ad- venture),
+ venne creato nel 1975 da Will Crowther e ampliato, nella versione più nota,
+ da Don Woods. Il giocatore esplorava un vasto labirinto di caverne e doveva trovare
+ il modo di superare numerosi ostacoli, sempre digitando i comandi.',NULL,10),
+(102,'giovgiodiapostgre','iononesisto','É stato il primo gioco di avventura testuale, cioè un gioco in cui bisognava
+ digitare da tastiera i comandi da are al personaggio interpretato per aiutarlo a superare ostacoli e
+ uscire da un labirinto.', NULL, NULL),
+(103,'patataviola','iononesisto',NULL,NULL,0), 
+(103,'giovgiodiapostgre','iononesisto','Il termine è stato coniato da Steve Wright della Atari,
+ proprio nell’ambito dei videogiochi ed è ormai opinione comune
+ che il primo caso riconosciuto di Easter Egg sia in Adventure,
+ del 1979, dove, dopo aver svolto una procedura ben precisa, appare il nome dell’autore Warren Robinett.', NULL, NULL),
+(104,'primadispararePenza','deusexmachina','Caligola fu assassinato da una congiura
+ organizzata da senato e cavalieri capeggiata da Cassio Cherea,
+ ripetutamente umiliato dall’imperatore.',NULL,NULL),
+(104,'marcoPastazio','deusexmachina','Caligola fu assassinato da Cassio Cherea che lo prese di sorpresa dopo uno spettacolo.',NULL,NULL),
+(105,'primadispararePenza','volarievia','La paleontologia è la branca delle scienze naturali
+ che studia gli esseri viventi vissuti nel passato geologico
+ e i loro ambienti di vita sulla Terra.',NULL,NULL),
+(105,'marcoPastazio','volarievia','Studia gli esseri viventi vissuti nel passato, come i dinosauri.',NULL,NULL),
+(106, 'lucybrando','perrielornitorinco', 'É una tecnica di ripresa usata nel cinema, in fotografia e in altre arti visive,
+che si ottiene con una decisa inclinazione laterale della macchina da presa o della fotocamera durante
+una inquadratura, in modo che l orizzonte risulti in diagonale rispetto ai bordi della immagine.', NULL, NULL);
+```
+
+--------------------------------------------------------------------------------------------
+
+RISPOSTE MULTIPLE
+
+```SQL
+INSERT INTO RISPOSTE_MULTIPLE VALUES
+(1001,'patataviola','MAGNAVOX ODYSSEY',true,3),
+(1001,'giovgiodiapostgre','MAGNAVOX ODYSSEY',NULL,NULL),
+(1002,'patataviola','CRASH BANDICOOT',false,0),
+(1002,'giovgiodiapostgre','GUYBRUSH THREEPWOOD',NULL,NULL),
+
+(1003,'primadispararePenza','INCITATUS',NULL, NULL),
+(1003,'marcoPastazio','INCITATUS',NULL, NULL),
+(1004,'primadispararePenza','AVEVA SCARSA CONSIDERAZIONE DEL
+ SENATO MA SI INTERESSAVA MOLTO ALLA PLEBE ALLA
+ QUALE OFFRIVA GIOCHI CIRCENSI ED ELARGIZIONI DI DENARO E CIBO',NULL, NULL),
+(1004,'marcoPastazio','CAPIVA CVHE IL SUO POTERE ERA BASATO SULLA
+ CONSIDERAZIONE DI ENTRAMBI, PER QUESTO LI TENEVA SEMPRE MOLTO IN CONSIDERAZIONE',NULL, NULL),
+(1005,'primadispararePenza','A CAUSA DELL MOLTE LEGGENDE CHE CIRCOLAVANO SU DI LUI',NULL, NULL),
+(1005,'marcoPastazio','A CAUSA DELL MOLTE LEGGENDE CHE CIRCOLAVANO SU DI LUI',NULL, NULL),
+(1006,'primadispararePenza','2',NULL, NULL),
+(1006,'marcoPastazio','4',NULL, NULL),
+(1007,'primadispararePenza','CRETACEO',NULL, NULL),
+(1007,'marcoPastazio','CRETACEO',NULL, NULL),
+(1008,'primadispararePenza','MAMMUT',NULL, NULL),
+(1008,'marcoPastazio','MAMMUT',NULL, NULL),
+(1009,'primadispararePenza','STEGOSAURO',NULL, NULL),
+(1009,'marcoPastazio','ALLOSAURO',NULL, NULL),
+(1010,'primadispararePenza','STEGOSAURO',NULL, NULL),
+(1010,'marcoPastazio','STEGOSAURO',NULL, NULL),
+(1011,'primadispararePenza','ITALIA',NULL, NULL),
+(1011,'marcoPastazio','CINA',NULL, NULL),
+
+(1012,'lucybrando','MAD MAX:FURY ROAD',NULL, NULL),
+(1013,'lucybrando','ALLA FINE DEL 1800',NULL, NULL),
+(1014,'lucybrando','SERGIO LEONE',NULL, NULL),
+(1015,'lucybrando','SHREK',NULL, NULL),
+(1016,'lucybrando','PER UN PUGNO DI DOLLARI',NULL, NULL),
+(1017,'lucybrando','FORREST GUMP',NULL, NULL);
+```
+
+
+--------------------------------------------------------------------------------------------
+
+
+CORREZIONE
+
+```SQL
+INSERT INTO CORREZIONE VALUES
+('iononesisto','patataviola',4,false,NULL),
+('iononesisto','giovgiodiapostgre',4,false,NULL),
+('deusexmachina','marcoPastazio',3,false,NULL),
+('deusexmachina','primadispararePenza',3,false,NULL),
+('volarievia','marcoPastazio',2,false,NULL),
+('volarievia','primadispararePenza',2,false,NULL),
+('perrielornitorinco','lucybrando',1,false,NULL);
+```
 
 --------------------------------------------------------------------------------------------
