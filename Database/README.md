@@ -781,7 +781,7 @@ INSERT INTO STUDENTE VALUES
 ('primadispararePenza','ihatepostgre','Luigi, 'Penza'),
 ('marcoPastazio', 'iLoveMogy','Marco', 'Pastore'),
 ('lucybrando','onedirection123','Lucia','Brando),
-('Giandreotti', 'galimberti<3', 'Gianluigi', 'Capasso');
+('Giandreotti', 'DemocraziaCristiana78', 'Gianluigi', 'Capasso');
 ```
 
 --------------------------------------------------------------------------------------------`
