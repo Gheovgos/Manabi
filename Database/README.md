@@ -565,7 +565,7 @@ Si controlla che fra username ci siano username uguali.
 CREATE OR REPLACE FUNCTION verifica_insegnanteCorrezione() RETURNS TRIGGER AS $verifica_insegnanteCorrezione$
 BEGIN
 	
-IF NOT EXISTS (SELECT TEST.USERNAME_I FROM TEST, CORREZIONE WHERE TEST.USERNAME_I = NEW.USERNAME_I) 
+IF NOT EXISTS (SELECT TEST.USERNAME_I FROM TEST WHERE TEST.USERNAME_I = NEW.USERNAME_I) 
 RAISE EXCEPTION '% non ha creato nessun test', username;
 END IF;
 
