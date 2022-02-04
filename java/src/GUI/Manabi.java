@@ -9,7 +9,7 @@ public class Manabi {
 	private JFrame frame;
 	
 	/**
-	 * Launch the application.
+	 * Avvio prima GUI
 	 */
 	public static void main(String[] args) {
 		
