@@ -69,6 +69,17 @@ public class Accesso {
 		frame.getContentPane().add(txtpnPassword);
 		
 		JButton btnNewButton = new JButton("ACCEDI");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(controller.login(textField.getText(), passwordField.getText())) {
+					Menu next = new Menu(controller);
+					frame.setVisible(false);
+					next.setVisible(true);
+				}
+				
+			}
+		});
 		btnNewButton.setFont(new Font("Dubai", Font.PLAIN, 12));
 		btnNewButton.setBounds(259, 376, 85, 21);
 		frame.getContentPane().add(btnNewButton);

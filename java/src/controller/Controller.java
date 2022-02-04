@@ -24,6 +24,13 @@ public class Controller {
 	
 	public void assignMat(String materia) {tmp = materia;} //Salva la materia in una variabile temporanea}
 	
+	public boolean login(String username, String password) {
+		u.username = username;
+		u.password = password;
+		//COLLEGA DAO
+		return true;
+		
+	}
 	
 
 }
