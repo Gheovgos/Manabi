@@ -36,6 +36,11 @@ public class CreaStudente {
 	private JTextPane txtpnInserisci;
 	private JButton btnNewButton;
 	private JButton btnAvanti;
+	private JTextPane txtpnPasswordNonValida;
+	private JTextField textMateria;
+	private JTextPane txtpnCognomeNonValido;
+	private JTextPane txtpnNomeNonValido;
+	private JTextPane txtpnLePassowordNon;
 
 	public CreaStudente(Controller c) {
 		controller = c;
@@ -141,7 +146,94 @@ public class CreaStudente {
 		btnNewButton.setBounds(62, 220, 85, 21);
 		frame.getContentPane().add(btnNewButton);
 		
+		
+		JTextPane txtpnError1 = new JTextPane();
+		txtpnError1.setEditable(false);
+		txtpnError1.setForeground(Color.RED);
+		txtpnError1.setFont(new Font("Tahoma", Font.PLAIN, 7));
+		txtpnError1.setToolTipText("L'username deve contenere almeno 8 caratteri e massimo 25.");
+		txtpnError1.setText("Username non valido!");
+		txtpnError1.setBounds(341, 45, 83, 20);
+		frame.getContentPane().add(txtpnError1);
+		txtpnError1.setVisible(false);
+		
+		txtpnPasswordNonValida = new JTextPane();
+		txtpnPasswordNonValida.setEditable(false);
+		txtpnPasswordNonValida.setToolTipText("La password deve contenere almeno 8 caratteri e non superarne 25.");
+		txtpnPasswordNonValida.setForeground(Color.RED);
+		txtpnPasswordNonValida.setFont(new Font("Tahoma", Font.PLAIN, 7));
+		txtpnPasswordNonValida.setText("Password non valida!");
+		txtpnPasswordNonValida.setBounds(341, 132, 75, 20);
+		frame.getContentPane().add(txtpnPasswordNonValida);
+		txtpnPasswordNonValida.setVisible(false);
+		
+		txtpnCognomeNonValido = new JTextPane();
+		txtpnCognomeNonValido.setForeground(Color.RED);
+		txtpnCognomeNonValido.setEditable(false);
+		txtpnCognomeNonValido.setFont(new Font("Tahoma", Font.PLAIN, 7));
+		txtpnCognomeNonValido.setToolTipText("Prova a inserire un cognome reale!");
+		txtpnCognomeNonValido.setText("Cognome non valido!");
+		txtpnCognomeNonValido.setBounds(341, 103, 75, 20);
+		frame.getContentPane().add(txtpnCognomeNonValido);
+		txtpnCognomeNonValido.setVisible(false);
+		
+		txtpnNomeNonValido = new JTextPane();
+		txtpnNomeNonValido.setForeground(Color.RED);
+		txtpnNomeNonValido.setToolTipText("Prova a inserire un nome reale!");
+		txtpnNomeNonValido.setText("Nome non valido!");
+		txtpnNomeNonValido.setFont(new Font("Tahoma", Font.PLAIN, 7));
+		txtpnNomeNonValido.setEditable(false);
+		txtpnNomeNonValido.setBounds(341, 74, 75, 20);
+		frame.getContentPane().add(txtpnNomeNonValido);
+		txtpnNomeNonValido.setVisible(false);
+		
+		txtpnLePassowordNon = new JTextPane();
+		txtpnLePassowordNon.setFont(new Font("Tahoma", Font.PLAIN, 7));
+		txtpnLePassowordNon.setEditable(false);
+		txtpnLePassowordNon.setForeground(Color.RED);
+		txtpnLePassowordNon.setText("Le passoword non corrispondono");
+		txtpnLePassowordNon.setBounds(341, 162, 75, 20);
+		frame.getContentPane().add(txtpnLePassowordNon);
+		txtpnLePassowordNon.setVisible(false);
+		
 		btnAvanti = new JButton("AVANTI");
+		btnAvanti.addMouseListener(new MouseAdapter() {
+			//verifica credenziali
+			public void mouseClicked(MouseEvent e) {
+				
+				boolean a, b, c, d, f; //per fare un controllo alla fine (va avanti nella prossima schermata
+				String s;
+				controller.assignUsername(txtInserisciUsername.getText());
+				if(controller.u.username.length() < 8 || controller.u.username.length() > 25) { txtpnError1.setVisible(true); a = false; }
+				else {txtpnError1.setVisible(false); a = true;}
+
+				controller.assignPassword(passwordField_1.getText());
+				if(controller.u.password.length() < 8 || controller.u.password.length() > 25) {txtpnPasswordNonValida.setVisible(true); b = false;}
+				else {txtpnPasswordNonValida.setVisible(false); b = true;}
+
+
+				controller.assignName(textField_1.getText());
+				if(controller.u.nome.length() < 2) {txtpnNomeNonValido.setVisible(true); c = false;}
+				else {txtpnNomeNonValido.setVisible(false); c = true;}
+				
+				controller.assignSurname(textField.getText());
+				if(controller.u.cognome.length() < 2) {	txtpnCognomeNonValido.setVisible(true); d = false;}
+				else {txtpnCognomeNonValido.setVisible(false); d = true;}
+				
+				s = passwordField.getText();
+
+				if(!controller.u.password.equals(s)) {txtpnLePassowordNon.setVisible(true); f = false;}
+				else {txtpnLePassowordNon.setVisible(false); f = true;}
+				
+				
+				if(a && b && c && d && f)
+				{
+					Menu next = new Menu(controller);
+					frame.setVisible(false);
+					next.setVisible(true);
+				}
+			}
+		});
 		btnAvanti.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		btnAvanti.setBounds(157, 220, 85, 21);
 		frame.getContentPane().add(btnAvanti);
