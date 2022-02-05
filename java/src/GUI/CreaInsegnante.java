@@ -14,6 +14,9 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class CreaInsegnante {
 
@@ -57,6 +60,12 @@ public class CreaInsegnante {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		JLabel icon = new JLabel("");
+		icon.setToolTipText("Mostra password");
+		icon.setIcon(new ImageIcon("C:\\Users\\giorg\\Downloads\\manabi\\src\\Immagini\\occhio.png"));
+		icon.setBounds(312, 165, 19, 14);
+		frame.getContentPane().add(icon);
+		
 		txtInserisciUsername = new JTextField();
 		txtInserisciUsername.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		txtInserisciUsername.setBounds(235, 46, 96, 19);
@@ -64,7 +73,7 @@ public class CreaInsegnante {
 		txtInserisciUsername.setColumns(10);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(235, 162, 96, 19);
+		passwordField.setBounds(235, 163, 96, 19);
 		frame.getContentPane().add(passwordField);
 		
 		passwordField_1 = new JPasswordField();

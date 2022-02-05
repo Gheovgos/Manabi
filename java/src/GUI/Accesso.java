@@ -1,3 +1,7 @@
+
+
+
+
 package GUI;
 
 import java.awt.EventQueue;
@@ -96,5 +100,10 @@ public class Accesso {
 		btnIscriviti.setFont(new Font("Dubai", Font.PLAIN, 12));
 		btnIscriviti.setBounds(396, 376, 85, 21);
 		frame.getContentPane().add(btnIscriviti);
+	}
+
+	public void setVisible(boolean b) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -228,7 +228,7 @@ public class CreaStudente {
 				
 				if(a && b && c && d && f)
 				{
-					Menu next = new Menu(controller);
+					MenuStudente next = new MenuStudente(controller);
 					frame.setVisible(false);
 					next.setVisible(true);
 				}

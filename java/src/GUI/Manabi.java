@@ -1,8 +1,11 @@
 package GUI;
 
 import java.awt.EventQueue;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 import controller.Controller;
+
 
 public class Manabi {
 
@@ -17,12 +20,8 @@ public class Manabi {
 			public void run() {
 				try {
 					Controller c = new Controller();
-					/* prima va aperta l'immagine e poi la finestra di log in*/
-					Accesso window = new Accesso(c);  //fai uscire la finestra dopo
-					
-					
-					
-					window.frame.setVisible(true);
+					Accesso window = new Accesso(c); 
+					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
