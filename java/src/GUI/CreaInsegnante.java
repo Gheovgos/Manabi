@@ -1,26 +1,21 @@
 package GUI;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import controller.*;
 import javax.swing.JTextField;
-import java.awt.BorderLayout;
 import javax.swing.JPasswordField;
 import java.awt.Font;
 import javax.swing.JTextPane;
 import java.awt.Color;
-import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class CreaInsegnante {
 
-	private JFrame frame;
+	JFrame frame;
 	Controller controller;
 	private JTextField txtInserisciUsername;
 	private JPasswordField passwordField;
@@ -43,6 +38,7 @@ public class CreaInsegnante {
 	private JTextPane txtpnCognomeNonValido;
 	private JTextPane txtpnNomeNonValido;
 	private JTextPane txtpnLePassowordNon;
+	private JTextPane txtpnUsernameNonDisponibile;
 
 	public CreaInsegnante(Controller c) {
 		controller = c;
@@ -50,21 +46,12 @@ public class CreaInsegnante {
 		frame.setVisible(true);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		JLabel icon = new JLabel("");
-		icon.setToolTipText("Mostra password");
-		icon.setIcon(new ImageIcon("C:\\Users\\giorg\\Downloads\\manabi\\src\\Immagini\\occhio.png"));
-		icon.setBounds(312, 165, 19, 14);
-		frame.getContentPane().add(icon);
 		
 		txtInserisciUsername = new JTextField();
 		txtInserisciUsername.setFont(new Font("Tahoma", Font.PLAIN, 8));
@@ -213,6 +200,18 @@ public class CreaInsegnante {
 		frame.getContentPane().add(txtpnNomeNonValido);
 		txtpnNomeNonValido.setVisible(false);
 		
+		txtpnUsernameNonDisponibile = new JTextPane();
+		txtpnUsernameNonDisponibile.setFont(new Font("Tahoma", Font.PLAIN, 7));
+		txtpnUsernameNonDisponibile.setForeground(Color.RED);
+		txtpnUsernameNonDisponibile.setBackground(Color.WHITE);
+		txtpnUsernameNonDisponibile.setEditable(false);
+		txtpnUsernameNonDisponibile.setToolTipText("Prova a utilizzare un username diverso.");
+		txtpnUsernameNonDisponibile.setText("Username non disponibile.");
+		txtpnUsernameNonDisponibile.setBounds(341, 45, 75, 20);
+		frame.getContentPane().add(txtpnUsernameNonDisponibile);
+		txtpnUsernameNonDisponibile.setVisible(false);
+		
+		
 		txtpnLePassowordNon = new JTextPane();
 		txtpnLePassowordNon.setFont(new Font("Tahoma", Font.PLAIN, 7));
 		txtpnLePassowordNon.setEditable(false);
@@ -227,10 +226,12 @@ public class CreaInsegnante {
 			//verifica credenziali
 			public void mouseClicked(MouseEvent e) {
 				
-				boolean a, b, c, d, f; //per fare un controllo alla fine (va avanti nella prossima schermata
+				boolean a, b, c, d, f, h; 
 				String s;
 				controller.assignUsername(txtInserisciUsername.getText());
-				if(controller.u.username.length() < 8 || controller.u.username.length() > 25) { txtpnError1.setVisible(true); a = false; }
+				
+				if(controller.checkUsername()) { txtpnUsernameNonDisponibile.setVisible(true); h = false; } else {txtpnUsernameNonDisponibile.setVisible(false); h = true;}
+				if(controller.u.username.length() < 8 || controller.u.username.length() > 25) {txtpnError1.setVisible(true); a = false;}
 				else {txtpnError1.setVisible(false); a = true;}
 
 				controller.assignPassword(passwordField_1.getText());
@@ -253,11 +254,12 @@ public class CreaInsegnante {
 				
 				controller.assignMat(textMateria.getText());
 				
-				if(a && b && c && d && f)
+				if(a && b && c && d && f && h)
 				{
-					Menu next = new Menu(controller);
+					controller.inizializzaInsegnante();
+					MenuInsegnante next = new MenuInsegnante(controller);
 					frame.setVisible(false);
-					next.setVisible(true);
+					next.frame.setVisible(true);
 				}
 			}
 		});

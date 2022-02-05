@@ -16,7 +16,7 @@ import javax.swing.JEditorPane;
 
 public class MenuStudente {
 
-	private JFrame frame;
+	JFrame frame;
 	Controller controller;
 	private JTextField txtMen;
 	private JTextField txtPunti;
@@ -33,9 +33,6 @@ public class MenuStudente {
 		frame.setVisible(true);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);

@@ -1,10 +1,5 @@
-
-
-
-
 package GUI;
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import controller.Controller;
 import javax.swing.JTextField;
@@ -13,11 +8,10 @@ import javax.swing.JTextPane;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
-import javax.swing.border.MatteBorder;
-import javax.swing.UIManager;
-import javax.swing.border.LineBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class Accesso {
 
@@ -26,18 +20,13 @@ public class Accesso {
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JTextPane txtpnPassword;
-	/**
-	 * Create the application.
-	 */
+
 	public Accesso(Controller c) {
 		controller = c;
 		initialize();
 		frame.setVisible(true);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -76,11 +65,32 @@ public class Accesso {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(controller.login(textField.getText(), passwordField.getText())) {
-					Menu next = new Menu(controller);
+				
+				controller.login(textField.getText(), passwordField.getText()); 
+				
+				if(controller.i != null) {
+					MenuInsegnante next = new MenuInsegnante(controller);
 					frame.setVisible(false);
-					next.setVisible(true);
+					next.frame.setVisible(true); }
+				if(controller.s != null) {
+					MenuStudente next = new MenuStudente(controller);
+					frame.setVisible(false);
+					next.frame.setVisible(true);
 				}
+				else {
+					
+					JTextPane textError = new JTextPane();
+					textError.setVisible(true);
+					textError.setFont(new Font("Tahoma", Font.PLAIN, 11));
+					textError.setForeground(Color.RED);
+					textError.setBackground(Color.WHITE);
+					textError.setText("Username o password errati.");
+					textError.setEditable(false);
+					textError.setBounds(491, 286, 133, 52);
+					frame.getContentPane().add(textError);
+					
+				}
+				
 				
 			}
 		});
@@ -100,6 +110,27 @@ public class Accesso {
 		btnIscriviti.setFont(new Font("Dubai", Font.PLAIN, 12));
 		btnIscriviti.setBounds(396, 376, 85, 21);
 		frame.getContentPane().add(btnIscriviti);
+		
+		JLabel Settings = new JLabel("");
+		Settings.setToolTipText("Apri impostazioni DB");
+		Settings.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				DBSettings next = new DBSettings(controller);
+				frame.setVisible(false);
+				next.frame.setVisible(true);
+				
+			}
+		});
+		Settings.setIcon(new ImageIcon(Accesso.class.getResource("/Immagini/settings.png")));
+		Settings.setBounds(578, 11, 46, 36);
+		frame.getContentPane().add(Settings);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(Accesso.class.getResource("/Immagini/manabi.png")));
+		lblNewLabel.setBounds(10, 11, 228, 138);
+		frame.getContentPane().add(lblNewLabel);
+		
 	}
 
 	public void setVisible(boolean b) {

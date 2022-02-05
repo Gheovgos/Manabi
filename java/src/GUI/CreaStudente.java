@@ -20,7 +20,7 @@ public class CreaStudente {
 	
 	
 
-	private JFrame frame;
+	JFrame frame;
 	Controller controller;
 	private JTextField txtInserisciUsername;
 	private JPasswordField passwordField;
@@ -37,10 +37,10 @@ public class CreaStudente {
 	private JButton btnNewButton;
 	private JButton btnAvanti;
 	private JTextPane txtpnPasswordNonValida;
-	private JTextField textMateria;
 	private JTextPane txtpnCognomeNonValido;
 	private JTextPane txtpnNomeNonValido;
 	private JTextPane txtpnLePassowordNon;
+	private JTextPane txtpnUsernameNonDisponibile;
 
 	public CreaStudente(Controller c) {
 		controller = c;
@@ -187,6 +187,17 @@ public class CreaStudente {
 		frame.getContentPane().add(txtpnNomeNonValido);
 		txtpnNomeNonValido.setVisible(false);
 		
+		txtpnUsernameNonDisponibile = new JTextPane();
+		txtpnUsernameNonDisponibile.setFont(new Font("Tahoma", Font.PLAIN, 7));
+		txtpnUsernameNonDisponibile.setForeground(Color.RED);
+		txtpnUsernameNonDisponibile.setBackground(Color.WHITE);
+		txtpnUsernameNonDisponibile.setEditable(false);
+		txtpnUsernameNonDisponibile.setToolTipText("Prova a utilizzare un username diverso.");
+		txtpnUsernameNonDisponibile.setText("Username non disponibile.");
+		txtpnUsernameNonDisponibile.setBounds(341, 45, 75, 20);
+		frame.getContentPane().add(txtpnUsernameNonDisponibile);
+		txtpnUsernameNonDisponibile.setVisible(false);
+		
 		txtpnLePassowordNon = new JTextPane();
 		txtpnLePassowordNon.setFont(new Font("Tahoma", Font.PLAIN, 7));
 		txtpnLePassowordNon.setEditable(false);
@@ -201,9 +212,12 @@ public class CreaStudente {
 			//verifica credenziali
 			public void mouseClicked(MouseEvent e) {
 				
-				boolean a, b, c, d, f; //per fare un controllo alla fine (va avanti nella prossima schermata
+				boolean a, b, c, d, f, h; //per fare un controllo alla fine (va avanti nella prossima schermata
 				String s;
+				
 				controller.assignUsername(txtInserisciUsername.getText());
+				
+				if(controller.checkUsername()) { txtpnUsernameNonDisponibile.setVisible(true); h = false; } else {txtpnUsernameNonDisponibile.setVisible(false); h = true;}
 				if(controller.u.username.length() < 8 || controller.u.username.length() > 25) { txtpnError1.setVisible(true); a = false; }
 				else {txtpnError1.setVisible(false); a = true;}
 
@@ -228,6 +242,7 @@ public class CreaStudente {
 				
 				if(a && b && c && d && f)
 				{
+					controller.inizializzaStudente();
 					MenuStudente next = new MenuStudente(controller);
 					frame.setVisible(false);
 					next.setVisible(true);
