@@ -91,6 +91,9 @@ public class Controller {
 		return true;
 	}
 	
-	
+	public void inizializzaTest() {
+		TestDAO testDB = new TestDAO();
+		testDB.insertTest(t);
+	}
 	
 }

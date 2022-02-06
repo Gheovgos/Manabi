@@ -139,7 +139,8 @@ public class TestMaker {
 		JTextPane noId = new JTextPane();
 		noId.setBackground(Color.WHITE);
 		noId.setForeground(Color.RED);
-		noId.setEnabled(false);
+		noId.setEnabled(true);
+		noId.setVisible(false);
 		noId.setEditable(false);
 		noId.setFont(new Font("Tahoma", Font.PLAIN, 7));
 		noId.setText("Identificativo non disponibile");
@@ -152,7 +153,8 @@ public class TestMaker {
 		noTime.setText("Tempo svolgimento non valido");
 		noTime.setFont(new Font("Tahoma", Font.PLAIN, 7));
 		noTime.setForeground(Color.RED);
-		noTime.setEnabled(false);
+		noTime.setEnabled(true);
+		noTime.setVisible(false);
 		noTime.setEditable(false);
 		noTime.setBounds(241, 73, 89, 20);
 		frame.getContentPane().add(noTime);
@@ -163,7 +165,8 @@ public class TestMaker {
 		noName.setText("Il campo non pu\u00F2 essere vuoto!");
 		noName.setForeground(Color.RED);
 		noName.setFont(new Font("Tahoma", Font.PLAIN, 7));
-		noName.setEnabled(false);
+		noName.setEnabled(true);
+		noName.setVisible(false);
 		noName.setEditable(false);
 		noName.setBounds(241, 44, 89, 20);
 		frame.getContentPane().add(noName);
@@ -179,10 +182,11 @@ public class TestMaker {
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				
-				boolean a, b, c;
-				@SuppressWarnings("removal")
-				Integer s = new Integer(-1);
-				s = Integer.parseInt(textidTest.getText());
+				boolean a, b, c = true, esegui = true;
+
+				if(textTempo.getText().equals("")) {esegui = false;}
+				
+				if(esegui) {
 				String tempoMin = "00:14:59";
 				DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 				Date tempo = new Date(); 
@@ -197,20 +201,40 @@ public class TestMaker {
 					tMin = sdf.parse(tempoMin);
 				} catch (ParseException e1) {
 					e1.printStackTrace();
+				} 
+		
+					if(tempo.before(tMin)) {c = false; noTime.setVisible(true);} else { c = true; noTime.setVisible(false);  controller.t.tempo = tempo;}
+					
 				}
 				
-				if(!controller.checkTestId(s)) {a = false; noId.setEnabled(true);} else { a = true; noId.setEnabled(false); controller.t.id = s;}
+				if(textidTest.getText().equals("")) { 
+					Integer i = new Integer(-1);
+					Random rand = new Random();
+					i = rand.nextInt(999);
+					textidTest.setText(String.valueOf(i));
+					while(!controller.checkTestId(i)) {
+						i = rand.nextInt(999);
+						textidTest.setText(String.valueOf(i));					
+					}
+					controller.t.id = i;
+					a = true;
+				}
+					
+				if(!controller.checkTestId(Integer.parseInt(textidTest.getText()))) {a = false; noId.setVisible(true);} else {a = true; noId.setVisible(false); controller.t.id = Integer.parseInt(textidTest.getText());}
 				
-				if(textNome.getText().equals("")) {b = false; noName.setEnabled(true);} else {b = true; noName.setEnabled(false); controller.t.nomeTest = textNome.getText();}
+				if(textNome.getText().equals("")) {b = false; noName.setVisible(true);} else {b = true; noName.setVisible(false); controller.t.nomeTest = textNome.getText();}
 				
-				if(tempo.before(tMin)) {c = false; noTime.setEnabled(true);} else { c = true; noTime.setEnabled(false);  controller.t.tempo = tempo;}
+				
 				
 				if(a && b && c) {
 					
 					controller.t.creatoreTest = controller.i.username;
 					controller.t.materia = textField.getText();
 					controller.t.descrizione = dtrpnDescrizione.getText();
-					System.out.println("Salvato con successo");
+					controller.inizializzaTest();
+					ConfermaTest next =new  ConfermaTest(controller);
+					frame.setVisible(false);
+					next.frame.setVisible(true);
 				}
 				
 

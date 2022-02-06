@@ -2,6 +2,9 @@ package PostgresDAO;
 
 import Database.ConnessioneDatabase;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import modelli.*;
 
 public class TestDAO {
@@ -46,4 +49,39 @@ public class TestDAO {
 		}
 	}
 
+	public void insertTest(Test t) {
+		PreparedStatement insert;
+		DateFormat df = new SimpleDateFormat("HH:mm:ss");
+		if(t.tempo == null) {
+			try {
+				insert = connessione.prepareStatement(
+						"INSERT INTO TEST(ID_TEST, USERNAME_I, NOME_TEST, MATERIA_TEST, DESCRIZIONE) VALUES ('"+t.id+"','"+t.creatoreTest+"','"+t.nomeTest+"', '"+t.materia+"', '"+t.descrizione+"');");
+				
+			insert.executeUpdate();
+			return;
+			
+			} 
+			catch (SQLException e) {
+		
+				e.printStackTrace();
+				return;
+
+			}
+		}
+			
+		String time = df.format(t.tempo);
+		
+		try {
+			insert = connessione.prepareStatement(
+					"INSERT INTO TEST VALUES ('"+t.id+"','"+t.creatoreTest+"','"+t.nomeTest+"','"+time+"', '"+t.materia+"', '"+t.descrizione+"');");
+			
+		insert.executeUpdate();
+		
+		} 
+		catch (SQLException e) {
+	
+			e.printStackTrace();
+
+		}
+	}
 }
