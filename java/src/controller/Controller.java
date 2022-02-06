@@ -2,6 +2,10 @@ package controller;
 import modelli.*;
 import PostgresDAO.*;
 
+import java.sql.SQLException;
+
+import Database.*;
+
 public class Controller {
 	public String tmp;
 	public Insegnante i = null;
@@ -10,9 +14,25 @@ public class Controller {
 	public Test t;
 	public Risposta r;
 	public Utente u;
+	public ConnessioneDatabase connessione;
 	
 	public Controller() {
 		u = new Utente();
+	}
+	
+	public boolean checkConnection() throws SQLException {
+		
+		connessione = new ConnessioneDatabase();
+		try {
+			connessione.connection = ConnessioneDatabase.getInstance().getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(connessione.connection == null) return false;
+		
+		return true;
+		
 	}
 	
 	public void assignUsername(String s) {u.username = s;}
@@ -62,7 +82,14 @@ public class Controller {
 		studenteDB.insertStudente(s);
 	}
 
-	
+	public boolean checkTestId(Integer i) {
+		
+		TestDAO testDB = new TestDAO();
+		
+		if(i == testDB.getTestId(i)) return false;
+		
+		return true;
+	}
 	
 	
 	

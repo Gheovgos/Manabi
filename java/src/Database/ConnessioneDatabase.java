@@ -5,11 +5,11 @@ public class ConnessioneDatabase {
 
 	// ATTRIBUTI
 	private static ConnessioneDatabase instance;
-	private Connection connection = null;
-	private String nome = "postgres";
-	private String password = "admin";
-	private String url = "jdbc:postgresql://localhost:5432/Manabi";
-	private String driver = "org.postgresql.Driver";
+	public Connection connection = null;
+	public String nome = "postgres";
+	public String password = "admin";
+	public String url = "jdbc:postgresql://localhost:5432/Manabi";
+	public String driver = "org.postgresql.Driver";
 	String failed = "Connessione al Database fallita.";
 	String success = "Connessione al Database effettuata con successo.";
 

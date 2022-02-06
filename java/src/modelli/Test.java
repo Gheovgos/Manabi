@@ -1,15 +1,14 @@
 package modelli;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 
 public class Test {
 	
-	
-	String nomeTest, materia;
-	Timer tempo = new Timer();
+	public Integer id;
+	public String nomeTest, materia, creatoreTest, descrizione;
+	public Date tempo;
     List<Quesiti> quesitiTot = new ArrayList<Quesiti>();
     List<Studente> studentiCoinvolti = new ArrayList<Studente>();
-    List<Insegnante> creatoreTest = new ArrayList<Insegnante>();
 }
