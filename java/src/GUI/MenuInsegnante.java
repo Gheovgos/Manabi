@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.EventQueue;
 import controller.*;
+import modelli.Quesiti;
 import modelli.Test;
 
 import javax.swing.JFrame;
@@ -61,6 +62,16 @@ public class MenuInsegnante {
 		frame.getContentPane().add(correggiTest);
 		
 		JButton creaQuiz = new JButton("Crea Quesiti");
+		creaQuiz.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				controller.q = new Quesiti();
+				QuizMaker next = new QuizMaker(controller);   //USATO PER TEST -- DEVE PORTARE ALLA SCHERMATA "VEDI TEST MODIFICABILI\NON FINITI"
+				frame.setVisible(false);
+				next.frame.setVisible(true);
+			}
+		});
 		creaQuiz.setBounds(10, 230, 245, 23);
 		frame.getContentPane().add(creaQuiz);
 		

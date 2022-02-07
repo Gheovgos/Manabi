@@ -2,10 +2,10 @@ package modelli;
 
 public class Risposta {
 
-String risposta, commento;
+String risposta, commento, username_s;
 boolean isTrue;
 int idQuiz;
-float punteggio;
+float punteggioOttenuto;
 	
 
 

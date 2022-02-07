@@ -21,9 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.awt.Font;
 
-import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;  
-
 public class TestMaker {
 
 	Controller controller;
@@ -231,7 +228,7 @@ public class TestMaker {
 					controller.t.creatoreTest = controller.i.username;
 					controller.t.materia = textField.getText();
 					controller.t.descrizione = dtrpnDescrizione.getText();
-					controller.inizializzaTest();
+					//controller.inizializzaTest();
 					ConfermaTest next =new  ConfermaTest(controller);
 					frame.setVisible(false);
 					next.frame.setVisible(true);

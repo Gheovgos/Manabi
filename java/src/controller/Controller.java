@@ -95,5 +95,18 @@ public class Controller {
 		TestDAO testDB = new TestDAO();
 		testDB.insertTest(t);
 	}
+
+	public boolean checkQuizId(Integer i, boolean isOpen) {
+
+		
+		QuesitiDAO quesitiDB = new QuesitiDAO();
+		
+		if(i == quesitiDB.getQuizId(i, isOpen)) {return false;}
+		
+		return true;
+	}
 	
+	public void inizializzaQuesito() {
+		Quesiti q = new Quesiti();
+	}
 }

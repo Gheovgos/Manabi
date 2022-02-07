@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import controller.*;
+import modelli.Quesiti;
+
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -40,6 +42,7 @@ public class ConfermaTest {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 
 			public void mouseClicked(MouseEvent e) {
+				
 				MenuInsegnante back = new MenuInsegnante(controller);
 				frame.setVisible(false);
 				back.frame.setVisible(true);
@@ -50,6 +53,15 @@ public class ConfermaTest {
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Crea quesiti");
+		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				
+				controller.q = new Quesiti(); 
+				QuizMaker next = new QuizMaker(controller);
+				frame.setVisible(false);
+				next.frame.setVisible(true);
+			}
+		});
 		btnNewButton_1.setBounds(335, 212, 89, 23);
 		frame.getContentPane().add(btnNewButton_1);
 		
