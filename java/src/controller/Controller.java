@@ -109,4 +109,20 @@ public class Controller {
 	public void inizializzaQuesito() {
 		Quesiti q = new Quesiti();
 	}
+	
+	public boolean checkTestName(String name, String username) {
+		TestDAO testDB = new TestDAO();
+		
+		if(testDB.getTestName(name, username).equals(name)) 
+			return true;
+		
+		return false;
+		
+	}
+	
+	public void caricaTest(String nome_test, String username) {
+		TestDAO testDB = new TestDAO();
+		
+		t = testDB.returnTest(nome_test, username);			
+	}
 }

@@ -67,7 +67,7 @@ public class MenuInsegnante {
 			public void mouseClicked(MouseEvent e) {
 				
 				controller.q = new Quesiti();
-				QuizMaker next = new QuizMaker(controller);   //USATO PER TEST -- DEVE PORTARE ALLA SCHERMATA "VEDI TEST MODIFICABILI\NON FINITI"
+				VisualizzaTestCreati next = new VisualizzaTestCreati(controller);   //USATO PER TEST -- DEVE PORTARE ALLA SCHERMATA "VEDI TEST MODIFICABILI\NON FINITI"
 				frame.setVisible(false);
 				next.frame.setVisible(true);
 			}

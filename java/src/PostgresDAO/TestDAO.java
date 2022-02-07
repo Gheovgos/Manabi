@@ -25,8 +25,6 @@ public class TestDAO {
 		@SuppressWarnings("removal")
 		Integer s = new Integer(-1);
 		String cmp = String.valueOf(id);
-		System.out.println(cmp);
-		
 		try {
 			u = connessione.prepareStatement(
 					"SELECT id_test FROM TEST WHERE id_test = "+cmp);
@@ -81,6 +79,61 @@ public class TestDAO {
 		catch (SQLException e) {
 	
 			e.printStackTrace();
+
+		}
+	}
+	
+	public String getTestName(String name, String username) {
+		PreparedStatement u;
+		String result = "";
+		
+				
+		try {
+			u = connessione.prepareStatement(
+					"SELECT nome_test FROM TEST WHERE username_i = '"+username+"' AND nome_test = '"+name+"'");
+			
+		ResultSet rs = u.executeQuery();
+		while(rs.next()) {
+			result = rs.getString("nome_test");
+		}
+		rs.close();
+		
+		return result;
+
+		
+		} 
+		catch (SQLException e) {
+	
+			e.printStackTrace();
+			return "";
+
+		}
+	}
+	
+	public Test returnTest(String nome_test, String username) {
+		PreparedStatement g;
+		Test t = null;
+		try {
+			g = connessione.prepareStatement(
+					"SELECT *"
+					+ "FROM TEST "
+					+ "WHERE username_i ='"+username+"' AND nome_test = '"+nome_test+"'");
+			
+		ResultSet rs = g.executeQuery();
+		while(rs.next()) {
+			t = new Test(rs.getInt("id_test"), rs.getString("username_i"), rs.getString("nome_test"), rs.getString("materia_test"), rs.getString("descrizione"));
+
+	
+		}
+		rs.close();
+		return t;
+
+		
+		} 
+		catch (SQLException e) {
+	
+			e.printStackTrace();
+			return null;
 
 		}
 	}

@@ -410,11 +410,6 @@ public class QuizMaker {
 		slider.setBounds(135, 117, 200, 26);
 		frame.getContentPane().add(slider);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon(QuizMaker.class.getResource("/Immagini/polpo blu manabi.png")));
-		lblNewLabel.setBounds(594, 307, 244, 92);
-		frame.getContentPane().add(lblNewLabel);
-		
 		
 		
 		slider.addMouseListener(new MouseAdapter() {
