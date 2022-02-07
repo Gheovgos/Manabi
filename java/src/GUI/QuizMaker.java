@@ -22,6 +22,11 @@ import java.awt.event.MouseEvent;
 import java.util.Random;
 import javax.swing.JSlider;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.Font;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 public class QuizMaker {
 
 	JFrame frame;
@@ -36,6 +41,8 @@ public class QuizMaker {
 	private JTextField textC;
 	private JTextField textD;
 	private JTextField textE;
+	private JTextField inputMin;
+	private JTextField inputMax;
 
 	public QuizMaker(Controller c) {
 		controller = c;
@@ -55,6 +62,96 @@ public class QuizMaker {
 		textField.setBounds(150, 11, 86, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
+		
+		JTextPane txtpnQuesitoSalvaoPer = new JTextPane();
+		txtpnQuesitoSalvaoPer.setEditable(false);
+		txtpnQuesitoSalvaoPer.setText("Quesito salvao per il test INSERISCI TEST ");
+		txtpnQuesitoSalvaoPer.setVisible(false);
+		txtpnQuesitoSalvaoPer.setBounds(335, 353, 225, 20);
+		frame.getContentPane().add(txtpnQuesitoSalvaoPer);
+		
+		inputMin = new JTextField();
+		inputMin.setBounds(150, 56, 86, 20);
+		frame.getContentPane().add(inputMin);
+		inputMin.setColumns(10);
+		
+		inputMax = new JTextField();
+		inputMax.setBounds(150, 86, 86, 20);
+		frame.getContentPane().add(inputMax);
+		inputMax.setColumns(10);
+		
+		JTextPane warningMin = new JTextPane();
+		warningMin.setEditable(false);
+		warningMin.setForeground(Color.RED);
+		warningMin.setFont(new Font("Tahoma", Font.PLAIN, 7));
+		warningMin.setText("Inserisci il punteggio minimo!");
+		warningMin.setBounds(246, 56, 89, 20);
+		frame.getContentPane().add(warningMin);
+		warningMin.setVisible(false);
+		
+		JTextPane txtpnInserisciIlPunteggio = new JTextPane();
+		txtpnInserisciIlPunteggio.setText("Inserisci il punteggio massimo!");
+		txtpnInserisciIlPunteggio.setForeground(Color.RED);
+		txtpnInserisciIlPunteggio.setFont(new Font("Tahoma", Font.PLAIN, 7));
+		txtpnInserisciIlPunteggio.setEditable(false);
+		txtpnInserisciIlPunteggio.setBounds(246, 86, 89, 20);
+		frame.getContentPane().add(txtpnInserisciIlPunteggio);
+		txtpnInserisciIlPunteggio.setVisible(false);
+		
+		JTextPane txtpnInserisciIlPunteggio_1 = new JTextPane();
+		txtpnInserisciIlPunteggio_1.setText("Inserisci la risposta!");
+		txtpnInserisciIlPunteggio_1.setForeground(Color.RED);
+		txtpnInserisciIlPunteggio_1.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		txtpnInserisciIlPunteggio_1.setEditable(false);
+		txtpnInserisciIlPunteggio_1.setBounds(130, 162, 89, 20);
+		frame.getContentPane().add(txtpnInserisciIlPunteggio_1);
+		txtpnInserisciIlPunteggio_1.setVisible(false);
+		
+		JTextPane txtpnInserisciIlPunteggio_1_1 = new JTextPane();
+		txtpnInserisciIlPunteggio_1_1.setText("Inserisci la risposta!");
+		txtpnInserisciIlPunteggio_1_1.setForeground(Color.RED);
+		txtpnInserisciIlPunteggio_1_1.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		txtpnInserisciIlPunteggio_1_1.setEditable(false);
+		txtpnInserisciIlPunteggio_1_1.setBounds(130, 193, 89, 20);
+		frame.getContentPane().add(txtpnInserisciIlPunteggio_1_1);
+		txtpnInserisciIlPunteggio_1_1.setVisible(false);
+		
+		JTextPane txtpnInserisciIlPunteggio_1_2 = new JTextPane();
+		txtpnInserisciIlPunteggio_1_2.setText("Inserisci la risposta!");
+		txtpnInserisciIlPunteggio_1_2.setForeground(Color.RED);
+		txtpnInserisciIlPunteggio_1_2.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		txtpnInserisciIlPunteggio_1_2.setEditable(false);
+		txtpnInserisciIlPunteggio_1_2.setBounds(130, 224, 89, 20);
+		frame.getContentPane().add(txtpnInserisciIlPunteggio_1_2);
+		txtpnInserisciIlPunteggio_1_2.setVisible(false);
+		
+		JTextPane txtpnInserisciIlPunteggio_1_3 = new JTextPane();
+		txtpnInserisciIlPunteggio_1_3.setText("Inserisci la risposta!");
+		txtpnInserisciIlPunteggio_1_3.setForeground(Color.RED);
+		txtpnInserisciIlPunteggio_1_3.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		txtpnInserisciIlPunteggio_1_3.setEditable(false);
+		txtpnInserisciIlPunteggio_1_3.setBounds(130, 255, 89, 20);
+		frame.getContentPane().add(txtpnInserisciIlPunteggio_1_3);
+		txtpnInserisciIlPunteggio_1_3.setVisible(false);
+		
+		JTextPane txtpnInserisciIlPunteggio_1_4 = new JTextPane();
+		txtpnInserisciIlPunteggio_1_4.setText("Inserisci la risposta!");
+		txtpnInserisciIlPunteggio_1_4.setForeground(Color.RED);
+		txtpnInserisciIlPunteggio_1_4.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		txtpnInserisciIlPunteggio_1_4.setEditable(false);
+		txtpnInserisciIlPunteggio_1_4.setBounds(130, 286, 89, 20);
+		txtpnInserisciIlPunteggio_1_4.setVisible(false);
+		frame.getContentPane().add(txtpnInserisciIlPunteggio_1_4);
+		
+		JTextPane txtpnLaDomandaNon = new JTextPane();
+		txtpnLaDomandaNon.setText("La domanda non pu\u00F2 essere vuota!");
+		txtpnLaDomandaNon.setForeground(Color.RED);
+		txtpnLaDomandaNon.setEditable(false);
+		txtpnLaDomandaNon.setVisible(false);
+		
+		txtpnLaDomandaNon.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		txtpnLaDomandaNon.setBounds(848, 286, 116, 34);
+		frame.getContentPane().add(txtpnLaDomandaNon);
 		
 		JButton btnNewButton = new JButton("Genera");
 		btnNewButton.addMouseListener(new MouseAdapter() {
@@ -83,6 +180,12 @@ public class QuizMaker {
 		txtpnIdentificativoDomanda.setBounds(10, 11, 130, 34);
 		frame.getContentPane().add(txtpnIdentificativoDomanda);
 		
+		JEditorPane dtrpnLaDomandaVa = new JEditorPane();
+		dtrpnLaDomandaVa.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		dtrpnLaDomandaVa.setText("La domanda va qui\r\nprova");
+		dtrpnLaDomandaVa.setBounds(373, 11, 591, 263);
+		frame.getContentPane().add(dtrpnLaDomandaVa);
+		
 		btnNewButton_1 = new JButton("Indietro");
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -95,24 +198,54 @@ public class QuizMaker {
 		frame.getContentPane().add(btnNewButton_1);
 		
 		btnNewButton_2 = new JButton("Salva");
+		btnNewButton_2.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if(isOpen) {
+					boolean a, b, c;
+					controller.q.idTest = controller.t.id;
+					if(textField.getText().equals("")) {
+						
+						Integer i = new Integer(0);
+						Random rand = new Random();
+						i = rand.nextInt(999);
+						textField.setText(String.valueOf(i));
+						while(!controller.checkQuizId(i, isOpen)) {
+							i = rand.nextInt(999);
+							textField.setText(String.valueOf(i));					
+						}
+						controller.q.idQuesito = i;
+					}
+					
+					if(inputMin.getText().equals("")) {
+						a = false;
+						warningMin.setVisible(true);		
+					}
+					else {a = true; warningMin.setVisible(false); controller.q.punteggioMin = Float.parseFloat(inputMin.getText());}
+					
+					if(txtpnInserisciIlPunteggio.getText().equals("")) {
+						b = false;
+						txtpnInserisciIlPunteggio.setVisible(true);		
+					}
+					else {b = true; txtpnInserisciIlPunteggio.setVisible(false); controller.q.punteggioMax = Float.parseFloat(inputMax.getText());}
+					
+					if(dtrpnLaDomandaVa.getText().equals("")) {
+						c = false;
+						txtpnLaDomandaNon.setVisible(true);
+						
+					}
+					else {
+						c = true;
+						txtpnLaDomandaNon.setVisible(false); controller.q.domanda = dtrpnLaDomandaVa.getText();
+					}
+					
+					if(a && b && c)
+					txtpnQuesitoSalvaoPer.setVisible(false);
+					//salva nel DB
+				}
+			}
+		});
 		btnNewButton_2.setBounds(882, 353, 89, 23);
 		frame.getContentPane().add(btnNewButton_2);
-		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(new Float(0), new Float(-100), new Float(100), new Float(1)));
-		spinner.setBounds(150, 56, 86, 20);
-		frame.getContentPane().add(spinner);
-		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerNumberModel(new Float(0), new Float(-100), new Float(100), new Float(1)));
-		spinner_1.setBounds(150, 86, 86, 20);
-		frame.getContentPane().add(spinner_1);
-		
-		JEditorPane dtrpnLaDomandaVa = new JEditorPane();
-		dtrpnLaDomandaVa.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		dtrpnLaDomandaVa.setText("La domanda va qui\r\nprova");
-		dtrpnLaDomandaVa.setBounds(373, 11, 591, 263);
-		frame.getContentPane().add(dtrpnLaDomandaVa);
 		
 		textA = new JTextField();
 		textA.setBounds(10, 162, 86, 20);
@@ -276,6 +409,13 @@ public class QuizMaker {
 		slider.setBackground(Color.WHITE);
 		slider.setBounds(135, 117, 200, 26);
 		frame.getContentPane().add(slider);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon(QuizMaker.class.getResource("/Immagini/polpo blu manabi.png")));
+		lblNewLabel.setBounds(594, 307, 244, 92);
+		frame.getContentPane().add(lblNewLabel);
+		
+		
 		
 		slider.addMouseListener(new MouseAdapter() {
 			@Override
