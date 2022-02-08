@@ -20,11 +20,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.awt.Font;
-
+import modelli.*;
 public class TestMaker {
 
 	Controller controller;
 	JFrame frame;
+	int i = 0;
 	private JTextField textidTest;
 	private JTextField textNome;
 	private JTextField textTempo;
@@ -60,11 +61,11 @@ public class TestMaker {
 		txtpnIdentificativoTest.setBounds(10, 11, 104, 20);
 		frame.getContentPane().add(txtpnIdentificativoTest);
 		
+		
 		JButton btnCasual = new JButton("Genera");
 		btnCasual.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				@SuppressWarnings("removal")
-				Integer i = new Integer(0);
+				
 				Random rand = new Random();
 				i = rand.nextInt(999);
 				textidTest.setText(String.valueOf(i));
@@ -72,7 +73,6 @@ public class TestMaker {
 					i = rand.nextInt(999);
 					textidTest.setText(String.valueOf(i));					
 				}
-				controller.t.id = i;
 				
 			}
 		});
@@ -180,14 +180,15 @@ public class TestMaker {
 			public void mouseClicked(MouseEvent e) {
 				
 				boolean a, b, c = true, esegui = true;
+				Date tempo = new Date(); 
+				Date tMin = new Date();
 
 				if(textTempo.getText().equals("")) {esegui = false;}
 				
 				if(esegui) {
 				String tempoMin = "00:14:59";
 				DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-				Date tempo = new Date(); 
-				Date tMin = new Date();
+				
 
 				try {
 					tempo = sdf.parse(textTempo.getText());
@@ -205,7 +206,7 @@ public class TestMaker {
 				}
 				
 				if(textidTest.getText().equals("")) { 
-					Integer i = new Integer(-1);
+					
 					Random rand = new Random();
 					i = rand.nextInt(999);
 					textidTest.setText(String.valueOf(i));
@@ -213,25 +214,23 @@ public class TestMaker {
 						i = rand.nextInt(999);
 						textidTest.setText(String.valueOf(i));					
 					}
-					controller.t.id = i;
 					a = true;
 				}
 					
-				if(!controller.checkTestId(Integer.parseInt(textidTest.getText()))) {a = false; noId.setVisible(true);} else {a = true; noId.setVisible(false); controller.t.id = Integer.parseInt(textidTest.getText());}
+				if(!controller.checkTestId(Integer.parseInt(textidTest.getText()))) {a = false; noId.setVisible(true);} else {a = true; noId.setVisible(false);}
 				
-				if(textNome.getText().equals("")) {b = false; noName.setVisible(true);} else {b = true; noName.setVisible(false); controller.t.nomeTest = textNome.getText();}
+				if(textNome.getText().equals("")) {b = false; noName.setVisible(true);} else {b = true; noName.setVisible(false);}
 				
 				
 				
 				if(a && b && c) {
 					
-					controller.t.creatoreTest = controller.i.username;
-					controller.t.materia = textField.getText();
-					controller.t.descrizione = dtrpnDescrizione.getText();
+					controller.t = new Test(Integer.parseInt(textidTest.getText()), controller.i.username, textNome.getText(), textField.getText(), dtrpnDescrizione.getText());
+					controller.t.tempo = tempo;
 					//controller.inizializzaTest();
 					ConfermaTest next =new  ConfermaTest(controller);
 					frame.setVisible(false);
-					next.frame.setVisible(true);
+					next.frmManabi.setVisible(true);
 				}
 				
 

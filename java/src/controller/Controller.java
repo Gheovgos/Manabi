@@ -3,6 +3,7 @@ import modelli.*;
 import PostgresDAO.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import Database.*;
 
@@ -106,18 +107,21 @@ public class Controller {
 		return true;
 	}
 	
-	public void inizializzaQuesito() {
-		Quesiti q = new Quesiti();
+	public void inizializzaQuesito(int idq, int idT, float pMin, float pMax, String d, String[] r, boolean isOpen) {
+		Quesiti q = new Quesiti(idq, idT, pMin, pMax, d, r, isOpen);
+		QuesitiDAO quesitiDB = new QuesitiDAO();
+		
+		quesitiDB.insertQuesito(idq, idT, pMin, pMax, d, r, isOpen);
+	
+		
 	}
 	
-	public boolean checkTestName(String name, String username) {
+	public String[] returnTestName(String username) {
 		TestDAO testDB = new TestDAO();
+		String[] rs = testDB.returnTestName(username);
 		
-		if(testDB.getTestName(name, username).equals(name)) 
-			return true;
-		
-		return false;
-		
+		return rs;
+				
 	}
 	
 	public void caricaTest(String nome_test, String username) {
@@ -125,4 +129,5 @@ public class Controller {
 		
 		t = testDB.returnTest(nome_test, username);			
 	}
+	
 }

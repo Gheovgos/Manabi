@@ -4,6 +4,7 @@ import Database.ConnessioneDatabase;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import modelli.*;
 
@@ -83,33 +84,40 @@ public class TestDAO {
 		}
 	}
 	
-	public String getTestName(String name, String username) {
-		PreparedStatement u;
-		String result = "";
+	public String[] returnTestName(String username) {
 		
-				
+		PreparedStatement g;
+		String[] t = new String[100];
+		int i;
 		try {
-			u = connessione.prepareStatement(
-					"SELECT nome_test FROM TEST WHERE username_i = '"+username+"' AND nome_test = '"+name+"'");
+			g = connessione.prepareStatement(
+					"SELECT nome_test FROM TEST WHERE username_i = '"+username+"'");
 			
-		ResultSet rs = u.executeQuery();
-		while(rs.next()) {
-			result = rs.getString("nome_test");
+		ResultSet rs = g.executeQuery();
+		for(i = 0; rs.next(); i++) {
+			t[i] = rs.getString("nome_test");
+	
 		}
-		rs.close();
+		String[] tmp = new String[i];
+		for(int z = 0; z < i; z++) {
+			tmp[z] = t[z];
+		}
 		
-		return result;
+		rs.close();
+		return tmp;
 
 		
 		} 
 		catch (SQLException e) {
 	
 			e.printStackTrace();
-			return "";
+			return null;
 
 		}
 	}
+		
 	
+
 	public Test returnTest(String nome_test, String username) {
 		PreparedStatement g;
 		Test t = null;
@@ -137,4 +145,5 @@ public class TestDAO {
 
 		}
 	}
+
 }

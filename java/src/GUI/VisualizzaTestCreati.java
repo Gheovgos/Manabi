@@ -14,12 +14,15 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.AbstractListModel;
+import javax.swing.DefaultComboBoxModel;
 
 public class VisualizzaTestCreati {
 
 	JFrame frame;
 	Controller controller;
-	private JTextField textField;
+	
+	
 
 	public VisualizzaTestCreati(Controller c) {
 		controller = c;
@@ -28,24 +31,17 @@ public class VisualizzaTestCreati {
 	}
 
 	private void initialize() {
+		String[] rs = controller.returnTestName(controller.i.username);
+		int max = rs.length;
+		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 432, 224);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JTextPane txtpnTestCreati = new JTextPane();
-		txtpnTestCreati.setText("Cerca test:");
-		txtpnTestCreati.setEditable(false);
-		txtpnTestCreati.setBounds(10, 11, 215, 20);
-		frame.getContentPane().add(txtpnTestCreati);
-		
-		textField = new JTextField();
-		textField.setBounds(10, 42, 285, 20);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
-		
 		JButton btnNewButton = new JButton("Modifica");
+		
 		btnNewButton.setBounds(317, 151, 89, 23);
 		frame.getContentPane().add(btnNewButton);
 		
@@ -62,28 +58,31 @@ public class VisualizzaTestCreati {
 		btnNewButton_1.setBounds(10, 151, 89, 23);
 		frame.getContentPane().add(btnNewButton_1);
 		
-		JTextPane txtpnToglimi = new JTextPane();
-		txtpnToglimi.setText("");
-		txtpnToglimi.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		txtpnToglimi.setEditable(false);
-		txtpnToglimi.setBounds(10, 73, 396, 64);
-		frame.getContentPane().add(txtpnToglimi);
+		JComboBox comboBox = new JComboBox();
+		comboBox.setMaximumRowCount(max);
+		comboBox.setModel(new DefaultComboBoxModel(rs));
+		comboBox.setSelectedIndex(0);
+		comboBox.setBounds(10, 61, 396, 22);
+		frame.getContentPane().add(comboBox);
 		
-		JButton btnNewButton_2 = new JButton("Cerca");
-		btnNewButton_2.addMouseListener(new MouseAdapter() {
+		JTextPane txtpnSelezionaIlTest = new JTextPane();
+		txtpnSelezionaIlTest.setEditable(false);
+		txtpnSelezionaIlTest.setText("Seleziona il test da modificare:");
+		txtpnSelezionaIlTest.setBounds(10, 11, 238, 20);
+		frame.getContentPane().add(txtpnSelezionaIlTest);
+		
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			
 			public void mouseClicked(MouseEvent e) {
-				boolean trovato = controller.checkTestName(textField.getText(), controller.i.username);
-				if(trovato) {
-					txtpnToglimi.setText("controller");
-					controller.caricaTest(textField.getText(), controller.i.username); 
-				}
-				else {
-					txtpnToglimi.setText("Nessun risultato per "+textField.getText());
-				}
-				
+				int selected = 0;
+				selected = comboBox.getSelectedIndex();
+				controller.caricaTest(rs[selected], controller.i.username);
+				QuizMaker next = new QuizMaker(controller);
+				frame.setVisible(false);
+				next.frame.setVisible(true);
 			}
 		});
-		btnNewButton_2.setBounds(317, 41, 89, 23);
-		frame.getContentPane().add(btnNewButton_2);
+		
+		
 	}
 }

@@ -19,6 +19,7 @@ import javax.swing.SpinnerListModel;
 import javax.swing.border.TitledBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.util.Random;
 import javax.swing.JSlider;
 import java.awt.event.MouseMotionAdapter;
@@ -34,7 +35,7 @@ public class QuizMaker {
 	private JTextField textField;
 	private JButton btnNewButton_1;
 	private JButton btnNewButton_2;
-	boolean isOpen = true;
+	boolean isOpen = true, ta = false, tb = false, tc = false, td = false, te = false;
 	int nRisposte = 1;
 	private JTextField textA;
 	private JTextField textB;
@@ -43,6 +44,8 @@ public class QuizMaker {
 	private JTextField textE;
 	private JTextField inputMin;
 	private JTextField inputMax;
+	int i;
+	private JTextField txtLaRispostaGiusta;
 
 	public QuizMaker(Controller c) {
 		controller = c;
@@ -59,15 +62,14 @@ public class QuizMaker {
 		frame.getContentPane().setLayout(null);
 		
 		textField = new JTextField();
-		textField.setBounds(150, 11, 86, 20);
+		textField.setBounds(150, 25, 86, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		JTextPane txtpnQuesitoSalvaoPer = new JTextPane();
 		txtpnQuesitoSalvaoPer.setEditable(false);
-		txtpnQuesitoSalvaoPer.setText("Quesito salvao per il test INSERISCI TEST ");
 		txtpnQuesitoSalvaoPer.setVisible(false);
-		txtpnQuesitoSalvaoPer.setBounds(335, 353, 225, 20);
+		txtpnQuesitoSalvaoPer.setBounds(350, 353, 225, 20);
 		frame.getContentPane().add(txtpnQuesitoSalvaoPer);
 		
 		inputMin = new JTextField();
@@ -79,6 +81,8 @@ public class QuizMaker {
 		inputMax.setBounds(150, 86, 86, 20);
 		frame.getContentPane().add(inputMax);
 		inputMax.setColumns(10);
+		
+		JSlider slider = new JSlider();
 		
 		JTextPane warningMin = new JTextPane();
 		warningMin.setEditable(false);
@@ -98,50 +102,25 @@ public class QuizMaker {
 		frame.getContentPane().add(txtpnInserisciIlPunteggio);
 		txtpnInserisciIlPunteggio.setVisible(false);
 		
-		JTextPane txtpnInserisciIlPunteggio_1 = new JTextPane();
-		txtpnInserisciIlPunteggio_1.setText("Inserisci la risposta!");
-		txtpnInserisciIlPunteggio_1.setForeground(Color.RED);
-		txtpnInserisciIlPunteggio_1.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		txtpnInserisciIlPunteggio_1.setEditable(false);
-		txtpnInserisciIlPunteggio_1.setBounds(130, 162, 89, 20);
-		frame.getContentPane().add(txtpnInserisciIlPunteggio_1);
-		txtpnInserisciIlPunteggio_1.setVisible(false);
+		JTextPane minSupMax = new JTextPane();
+		minSupMax.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		minSupMax.setForeground(Color.RED);
+		minSupMax.setToolTipText("Prova a mettere un valore minore al massimo, od ad aumentare il massimo.");
+		minSupMax.setText("Il punteggio minimo supera il massimo!");
+		minSupMax.setVisible(false);
+		minSupMax.setEditable(false);
+		minSupMax.setBounds(362, 286, 141, 34);
+		frame.getContentPane().add(minSupMax);
 		
-		JTextPane txtpnInserisciIlPunteggio_1_1 = new JTextPane();
-		txtpnInserisciIlPunteggio_1_1.setText("Inserisci la risposta!");
-		txtpnInserisciIlPunteggio_1_1.setForeground(Color.RED);
-		txtpnInserisciIlPunteggio_1_1.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		txtpnInserisciIlPunteggio_1_1.setEditable(false);
-		txtpnInserisciIlPunteggio_1_1.setBounds(130, 193, 89, 20);
-		frame.getContentPane().add(txtpnInserisciIlPunteggio_1_1);
-		txtpnInserisciIlPunteggio_1_1.setVisible(false);
-		
-		JTextPane txtpnInserisciIlPunteggio_1_2 = new JTextPane();
-		txtpnInserisciIlPunteggio_1_2.setText("Inserisci la risposta!");
-		txtpnInserisciIlPunteggio_1_2.setForeground(Color.RED);
-		txtpnInserisciIlPunteggio_1_2.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		txtpnInserisciIlPunteggio_1_2.setEditable(false);
-		txtpnInserisciIlPunteggio_1_2.setBounds(130, 224, 89, 20);
-		frame.getContentPane().add(txtpnInserisciIlPunteggio_1_2);
-		txtpnInserisciIlPunteggio_1_2.setVisible(false);
-		
-		JTextPane txtpnInserisciIlPunteggio_1_3 = new JTextPane();
-		txtpnInserisciIlPunteggio_1_3.setText("Inserisci la risposta!");
-		txtpnInserisciIlPunteggio_1_3.setForeground(Color.RED);
-		txtpnInserisciIlPunteggio_1_3.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		txtpnInserisciIlPunteggio_1_3.setEditable(false);
-		txtpnInserisciIlPunteggio_1_3.setBounds(130, 255, 89, 20);
-		frame.getContentPane().add(txtpnInserisciIlPunteggio_1_3);
-		txtpnInserisciIlPunteggio_1_3.setVisible(false);
-		
-		JTextPane txtpnInserisciIlPunteggio_1_4 = new JTextPane();
-		txtpnInserisciIlPunteggio_1_4.setText("Inserisci la risposta!");
-		txtpnInserisciIlPunteggio_1_4.setForeground(Color.RED);
-		txtpnInserisciIlPunteggio_1_4.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		txtpnInserisciIlPunteggio_1_4.setEditable(false);
-		txtpnInserisciIlPunteggio_1_4.setBounds(130, 286, 89, 20);
-		txtpnInserisciIlPunteggio_1_4.setVisible(false);
-		frame.getContentPane().add(txtpnInserisciIlPunteggio_1_4);
+		JTextPane warningMul = new JTextPane();
+		warningMul.setToolTipText("Non puoi lasciare risposte vuote.");
+		warningMul.setText("Inserisci tutte le risposte!");
+		warningMul.setForeground(Color.RED);
+		warningMul.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		warningMul.setEditable(false);
+		warningMul.setBounds(190, 193, 89, 51);
+		warningMul.setVisible(false);
+		frame.getContentPane().add(warningMul);
 		
 		JTextPane txtpnLaDomandaNon = new JTextPane();
 		txtpnLaDomandaNon.setText("La domanda non pu\u00F2 essere vuota!");
@@ -158,8 +137,7 @@ public class QuizMaker {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				@SuppressWarnings("removal")
-				Integer i = new Integer(0);
+				
 				Random rand = new Random();
 				i = rand.nextInt(999);
 				textField.setText(String.valueOf(i));
@@ -167,22 +145,21 @@ public class QuizMaker {
 					i = rand.nextInt(999);
 					textField.setText(String.valueOf(i));					
 				}
-				controller.q.idQuesito = i;
+				
 			}
 		});
-		btnNewButton.setBounds(246, 10, 89, 23);
+		btnNewButton.setBounds(246, 24, 89, 23);
 		frame.getContentPane().add(btnNewButton);
 		
 		JTextPane txtpnIdentificativoDomanda = new JTextPane();
 		txtpnIdentificativoDomanda.setText("Identificativo domanda");
 		txtpnIdentificativoDomanda.setBackground(new Color(255, 255, 255));
 		txtpnIdentificativoDomanda.setEditable(false);
-		txtpnIdentificativoDomanda.setBounds(10, 11, 130, 34);
+		txtpnIdentificativoDomanda.setBounds(10, 25, 130, 20);
 		frame.getContentPane().add(txtpnIdentificativoDomanda);
 		
 		JEditorPane dtrpnLaDomandaVa = new JEditorPane();
 		dtrpnLaDomandaVa.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		dtrpnLaDomandaVa.setText("La domanda va qui\r\nprova");
 		dtrpnLaDomandaVa.setBounds(373, 11, 591, 263);
 		frame.getContentPane().add(dtrpnLaDomandaVa);
 		
@@ -201,11 +178,11 @@ public class QuizMaker {
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if(isOpen) {
-					boolean a, b, c;
-					controller.q.idTest = controller.t.id;
-					if(textField.getText().equals("")) {
-						
-						Integer i = new Integer(0);
+					
+					String[] r = new String[0];
+					boolean a, b, c, d;
+					
+					if(textField.getText().equals("")) {						
 						Random rand = new Random();
 						i = rand.nextInt(999);
 						textField.setText(String.valueOf(i));
@@ -213,20 +190,19 @@ public class QuizMaker {
 							i = rand.nextInt(999);
 							textField.setText(String.valueOf(i));					
 						}
-						controller.q.idQuesito = i;
 					}
 					
 					if(inputMin.getText().equals("")) {
 						a = false;
 						warningMin.setVisible(true);		
 					}
-					else {a = true; warningMin.setVisible(false); controller.q.punteggioMin = Float.parseFloat(inputMin.getText());}
+					else {a = true; warningMin.setVisible(false);}
 					
-					if(txtpnInserisciIlPunteggio.getText().equals("")) {
+					if(inputMax.getText().equals("")) {
 						b = false;
 						txtpnInserisciIlPunteggio.setVisible(true);		
 					}
-					else {b = true; txtpnInserisciIlPunteggio.setVisible(false); controller.q.punteggioMax = Float.parseFloat(inputMax.getText());}
+					else {b = true; txtpnInserisciIlPunteggio.setVisible(false);}
 					
 					if(dtrpnLaDomandaVa.getText().equals("")) {
 						c = false;
@@ -235,12 +211,129 @@ public class QuizMaker {
 					}
 					else {
 						c = true;
-						txtpnLaDomandaNon.setVisible(false); controller.q.domanda = dtrpnLaDomandaVa.getText();
+						txtpnLaDomandaNon.setVisible(false);
 					}
 					
-					if(a && b && c)
-					txtpnQuesitoSalvaoPer.setVisible(false);
-					//salva nel DB
+					if(Float.parseFloat(inputMin.getText()) >= Float.parseFloat(inputMax.getText())) {minSupMax.setVisible(true); d = false;} else {minSupMax.setVisible(false); d = true;}
+					
+					if(isOpen && a && b && c && d) {
+						controller.inizializzaQuesito(i, controller.t.id, Float.parseFloat(inputMin.getText()),  Float.parseFloat(inputMax.getText()), dtrpnLaDomandaVa.getText(), r, isOpen);
+						txtpnQuesitoSalvaoPer.setText("Quesito aperto salvato per il test \""+controller.t.nomeTest+"\"");
+						txtpnQuesitoSalvaoPer.setVisible(true); }
+					
+				}
+				else {
+					boolean a, b, c, d;
+					
+					String[] r = new String[5];
+					Arrays.fill(r, "");
+					if(textField.getText().equals("")) {
+						
+						
+						Random rand = new Random();
+						i = rand.nextInt(999);
+						textField.setText(String.valueOf(i));
+						while(!controller.checkQuizId(i, isOpen)) {
+							i = rand.nextInt(999);
+							textField.setText(String.valueOf(i));					
+						}
+						
+					}
+					
+					if(inputMin.getText().equals("")) {
+						a = false;
+						warningMin.setVisible(true);		
+					}
+					else {a = true; warningMin.setVisible(false);}
+					
+					if(inputMax.getText().equals("")) {
+						b = false;
+						txtpnInserisciIlPunteggio.setVisible(true);		
+					}
+					else {b = true; txtpnInserisciIlPunteggio.setVisible(false);}
+					
+					if(dtrpnLaDomandaVa.getText().equals("")) {
+						c = false;
+						txtpnLaDomandaNon.setVisible(true);
+						
+					}
+					else {
+						c = true;
+						txtpnLaDomandaNon.setVisible(false);
+					}
+					
+					if(Float.parseFloat(inputMin.getText()) >= Float.parseFloat(inputMax.getText())) {minSupMax.setVisible(true); d = false;} else {minSupMax.setVisible(false); d = true;}
+					
+					if(slider.getValue() == 1) {isOpen = true;}
+					
+					if(slider.getValue() == 2) {
+						boolean f;
+						if(textA.getText().equals("") || textB.getText().equals("")) {
+							warningMul.setVisible(true);
+							f = false;
+						}
+						else {warningMul.setVisible(false); f = true; r[0] = textA.getText(); r[1] = textB.getText();  }
+						
+						if(!isOpen && a && b && c && d && f) {
+							controller.inizializzaQuesito(i, controller.t.id, Float.parseFloat(inputMin.getText()),  Float.parseFloat(inputMax.getText()), dtrpnLaDomandaVa.getText(), r, isOpen);
+							warningMul.setVisible(false);
+							txtpnQuesitoSalvaoPer.setText("Quesito multiplo salvato per il test \""+controller.t.nomeTest+"\"");
+							txtpnQuesitoSalvaoPer.setVisible(true); 
+							//salva nel DB
+						}						
+					}
+					if(slider.getValue() == 3) {
+						boolean f;
+						if(textA.getText().equals("") || textB.getText().equals("") || textC.getText().equals("")) {
+							warningMul.setVisible(true);
+							f = false;
+						}
+						else {warningMul.setVisible(false); f = true; r[0] = textA.getText(); r[1] = textB.getText(); r[2] = textC.getText();}
+						
+						if(!isOpen && a && b && c && d && f) {
+							controller.inizializzaQuesito(i, controller.t.id, Float.parseFloat(inputMin.getText()),  Float.parseFloat(inputMax.getText()), dtrpnLaDomandaVa.getText(), r, isOpen);
+							warningMul.setVisible(false);
+							txtpnQuesitoSalvaoPer.setText("Quesito multiplo salvato per il test \""+controller.t.nomeTest+"\"");
+							txtpnQuesitoSalvaoPer.setVisible(true); 
+							//salva nel DB
+						}						
+					}
+					
+					if(slider.getValue() == 4) {
+						boolean f;
+						if(textA.getText().equals("") || textB.getText().equals("") || textC.getText().equals("") || textD.getText().equals("")) {
+							warningMul.setVisible(true);
+							f = false;
+						}
+						else {warningMul.setVisible(false); f = true; r[0] = textA.getText(); r[1] = textB.getText(); r[2] = textC.getText(); r[3] = textD.getText();}
+						
+						if(!isOpen && a && b && c && d && f) {
+							controller.inizializzaQuesito(i, controller.t.id, Float.parseFloat(inputMin.getText()),  Float.parseFloat(inputMax.getText()), dtrpnLaDomandaVa.getText(), r, isOpen);
+							warningMul.setVisible(false);
+							txtpnQuesitoSalvaoPer.setText("Quesito multiplo salvato per il test \""+controller.t.nomeTest+"\"");
+							txtpnQuesitoSalvaoPer.setVisible(true); 
+							//salva nel DB
+						}						
+					}
+					
+					if(slider.getValue() == 5) {
+						boolean f;
+						if(textA.getText().equals("") || textB.getText().equals("") || textC.getText().equals("") || textD.getText().equals("") || textE.getText().equals("")) {
+							warningMul.setVisible(true);
+							f = false;
+						}
+						else {warningMul.setVisible(false); f = true; r[0] = textA.getText(); r[1] = textB.getText(); r[2] = textC.getText(); r[3] = textD.getText(); r[4] = textE.getText();}
+						
+						if(!isOpen && a && b && c && d && f) {
+							controller.inizializzaQuesito(i, controller.t.id, Float.parseFloat(inputMin.getText()),  Float.parseFloat(inputMax.getText()), dtrpnLaDomandaVa.getText(), r, isOpen);
+							warningMul.setVisible(false);
+							txtpnQuesitoSalvaoPer.setText("Quesito multiplo salvato per il test \""+controller.t.nomeTest+"\"");
+							txtpnQuesitoSalvaoPer.setVisible(true); 
+							//salva nel DB
+						}						
+					}
+					
+					
 				}
 			}
 		});
@@ -339,7 +432,16 @@ public class QuizMaker {
 		textnRisposte.setBounds(229, 136, 20, 20);
 		frame.getContentPane().add(textnRisposte);
 		
-		JSlider slider = new JSlider();
+		txtLaRispostaGiusta = new JTextField();
+		txtLaRispostaGiusta.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		txtLaRispostaGiusta.setEditable(false);
+		txtLaRispostaGiusta.setVisible(false);
+		txtLaRispostaGiusta.setText("La risposta giusta va inserita nella risposta A.");
+		txtLaRispostaGiusta.setBounds(130, 162, 171, 20);
+		frame.getContentPane().add(txtLaRispostaGiusta);
+		txtLaRispostaGiusta.setColumns(10);
+		
+		
 		slider.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
@@ -350,7 +452,9 @@ public class QuizMaker {
 					
 					textC.setVisible(false); txtpnC.setVisible(false); textD.setVisible(false); txtpnD.setVisible(false); 
 					
-					textE.setVisible(false); txtpnE.setVisible(false);  isOpen = true;
+					textE.setVisible(false); txtpnE.setVisible(false);  isOpen = true; txtLaRispostaGiusta.setVisible(false);
+					
+					ta = false; tb = false; tc = false; td = false; te = false;
 					
 					textnRisposte.setText(String.valueOf(slider.getValue()));
 				}
@@ -362,7 +466,9 @@ public class QuizMaker {
 					
 					textC.setVisible(false); txtpnC.setVisible(false); textD.setVisible(false); txtpnD.setVisible(false); 
 					
-					textE.setVisible(false); txtpnE.setVisible(false); isOpen = false;
+					textE.setVisible(false); txtpnE.setVisible(false); isOpen = false; txtLaRispostaGiusta.setVisible(true);
+					
+					ta = true; tb = true; tc = false; td = false; te = false;
 					
 					textnRisposte.setText(String.valueOf(slider.getValue()));
 				}
@@ -372,7 +478,9 @@ public class QuizMaker {
 					
 					textC.setVisible(true); txtpnC.setVisible(true); textD.setVisible(false); txtpnD.setVisible(false); 
 					
-					textE.setVisible(false); txtpnE.setVisible(false); isOpen = false;
+					textE.setVisible(false); txtpnE.setVisible(false); isOpen = false; txtLaRispostaGiusta.setVisible(true);
+					
+					ta = true; tb = true; tc = true; td = false; te = false;
 					
 					textnRisposte.setText(String.valueOf(slider.getValue()));
 				}
@@ -383,7 +491,9 @@ public class QuizMaker {
 					
 					textC.setVisible(true); txtpnC.setVisible(true); textD.setVisible(true); txtpnD.setVisible(true); 
 					
-					textE.setVisible(false); txtpnE.setVisible(false); isOpen = false;
+					textE.setVisible(false); txtpnE.setVisible(false); isOpen = false; txtLaRispostaGiusta.setVisible(true);
+					
+					ta = true; tb = true; tc = true; td = true; te = false;
 					
 					textnRisposte.setText(String.valueOf(slider.getValue()));
 					
@@ -395,7 +505,9 @@ public class QuizMaker {
 					
 					textC.setVisible(true); txtpnC.setVisible(true); textD.setVisible(true); txtpnD.setVisible(true); 
 					
-					textE.setVisible(true); txtpnE.setVisible(true); isOpen = false;
+					textE.setVisible(true); txtpnE.setVisible(true); isOpen = false; txtLaRispostaGiusta.setVisible(true);
+					
+					ta = true; tb = true; tc = true; td = true; te = true;
 					
 					textnRisposte.setText(String.valueOf(slider.getValue()));
 					
@@ -410,6 +522,14 @@ public class QuizMaker {
 		slider.setBounds(135, 117, 200, 26);
 		frame.getContentPane().add(slider);
 		
+		JTextPane txtpnStaiCreandoQuesiti = new JTextPane();
+		txtpnStaiCreandoQuesiti.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		txtpnStaiCreandoQuesiti.setText("Stai creando quesiti per il Test \""+controller.t.nomeTest+"\"");
+		txtpnStaiCreandoQuesiti.setEditable(false);
+		txtpnStaiCreandoQuesiti.setBounds(10, 3, 225, 20);
+		frame.getContentPane().add(txtpnStaiCreandoQuesiti);
+		
+		
 		
 		
 		slider.addMouseListener(new MouseAdapter() {
@@ -422,7 +542,9 @@ public class QuizMaker {
 					
 					textC.setVisible(false); txtpnC.setVisible(false); textD.setVisible(false); txtpnD.setVisible(false); 
 					
-					textE.setVisible(false); txtpnE.setVisible(false); 
+					textE.setVisible(false); txtpnE.setVisible(false); txtLaRispostaGiusta.setVisible(false);
+					
+					ta = false; tb = false; tc = false; td = false; te = false;
 					
 					textnRisposte.setText(String.valueOf(slider.getValue()));
 				}
@@ -434,7 +556,9 @@ public class QuizMaker {
 					
 					textC.setVisible(false); txtpnC.setVisible(false); textD.setVisible(false); txtpnD.setVisible(false); 
 					
-					textE.setVisible(false); txtpnE.setVisible(false); 
+					textE.setVisible(false); txtpnE.setVisible(false); txtLaRispostaGiusta.setVisible(true);
+					
+					ta = true; tb = true; tc = false; td = false; te = false;
 					
 					textnRisposte.setText(String.valueOf(slider.getValue()));
 				}
@@ -444,7 +568,9 @@ public class QuizMaker {
 					
 					textC.setVisible(true); txtpnC.setVisible(true); textD.setVisible(false); txtpnD.setVisible(false); 
 					
-					textE.setVisible(false); txtpnE.setVisible(false); 
+					textE.setVisible(false); txtpnE.setVisible(false); txtLaRispostaGiusta.setVisible(true);
+					
+					ta = true; tb = true; tc = true; td = false; te = false;
 					
 					textnRisposte.setText(String.valueOf(slider.getValue()));
 				}
@@ -455,7 +581,9 @@ public class QuizMaker {
 					
 					textC.setVisible(true); txtpnC.setVisible(true); textD.setVisible(true); txtpnD.setVisible(true); 
 					
-					textE.setVisible(false); txtpnE.setVisible(false); 
+					textE.setVisible(false); txtpnE.setVisible(false); txtLaRispostaGiusta.setVisible(true);
+					
+					ta = true; tb = true; tc = true; td = true; te = false;
 					
 					textnRisposte.setText(String.valueOf(slider.getValue()));
 					
@@ -467,7 +595,9 @@ public class QuizMaker {
 					
 					textC.setVisible(true); txtpnC.setVisible(true); textD.setVisible(true); txtpnD.setVisible(true); 
 					
-					textE.setVisible(true); txtpnE.setVisible(true); 
+					textE.setVisible(true); txtpnE.setVisible(true); txtLaRispostaGiusta.setVisible(true);
+					
+					ta = true; tb = true; tc = true; td = true; te = true;
 					
 					textnRisposte.setText(String.valueOf(slider.getValue()));
 					

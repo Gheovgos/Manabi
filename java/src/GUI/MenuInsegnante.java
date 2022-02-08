@@ -42,7 +42,6 @@ public class MenuInsegnante {
 		JButton creaTest = new JButton("Crea nuovo Test");
 		creaTest.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				controller.t = new Test();
 				TestMaker testmaker = new TestMaker(controller);
 				frame.setVisible(false);
 				testmaker.frame.setVisible(true);
@@ -65,9 +64,8 @@ public class MenuInsegnante {
 		creaQuiz.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				controller.q = new Quesiti();
-				VisualizzaTestCreati next = new VisualizzaTestCreati(controller);   //USATO PER TEST -- DEVE PORTARE ALLA SCHERMATA "VEDI TEST MODIFICABILI\NON FINITI"
+								
+				VisualizzaTestCreati next = new VisualizzaTestCreati(controller); 
 				frame.setVisible(false);
 				next.frame.setVisible(true);
 			}

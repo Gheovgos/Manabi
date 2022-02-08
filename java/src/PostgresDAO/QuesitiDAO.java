@@ -1,6 +1,8 @@
 package PostgresDAO;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import Database.ConnessioneDatabase;
 import modelli.*;
@@ -72,4 +74,48 @@ public class QuesitiDAO {
 		}
 		
 	}
+
+	public void insertQuesito(int idq, int idT, float pMin, float pMax, String d, String[] r, boolean isOpen) {
+		if(isOpen) {
+			PreparedStatement insert;
+			
+				try {
+					insert = connessione.prepareStatement(
+							"INSERT INTO QUESITO_APERTO VALUES ('"+idq+"','"+idT+"','"+pMin+"', '"+pMax+"', '"+d+"');");
+					
+				insert.executeUpdate();
+				return;
+				
+				} 
+				catch (SQLException e) {
+			
+					e.printStackTrace();
+					return;
+
+				}
+			
+			}	
+			else {
+				
+				PreparedStatement insert;
+				
+					try {
+						insert = connessione.prepareStatement(
+								"INSERT INTO QUESITO_MULTIPLO VALUES ('"+idq+"','"+idT+"','"+pMax+"', '"+pMin+"', '"+d+"', '"+r[0]+"','"+r[1]+"','"+r[2]+"','"+r[3]+"','"+r[4]+"');");
+						
+					insert.executeUpdate();
+					return;
+					
+					} 
+					catch (SQLException e) {
+				
+						e.printStackTrace();
+						return;
+
+					}
+				
+				}
+				
+			}
+
 }
