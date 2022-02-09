@@ -58,6 +58,37 @@ public class InsegnanteDAO {
 		
 	}
 	
+	public Insegnante login(String username)
+	{
+		PreparedStatement login;
+		try {
+			login = connessione.prepareStatement(
+					"SELECT * "
+					+ "FROM Insegnante "
+					+ "WHERE username_i ='"+username+"'");
+			
+		ResultSet rs = login.executeQuery();
+		while(rs.next()) {
+			i = new Insegnante(rs.getString("Username_i"), rs.getString("password_i"), rs.getString("nome"), rs.getString("cognome"));
+
+	
+		}
+		rs.close();
+		return i;
+
+		
+		} 
+		catch (SQLException e) {
+	
+			e.printStackTrace();
+			return null;
+
+		}
+		
+
+		
+	}
+	
 	public String getUsername(String username) {
 		PreparedStatement u;
 		String s = null;

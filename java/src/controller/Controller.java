@@ -108,7 +108,7 @@ public class Controller {
 	}
 	
 	public void inizializzaQuesito(int idq, int idT, float pMin, float pMax, String d, String[] r, boolean isOpen) {
-		Quesiti q = new Quesiti(idq, idT, pMin, pMax, d, r, isOpen);
+		q = new Quesiti(idq, idT, pMin, pMax, d, r, isOpen);
 		QuesitiDAO quesitiDB = new QuesitiDAO();
 		
 		quesitiDB.insertQuesito(idq, idT, pMin, pMax, d, r, isOpen);
@@ -118,7 +118,15 @@ public class Controller {
 	
 	public String[] returnTestName(String username) {
 		TestDAO testDB = new TestDAO();
-		String[] rs = testDB.returnTestName(username);
+		String[] rs = testDB.returnUnsolvedTestName(username);
+		
+		return rs;
+				
+	}
+	
+	public String[] returnTestName(String username, int a) {
+		TestDAO testDB = new TestDAO();
+		String[] rs = testDB.returnSolvedTestName(username);
 		
 		return rs;
 				
@@ -130,4 +138,59 @@ public class Controller {
 		t = testDB.returnTest(nome_test, username);			
 	}
 	
+	public void caricaTest(String nome_test) {
+		TestDAO testDB = new TestDAO();
+		
+		t = testDB.returnTest(nome_test);			
+	}
+
+	public float ottieniPunteggioStudente(String username_s) {
+		StudenteDAO studenteDB = new StudenteDAO();
+		
+		return studenteDB.getPunt(username_s);
+		
+	}
+	
+	public String[] returnCompTestName(String username) {
+		TestDAO testDB = new TestDAO();
+		String[] rs = testDB.returnCompTestName(username);
+		
+		return rs;
+				
+	}
+
+	public void addCorrezione(String username_i, String username_s, int id) {
+		TestDAO testDB = new TestDAO();
+		
+		testDB.aggiornaCorrezione(username_i, username_s, id);
+	}
+	
+	public void caricaInsegnante(String username) {
+		InsegnanteDAO insegnanteDB = new InsegnanteDAO();
+		
+		i = insegnanteDB.login(username);
+	}
+	
+	public void caricaQuesitoA(int idTest) {
+		QuesitiDAO quesitiDB = new QuesitiDAO();
+		
+		q = quesitiDB.returnQuiz(idTest, true);
+		//VEDI SE RESTITUISCE UN SOLO QUIZ -> ALTRIMENTI METTILO IN T ARRAY
+		//FAI LO STESSO CON SOTTO
+	}
+	
+	public void caricaQuesitoM(int idTest) {
+		
+	}
+	
+	public int setIndexTest(int idTest) {
+		QuesitiDAO quesitiDB = new QuesitiDAO();
+		int n = 0;
+		
+		
+		n = quesitiDB.nQuizA(idTest) + quesitiDB.nQuizM(idTest);
+		
+		t.quesiti = new ArrayList<Quesiti>();
+		return n;
+	}
 }

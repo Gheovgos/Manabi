@@ -49,10 +49,11 @@ public class MenuStudente {
   frmManabi.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 13));
   frmManabi.getContentPane().setBackground(Color.WHITE);
   frmManabi.setBounds(100, 100, 648, 600);
-  frmManabi.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+  frmManabi.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
   frmManabi.getContentPane().setLayout(null);
   
   txtTotali = new JTextField();
+  txtTotali.setEditable(false);
   txtTotali.setText("TOTALI");
   txtTotali.setFont(new Font("Corbel", Font.BOLD, 18));
   txtTotali.setColumns(10);
@@ -104,6 +105,13 @@ public class MenuStudente {
   frmManabi.getContentPane().add(btnElencoCorsiSeguiti_1);
   
   JButton btnElencoCorsiSeguiti_1_1_1 = new JButton("");
+  btnElencoCorsiSeguiti_1_1_1.addMouseListener(new MouseAdapter() {
+  	public void mouseClicked(MouseEvent e) {
+  		VisualizzaTestDaCompilare next = new VisualizzaTestDaCompilare(controller);
+  		next.frame.setVisible(true);
+  		frmManabi.setVisible(false);
+  	}
+  });
   btnElencoCorsiSeguiti_1_1_1.setIcon(new ImageIcon(MenuStudente.class.getResource("/Immagini/sfondi/studente3.png")));
   btnElencoCorsiSeguiti_1_1_1.setFont(new Font("Candara", Font.PLAIN, 13));
   btnElencoCorsiSeguiti_1_1_1.setBounds(20, 112, 141, 315);
@@ -117,6 +125,7 @@ public class MenuStudente {
   frmManabi.getContentPane().add(btnElencoCorsiSeguiti_1_1);
   
   txtCercaCorso = new JTextField();
+  txtCercaCorso.setEditable(false);
   txtCercaCorso.setHorizontalAlignment(SwingConstants.CENTER);
   txtCercaCorso.setForeground(new Color(112, 128, 144));
   txtCercaCorso.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -127,6 +136,7 @@ public class MenuStudente {
   txtCercaCorso.setColumns(10);
   
   txtElencoCorsiSeguiti = new JTextField();
+  txtElencoCorsiSeguiti.setEditable(false);
   txtElencoCorsiSeguiti.setText("COMPILA TEST");
   txtElencoCorsiSeguiti.setLocation(new Point(0, 12));
   txtElencoCorsiSeguiti.setHorizontalAlignment(SwingConstants.CENTER);
@@ -137,6 +147,7 @@ public class MenuStudente {
   frmManabi.getContentPane().add(txtElencoCorsiSeguiti);
   
   txtProfiloUtente = new JTextField();
+  txtProfiloUtente.setEditable(false);
   txtProfiloUtente.setText("PROFILO UTENTE");
   txtProfiloUtente.setLocation(new Point(0, 12));
   txtProfiloUtente.setHorizontalAlignment(SwingConstants.CENTER);
@@ -147,6 +158,7 @@ public class MenuStudente {
   frmManabi.getContentPane().add(txtProfiloUtente);
   
   txtTestSvolti = new JTextField();
+  txtTestSvolti.setEditable(false);
   txtTestSvolti.setText("TEST SVOLTI");
   txtTestSvolti.setLocation(new Point(0, 12));
   txtTestSvolti.setHorizontalAlignment(SwingConstants.CENTER);
@@ -157,14 +169,17 @@ public class MenuStudente {
   frmManabi.getContentPane().add(txtTestSvolti);
   
   txtMettiPuntiSce = new JTextField();
-  txtMettiPuntiSce.setText("METTI PUNTI SCE");
+  txtMettiPuntiSce.setEditable(false);
+  txtMettiPuntiSce.setHorizontalAlignment(SwingConstants.CENTER);
+  txtMettiPuntiSce.setText(String.valueOf(controller.ottieniPunteggioStudente(controller.s.username)));
   txtMettiPuntiSce.setBorder(null);
   txtMettiPuntiSce.setOpaque(false);
-  txtMettiPuntiSce.setBounds(472, 511, 86, 39);
+  txtMettiPuntiSce.setBounds(514, 505, 39, 39);
   frmManabi.getContentPane().add(txtMettiPuntiSce);
   txtMettiPuntiSce.setColumns(10);
   
   txtUltimoTestSvolto = new JTextField();
+  txtUltimoTestSvolto.setEditable(false);
   txtUltimoTestSvolto.setHorizontalAlignment(SwingConstants.CENTER);
   txtUltimoTestSvolto.setText("ULTIMO TEST SVOLTO");
   txtUltimoTestSvolto.setBackground(SystemColor.controlHighlight);

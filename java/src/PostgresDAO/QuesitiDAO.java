@@ -1,8 +1,6 @@
 package PostgresDAO;
 
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import Database.ConnessioneDatabase;
 import modelli.*;
@@ -118,4 +116,95 @@ public class QuesitiDAO {
 				
 			}
 
+	public Quesiti returnQuiz(int id, boolean isOpen) {
+		PreparedStatement g;
+		Quesiti q = null;
+		
+		if(isOpen) {
+			String[] r = new String[0];
+			r[0] = "";
+			
+			try {
+				g = connessione.prepareStatement(
+						"SELECT * FROM QUESITO_APERTO WHERE id_test = "+id);
+				
+			ResultSet rs = g.executeQuery();
+			while(rs.next()) {
+				q = new Quesiti(rs.getInt("id_a"), rs.getInt("id_test"), rs.getFloat("punteggio_min"), rs.getFloat("punteggio_max"), rs.getString("domanda"), r ,isOpen);
+
+		
+			}
+			rs.close();
+			return q;
+
+			
+			} 
+			catch (SQLException e) {
+		
+				e.printStackTrace();
+				return null;
+
+			}
+			
+		}
+		else {
+			return null;
+		}
+	}
+
+	public int nQuizA(int id) {
+		PreparedStatement g;
+		int n = 0;
+		
+		try {
+			g = connessione.prepareStatement(
+					"select count(id_test) from quesito_aperto where id_test = "+id);
+			
+		ResultSet rs = g.executeQuery();
+		while(rs.next()) {
+			n = rs.getInt("count");
+
+	
+		}
+		rs.close();
+		return n;
+
+		
+		} 
+		catch (SQLException e) {
+	
+			e.printStackTrace();
+			return 0;
+
+		}
+		
+	}
+	
+	public int nQuizM(int id) {
+		PreparedStatement g;
+		int n = 0;
+		
+		try {
+			g = connessione.prepareStatement(
+					"select count(id_test) from quesito_multiplo where id_test = "+id);
+			
+		ResultSet rs = g.executeQuery();
+		while(rs.next()) {
+			n = rs.getInt("count");
+
+	
+		}
+		rs.close();
+		return n;
+
+		
+		} 
+		catch (SQLException e) {
+	
+			e.printStackTrace();
+			return 0;
+
+		}
+		
+	}
 }

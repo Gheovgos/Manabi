@@ -93,4 +93,32 @@ public class StudenteDAO {
 			e.printStackTrace();
 		}		
 	}
+	
+	public float getPunt(String username) {
+		PreparedStatement u;
+		float punteggio = 0;
+		
+		try {
+			u = connessione.prepareStatement(
+					"SELECT punteggio_tot "
+					+ "FROM Studente "
+					+ "WHERE username_s ='"+username+"'");
+			
+		ResultSet rs = u.executeQuery();
+		while(rs.next()) {
+			punteggio = rs.getFloat("punteggio_tot");
+		}
+		rs.close();
+		return punteggio;
+
+		
+		} 
+		catch (SQLException e) {
+	
+			e.printStackTrace();
+			return 0;
+
+		}
+		
+	}
 }

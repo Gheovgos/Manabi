@@ -40,6 +40,46 @@ public class VisualizzaTestCreati {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setMaximumRowCount(max);
+		comboBox.setModel(new DefaultComboBoxModel(rs));
+		comboBox.setSelectedIndex(-1);
+		comboBox.setBounds(10, 61, 396, 22);
+		frame.getContentPane().add(comboBox);
+		
+		JTextPane txtpnSelezionaIlTest = new JTextPane();
+		txtpnSelezionaIlTest.setEditable(false);
+		txtpnSelezionaIlTest.setText("Seleziona il test da modificare:");
+		txtpnSelezionaIlTest.setBounds(10, 11, 238, 20);
+		frame.getContentPane().add(txtpnSelezionaIlTest);
+		
+		JTextPane txtpnNonPuoiCreare = new JTextPane();
+		txtpnNonPuoiCreare.setText("Non puoi creare quesiti a test gi\u00E0 esistenti. Creane uno!");
+		txtpnNonPuoiCreare.setEditable(false);
+		txtpnNonPuoiCreare.setVisible(false);
+		txtpnNonPuoiCreare.setBounds(10, 30, 396, 23);
+		frame.getContentPane().add(txtpnNonPuoiCreare);
+		
+		JButton btnNewButton_2 = new JButton("Crea");
+		btnNewButton_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				TestMaker next = new TestMaker(controller);
+				
+				frame.setVisible(false);
+				next.frame.setVisible(true);
+			}
+		});
+		btnNewButton_2.setBounds(164, 94, 89, 23);
+		frame.getContentPane().add(btnNewButton_2);
+		btnNewButton_2.setVisible(false);
+		btnNewButton_2.setEnabled(false);
+		
+		
+		/*if(CONTROLLA CONDIZIONE) {
+			txtpnNonPuoiCreare.setVisible(true); btnNewButton_2.setVisible(true); btnNewButton_2.setEnabled(true); txtpnSelezionaIlTest.setVisible(false); comboBox.setVisible(false);					
+		}*/
+		
 		JButton btnNewButton = new JButton("Modifica");
 		
 		btnNewButton.setBounds(317, 151, 89, 23);
@@ -57,19 +97,6 @@ public class VisualizzaTestCreati {
 		});
 		btnNewButton_1.setBounds(10, 151, 89, 23);
 		frame.getContentPane().add(btnNewButton_1);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setMaximumRowCount(max);
-		comboBox.setModel(new DefaultComboBoxModel(rs));
-		comboBox.setSelectedIndex(0);
-		comboBox.setBounds(10, 61, 396, 22);
-		frame.getContentPane().add(comboBox);
-		
-		JTextPane txtpnSelezionaIlTest = new JTextPane();
-		txtpnSelezionaIlTest.setEditable(false);
-		txtpnSelezionaIlTest.setText("Seleziona il test da modificare:");
-		txtpnSelezionaIlTest.setBounds(10, 11, 238, 20);
-		frame.getContentPane().add(txtpnSelezionaIlTest);
 		
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			

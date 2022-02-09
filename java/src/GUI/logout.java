@@ -13,6 +13,8 @@ import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 import javax.swing.SwingConstants;
 import java.awt.Frame;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class logout {
 
@@ -38,6 +40,12 @@ public class logout {
 		frmManabi.getContentPane().setLayout(null);
 		
 		JButton btnNewButton_3_1 = new JButton("YUP");
+		btnNewButton_3_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+		});
 		btnNewButton_3_1.setBackground(new Color(100, 149, 237));
 		btnNewButton_3_1.setBorder(null);
 		btnNewButton_3_1.setFont(new Font("Candara", Font.PLAIN, 13));
@@ -45,6 +53,21 @@ public class logout {
 		frmManabi.getContentPane().add(btnNewButton_3_1);
 		
 		JButton btnNewButton_3 = new JButton("NAH");
+		btnNewButton_3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(controller.i != null) {
+					
+					frmManabi.setVisible(false);
+					
+				}
+				else {
+					
+					frmManabi.setVisible(false);
+					
+				}
+			}
+		});
 		btnNewButton_3.setBorder(null);
 		btnNewButton_3.setBackground(new Color(100, 149, 237));
 		btnNewButton_3.setFont(new Font("Candara", Font.PLAIN, 13));
