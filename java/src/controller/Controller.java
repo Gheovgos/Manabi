@@ -171,26 +171,19 @@ public class Controller {
 		i = insegnanteDB.login(username);
 	}
 	
-	public void caricaQuesitoA(int idTest) {
+	public void caricaQuesitiTest(int idTest) {
 		QuesitiDAO quesitiDB = new QuesitiDAO();
+		int[] quantity;
 		
-		q = quesitiDB.returnQuiz(idTest, true);
-		//VEDI SE RESTITUISCE UN SOLO QUIZ -> ALTRIMENTI METTILO IN T ARRAY
-		//FAI LO STESSO CON SOTTO
+		quantity = quesitiDB.getQuizId(idTest);
+				
+		t.quesiti = new Quesiti[quantity.length];
+		
+		for(int i = 0; i < quantity.length; i++) {
+			t.quesiti[i] = quesitiDB.returnQuiz(quantity[i], idTest);	
+		}
 	}
 	
-	public void caricaQuesitoM(int idTest) {
-		
-	}
 	
-	public int setIndexTest(int idTest) {
-		QuesitiDAO quesitiDB = new QuesitiDAO();
-		int n = 0;
-		
-		
-		n = quesitiDB.nQuizA(idTest) + quesitiDB.nQuizM(idTest);
-		
-		t.quesiti = new ArrayList<Quesiti>();
-		return n;
-	}
+	
 }

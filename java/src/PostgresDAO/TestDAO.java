@@ -3,6 +3,7 @@ package PostgresDAO;
 import Database.ConnessioneDatabase;
 import java.sql.*;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -228,6 +229,7 @@ public class TestDAO {
 	public Test returnTest(String nome_test, String username) {
 		PreparedStatement g;
 		Test t = null;
+		Time time;
 		try {
 			g = connessione.prepareStatement(
 					"SELECT *"
@@ -237,6 +239,29 @@ public class TestDAO {
 		ResultSet rs = g.executeQuery();
 		while(rs.next()) {
 			t = new Test(rs.getInt("id_test"), rs.getString("username_i"), rs.getString("nome_test"), rs.getString("materia_test"), rs.getString("descrizione"));
+			time = rs.getTime("tempo_svolgimento"); 
+			if(time != null) {
+				String tmp = time.toString();
+				
+				DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		
+				try {
+					t.tempo = sdf.parse(tmp);
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+			}
+			else {
+				String tmp = "00:00:00";
+				
+				DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		
+				try {
+					t.tempo = sdf.parse(tmp);
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+			}
 
 	
 		}
@@ -256,6 +281,7 @@ public class TestDAO {
 	public Test returnTest(String nome_test) {
 		PreparedStatement g;
 		Test t = null;
+		Time time;
 		try {
 			g = connessione.prepareStatement(
 					"SELECT *"
@@ -265,7 +291,29 @@ public class TestDAO {
 		ResultSet rs = g.executeQuery();
 		while(rs.next()) {
 			t = new Test(rs.getInt("id_test"), rs.getString("username_i"), rs.getString("nome_test"), rs.getString("materia_test"), rs.getString("descrizione"));
-
+			time = rs.getTime("tempo_svolgimento"); 
+			if(time != null) {
+				String tmp = time.toString();
+				
+				DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		
+				try {
+					t.tempo = sdf.parse(tmp);
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+			}
+			else {
+				String tmp = "00:00:00";
+				
+				DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		
+				try {
+					t.tempo = sdf.parse(tmp);
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+				}
+			}
 	
 		}
 		rs.close();

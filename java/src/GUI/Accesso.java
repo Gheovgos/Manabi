@@ -5,13 +5,21 @@ import controller.Controller;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
 import javax.swing.JLabel;
+
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.SystemColor;
@@ -47,12 +55,50 @@ public class Accesso {
 		textField.setBounds(259, 290, 222, 19);
 		frmManabi.getContentPane().add(textField);
 		textField.setColumns(10);
+		
+		
 
 	
 		
 		passwordField = new JPasswordField();
+		int condition = JPasswordField.WHEN_FOCUSED;
+		  InputMap iMap = passwordField.getInputMap(condition);
+		  ActionMap aMap = passwordField.getActionMap();
+		  String enter = "enter";
+		  iMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), enter);
+		  aMap.put(enter, new AbstractAction() {
+
+			     public void actionPerformed(ActionEvent arg0) {
+			    	 controller.login(textField.getText(), passwordField.getText()); 
+						
+						if(controller.i != null) {
+							MenuInsegnante next = new MenuInsegnante(controller);
+							frmManabi.setVisible(false);
+							next.frame.setVisible(true); }
+						if(controller.s != null) {
+							MenuStudente next = new MenuStudente(controller);
+							frmManabi.setVisible(false);
+							next.frmManabi.setVisible(true);
+						}
+						else {
+							
+							JTextPane textError = new JTextPane();
+							textError.setVisible(true);
+							textError.setFont(new Font("Tahoma", Font.PLAIN, 11));
+							textError.setForeground(Color.RED);
+							textError.setBackground(Color.WHITE);
+							textError.setText("Username o password errati.");
+							textError.setEditable(false);
+							textError.setBounds(491, 286, 133, 52);
+							frmManabi.getContentPane().add(textError);
+							
+						}
+			        
+			     }
+			  });
 		passwordField.setBounds(259, 319, 222, 19);
 		frmManabi.getContentPane().add(passwordField);
+		
 		
 		JTextPane txtpnUsername = new JTextPane();
 		txtpnUsername.setOpaque(false);

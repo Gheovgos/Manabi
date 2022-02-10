@@ -16,6 +16,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.text.SimpleDateFormat;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
@@ -42,6 +43,10 @@ public class VisualizzaTestDaCompilare {
 		controller.caricaInsegnante(controller.t.creatoreTest);
 		
 		
+		String tempo = controller.t.tempo.toString();
+		tempo = tempo.substring(11, 19);
+		
+		
 		JComboBox comboBox = new JComboBox();	
 		
 		comboBox.setMaximumRowCount(max);
@@ -64,13 +69,13 @@ public class VisualizzaTestDaCompilare {
 		JTextPane txtpnAutore = new JTextPane();
 		txtpnAutore.setText("Autore: "+controller.i.cognome+" "+controller.i.nome);
 		txtpnAutore.setEditable(false);
-		txtpnAutore.setBounds(227, 96, 140, 20);
+		txtpnAutore.setBounds(227, 96, 140, 43);
 		frame.getContentPane().add(txtpnAutore);
 		
 		JTextPane txtpnTempo = new JTextPane();
-		txtpnTempo.setText("Tempo: "+controller.t.tempo);
+		txtpnTempo.setText("Tempo: "+tempo);
 		txtpnTempo.setEditable(false);
-		txtpnTempo.setBounds(377, 96, 165, 20);
+		txtpnTempo.setBounds(377, 96, 200, 20);
 		frame.getContentPane().add(txtpnTempo);
 		
 		JEditorPane editorDescrizione = new JEditorPane();
@@ -106,8 +111,13 @@ public class VisualizzaTestDaCompilare {
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int selected = 0;
+				selected = comboBox.getSelectedIndex();
+				controller.caricaTest(rs[selected]);
+				controller.caricaInsegnante(controller.t.creatoreTest);
 				
-				controller.addCorrezione(controller.i.username, controller.s.username, controller.t.id);
+				//controller.addCorrezione(controller.i.username, controller.s.username, controller.t.id);
+				
 				CompilaTest next = new CompilaTest(controller);
 				frame.setVisible(false);
 				next.frame.setVisible(true);
@@ -120,10 +130,14 @@ public class VisualizzaTestDaCompilare {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				int selected = 0;
+				
 				selected = comboBox.getSelectedIndex();
 				controller.caricaTest(rs[selected]);
+				controller.caricaInsegnante(controller.t.creatoreTest);
+				String tempo = controller.t.tempo.toString();
+				tempo = tempo.substring(11, 19);
 				textNomeTest.setText("Nome test: "+controller.t.nomeTest); editorDescrizione.setText(controller.t.descrizione);
-				txtpnAutore.setText("Autore: "+controller.i.cognome+" "+controller.i.nome); txtpnTempo.setText("Tempo: "+controller.t.tempo); txtpnMateria.setText("Materia: "+controller.t.materia);
+				txtpnAutore.setText("Autore: "+controller.i.cognome+" "+controller.i.nome); txtpnTempo.setText("Tempo: "+tempo); txtpnMateria.setText("Materia: "+controller.t.materia);
 			}
 		});
 		
@@ -133,8 +147,11 @@ public class VisualizzaTestDaCompilare {
 				int selected = 0;
 				selected = comboBox.getSelectedIndex();
 				controller.caricaTest(rs[selected]);
+				controller.caricaInsegnante(controller.t.creatoreTest);
+				String tempo = controller.t.tempo.toString();
+				tempo = tempo.substring(11, 19);
 				textNomeTest.setText("Nome test: "+controller.t.nomeTest); editorDescrizione.setText(controller.t.descrizione);
-				txtpnAutore.setText("Autore: "+controller.i.cognome+" "+controller.i.nome); txtpnTempo.setText("Tempo: "+controller.t.tempo); txtpnMateria.setText("Materia: "+controller.t.materia);
+				txtpnAutore.setText("Autore: "+controller.i.cognome+" "+controller.i.nome); txtpnTempo.setText("Tempo: "+tempo); txtpnMateria.setText("Materia: "+controller.t.materia);
 				
 			}
 		});
