@@ -17,7 +17,6 @@ import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Timer;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.event.FocusAdapter;
@@ -33,15 +32,11 @@ public class CompilaTest {
 	String[] rs;
 	private JTextField Ttempo;
 	
-    private long startTime = -1;
-    private long duration;
-	
 	public CompilaTest(Controller c) {
 		controller = c;
 		controller.caricaQuesitiTest(controller.t.id);
 		initialize();
 		frame.setVisible(true);
-		duration = controller.t.tempo.getTime();
 		
 	}
 
@@ -52,7 +47,8 @@ public class CompilaTest {
 		rs = controller.t.quesiti[progresso].risposte;
 		
 		rs = shuffle(rs);
-		//Timer timer = new Timer(duration);
+		
+		//vedi timer
 		
 		
 		
@@ -86,7 +82,7 @@ public class CompilaTest {
 		frame.getContentPane().add(titoloTest);
 		
 		JTextPane textDomanda = new JTextPane();
-		textDomanda.setText(controller.t.quesiti[0].domanda);
+		textDomanda.setText(controller.t.quesiti[progresso].domanda);
 		
 		textDomanda.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		textDomanda.setBounds(20, 42, 769, 145);
@@ -178,15 +174,11 @@ public class CompilaTest {
 			public void mouseClicked(MouseEvent e) {
 				
 				if(controller.t.quesiti[progresso].isOpen) {
-					boolean a;
-					if(textRispostaAperta.getText().equals("")) {
-						warnNoRisp.setVisible(true); a = false;
-					}
-					else {
-						warnNoRisp.setVisible(false); a = true;
-					}
-					if(a) {
+					
+					
+						controller.insertRisposta(controller.t.quesiti[progresso].idQuesito, textRispostaAperta.getText(), 0, controller.t.quesiti[progresso].isOpen);
 						progresso++;
+						
 						//salva nel DB						
 						progressBar.setValue(progresso);
 						if(checkProgress(progresso, lunghezzaTest)) {
@@ -195,6 +187,7 @@ public class CompilaTest {
 							TestCompletato next = new TestCompletato(controller);	
 						}
 						
+						textDomanda.setText(controller.t.quesiti[progresso].domanda);
 						if(controller.t.quesiti[progresso].isOpen) {
 							A.setVisible(false); B.setVisible(false); C.setVisible(false); D.setVisible(false); E.setVisible(false);
 							textRispostaAperta.setVisible(true);}
@@ -215,7 +208,7 @@ public class CompilaTest {
 							textRispostaAperta.setVisible(false); 						
 						}
 					}
-				}
+				
 				else {
 					boolean a;
 					if(!(B.isSelected() || C.isSelected() || D.isSelected() || E.isSelected() || A.isSelected())) {
@@ -226,6 +219,12 @@ public class CompilaTest {
 					}
 					
 					if(a) {
+						if(A.isSelected()) {controller.insertRisposta(controller.t.quesiti[progresso].idQuesito, A.getText(), 0, controller.t.quesiti[progresso].isOpen);}
+						else if(B.isSelected()) {controller.insertRisposta(controller.t.quesiti[progresso].idQuesito, A.getText(), 0, controller.t.quesiti[progresso].isOpen);}
+						else if(C.isSelected()) {controller.insertRisposta(controller.t.quesiti[progresso].idQuesito, C.getText(), 0, controller.t.quesiti[progresso].isOpen);}
+						else if(D.isSelected()) {controller.insertRisposta(controller.t.quesiti[progresso].idQuesito, D.getText(), 0, controller.t.quesiti[progresso].isOpen);}
+						else if(E.isSelected()) {controller.insertRisposta(controller.t.quesiti[progresso].idQuesito, E.getText(), 0, controller.t.quesiti[progresso].isOpen);}
+						
 						progresso++;
 						progressBar.setValue(progresso);
 						if(checkProgress(progresso, lunghezzaTest)) {
@@ -233,6 +232,7 @@ public class CompilaTest {
 							frame.setVisible(false);
 							TestCompletato next = new TestCompletato(controller);	
 						}
+						textDomanda.setText(controller.t.quesiti[progresso].domanda);
 						//SALVA NEL DB
 						
 						if(controller.t.quesiti[progresso].isOpen) {

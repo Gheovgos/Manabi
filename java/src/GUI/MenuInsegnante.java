@@ -11,6 +11,8 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 public class MenuInsegnante {
 
@@ -48,12 +50,16 @@ public class MenuInsegnante {
 			}
 		});
 		creaTest.setToolTipText("Crea un nuovo test");
-		creaTest.setBounds(10, 221, 613, 93);
+		creaTest.setBounds(314, 58, 135, 445);
 		frame.getContentPane().add(creaTest);
 		
 		JButton vediTest = new JButton("Visualizza Test creati");
+		vediTest.setBackground(Color.PINK);
+		vediTest.setBorderPainted(false);
+		vediTest.setVerticalAlignment(SwingConstants.BOTTOM);
+		vediTest.setIcon(new ImageIcon(MenuInsegnante.class.getResource("/Immagini/photo5776222051361732461.jpg")));
 		vediTest.setToolTipText("Apre una finestra in cui puoi vedere i tuoi test creati e le relative informazioni");
-		vediTest.setBounds(10, 119, 613, 93);
+		vediTest.setBounds(169, 58, 135, 445);
 		frame.getContentPane().add(vediTest);
 		
 		JButton correggiTest = new JButton("Correggi Test");
@@ -65,10 +71,14 @@ public class MenuInsegnante {
 				
 			}
 		});
-		correggiTest.setBounds(10, 325, 613, 93);
+		correggiTest.setBounds(459, 58, 135, 445);
 		frame.getContentPane().add(correggiTest);
 		
 		JButton creaQuiz = new JButton("Crea Quesiti");
+		creaQuiz.setBorderPainted(false);
+		creaQuiz.setBackground(Color.PINK);
+		creaQuiz.setIcon(new ImageIcon(MenuInsegnante.class.getResource("/Immagini/LAMPADINA.png")));
+		creaQuiz.setVerticalAlignment(SwingConstants.BOTTOM);
 		creaQuiz.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -78,7 +88,7 @@ public class MenuInsegnante {
 				next.frame.setVisible(true);
 			}
 		});
-		creaQuiz.setBounds(10, 44, 613, 64);
+		creaQuiz.setBounds(24, 58, 135, 445);
 		frame.getContentPane().add(creaQuiz);
 		
 		JButton logout = new JButton("Logout");
@@ -93,7 +103,7 @@ public class MenuInsegnante {
 		frame.getContentPane().add(logout);
 		
 		JButton apriSettings = new JButton("Apri impostazioni");
-		apriSettings.setBounds(10, 429, 613, 64);
+		apriSettings.setBounds(575, 11, 48, 32);
 		frame.getContentPane().add(apriSettings);
 	}
 }

@@ -184,6 +184,12 @@ public class Controller {
 		}
 	}
 	
-	
+	public void insertRisposta(int id_q, String risposta, float punteggio, boolean isOpen) {
+		float f = 0;
+		RispostaDAO rispostaDB = new RispostaDAO();
+		if(isOpen) {rispostaDB.insertRisposta(id_q, s.username, i.username, risposta, f, isOpen);}
+		else {rispostaDB.insertRisposta(id_q, s.username, i.username, risposta, f, isOpen);}
+		
+	}
 	
 }

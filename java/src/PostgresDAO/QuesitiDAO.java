@@ -115,7 +115,7 @@ public class QuesitiDAO {
 				
 				}
 				
-			}
+	}
 	
 	
 	public int[] getQuizId(int id) {
