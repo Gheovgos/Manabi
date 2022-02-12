@@ -44,7 +44,6 @@ public class DBSettings {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Accesso back = new Accesso(controller);
-				back.setVisible(true);
 				frame.setVisible(false);
 			}
 		});

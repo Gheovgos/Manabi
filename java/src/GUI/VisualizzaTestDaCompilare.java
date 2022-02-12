@@ -19,6 +19,8 @@ import java.awt.event.MouseMotionAdapter;
 import java.text.SimpleDateFormat;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import javax.swing.JCheckBox;
+import java.awt.Toolkit;
 
 public class VisualizzaTestDaCompilare {
 
@@ -33,14 +35,25 @@ public class VisualizzaTestDaCompilare {
 	
 	private void initialize() {
 		frame = new JFrame();
+		frame.setTitle("Manabi");
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VisualizzaTestDaCompilare.class.getResource("/Immagini/icona manabi.png")));
 		frame.getContentPane().setBackground(Color.WHITE);
-		frame.setBounds(100, 100, 609, 451);
+		frame.setBounds(100, 100, 609, 599);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		String[] rs = controller.returnCompTestName(controller.s.username);
+		if(rs == null) {
+			System.out.println("No test");
+		}
 		int max = rs.length;
 		controller.caricaTest(rs[0]);
 		controller.caricaInsegnante(controller.t.creatoreTest);
+		
+		JCheckBox already = new JCheckBox("Hai gi\u00E0 compilato questo test!");
+		already.setSelected(true);
+		already.setBounds(319, 47, 258, 23);
+		frame.getContentPane().add(already);
+		already.setVisible(false);
 		
 		
 		String tempo = controller.t.tempo.toString();
@@ -82,7 +95,7 @@ public class VisualizzaTestDaCompilare {
 		editorDescrizione.setText(controller.t.descrizione);
 		editorDescrizione.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		editorDescrizione.setEditable(false);
-		editorDescrizione.setBounds(10, 181, 567, 141);
+		editorDescrizione.setBounds(10, 181, 573, 292);
 		frame.getContentPane().add(editorDescrizione);
 		
 		JTextPane textDesc = new JTextPane();
@@ -104,7 +117,7 @@ public class VisualizzaTestDaCompilare {
 				frame.setVisible(false);
 			}
 		});
-		btnNewButton.setBounds(10, 378, 89, 23);
+		btnNewButton.setBounds(10, 526, 89, 23);
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Compila");
@@ -116,15 +129,17 @@ public class VisualizzaTestDaCompilare {
 				controller.caricaTest(rs[selected]);
 				controller.caricaInsegnante(controller.t.creatoreTest);
 				
-				//controller.addCorrezione(controller.i.username, controller.s.username, controller.t.id);
+				controller.addCorrezione(controller.i.username, controller.s.username, controller.t.id);
 				
 				CompilaTest next = new CompilaTest(controller);
 				frame.setVisible(false);
 				next.frame.setVisible(true);
 			}
 		});
-		btnNewButton_1.setBounds(484, 378, 89, 23);
+		btnNewButton_1.setBounds(494, 526, 89, 23);
 		frame.getContentPane().add(btnNewButton_1);
+		
+		
 		
 		comboBox.addMouseListener(new MouseAdapter() {
 			@Override
@@ -138,6 +153,14 @@ public class VisualizzaTestDaCompilare {
 				tempo = tempo.substring(11, 19);
 				textNomeTest.setText("Nome test: "+controller.t.nomeTest); editorDescrizione.setText(controller.t.descrizione);
 				txtpnAutore.setText("Autore: "+controller.i.cognome+" "+controller.i.nome); txtpnTempo.setText("Tempo: "+tempo); txtpnMateria.setText("Materia: "+controller.t.materia);
+				if(controller.checkAlreadySolved(controller.t.id, controller.s.username)) {
+					already.setVisible(false);
+					btnNewButton_1.setVisible(true);				
+				}
+				else {
+					already.setVisible(true);
+					btnNewButton_1.setVisible(false);
+				}
 			}
 		});
 		
@@ -152,6 +175,14 @@ public class VisualizzaTestDaCompilare {
 				tempo = tempo.substring(11, 19);
 				textNomeTest.setText("Nome test: "+controller.t.nomeTest); editorDescrizione.setText(controller.t.descrizione);
 				txtpnAutore.setText("Autore: "+controller.i.cognome+" "+controller.i.nome); txtpnTempo.setText("Tempo: "+tempo); txtpnMateria.setText("Materia: "+controller.t.materia);
+				if(controller.checkAlreadySolved(controller.t.id, controller.s.username)) {
+					already.setVisible(false);
+					btnNewButton_1.setVisible(true);				
+				}
+				else {
+					already.setVisible(true);
+					btnNewButton_1.setVisible(false);
+				}
 				
 			}
 		});

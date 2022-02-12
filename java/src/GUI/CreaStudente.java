@@ -140,7 +140,7 @@ public class CreaStudente {
 			public void mouseClicked(MouseEvent e) {
 				TipoAccount tipoAccount = new TipoAccount(controller);
 				frame.setVisible(false);
-				tipoAccount.setVisible(true);
+				
 			}
 		});
 		btnNewButton.setBounds(62, 220, 85, 21);
@@ -245,7 +245,7 @@ public class CreaStudente {
 					controller.inizializzaStudente();
 					MenuStudente next = new MenuStudente(controller);
 					frame.setVisible(false);
-					next.setVisible(true);
+				
 				}
 			}
 		});
@@ -253,11 +253,5 @@ public class CreaStudente {
 		btnAvanti.setBounds(157, 220, 85, 21);
 		frame.getContentPane().add(btnAvanti);
 	}
-
-	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 }

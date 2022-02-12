@@ -73,12 +73,10 @@ public class Accesso {
 						
 						if(controller.i != null) {
 							MenuInsegnante next = new MenuInsegnante(controller);
-							frmManabi.setVisible(false);
-							next.frame.setVisible(true); }
+							frmManabi.setVisible(false); }
 						if(controller.s != null) {
 							MenuStudente next = new MenuStudente(controller);
 							frmManabi.setVisible(false);
-							next.frmManabi.setVisible(true);
 						}
 						else {
 							
@@ -128,11 +126,11 @@ public class Accesso {
 				if(controller.i != null) {
 					MenuInsegnante next = new MenuInsegnante(controller);
 					frmManabi.setVisible(false);
-					next.frame.setVisible(true); }
+					 }
 				if(controller.s != null) {
 					MenuStudente next = new MenuStudente(controller);
 					frmManabi.setVisible(false);
-					next.frmManabi.setVisible(true);
+					
 				}
 				else {
 					
@@ -163,7 +161,7 @@ public class Accesso {
 			public void mouseClicked(MouseEvent e) {
 				TipoAccount tipoAccount = new TipoAccount(controller);
 				frmManabi.setVisible(false);
-				tipoAccount.setVisible(true);
+			
 			}
 		});
 		btnIscriviti.setFont(new Font("Dialog", Font.BOLD, 9));
@@ -197,8 +195,4 @@ public class Accesso {
 		
 	}
 
-	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
 }

@@ -184,12 +184,52 @@ public class Controller {
 		}
 	}
 	
-	public void insertRisposta(int id_q, String risposta, float punteggio, boolean isOpen) {
-		float f = 0;
+	public void insertRisposta(int id_q, String risposta, boolean isOpen) {
 		RispostaDAO rispostaDB = new RispostaDAO();
-		if(isOpen) {rispostaDB.insertRisposta(id_q, s.username, i.username, risposta, f, isOpen);}
-		else {rispostaDB.insertRisposta(id_q, s.username, i.username, risposta, f, isOpen);}
+		if(isOpen) {rispostaDB.insertRisposta(id_q, s.username, i.username, risposta, isOpen);}
+		else {rispostaDB.insertRisposta(id_q, s.username, i.username, risposta, isOpen);}
 		
 	}
+
+	public void caricaStudente(String username) {
+		StudenteDAO studenteDB = new StudenteDAO();
+		
+		s = studenteDB.login(username);
+	}
+
+	public String[] returnStudenti(int id) {
+		String[] studenti;
+		RispostaDAO rispostaDB = new RispostaDAO();
+		
+		studenti = rispostaDB.returnStudenti(id);
+		
+		return studenti;
+	}
+
+	public String caricaRisopsta(int idq, String username_s) {
+		String risposta;
+		RispostaDAO rispostaDB = new RispostaDAO();
+		
+		risposta = rispostaDB.returnRisposta(idq, username_s);
+		
+		return risposta;
+	}
+
+	public void updateRisposta(int id, String username, float punteggio, String commento) {
+		RispostaDAO rispostaDB = new RispostaDAO();
+		
+		rispostaDB.updateRisposta(id, username, punteggio, commento);
+		
+	}
+
+	public void aggiornaCorrezione(int id, String username) {
+		RispostaDAO rispostaDB = new RispostaDAO();
+		
+		rispostaDB.updateCorrezione(id, username);
+	}
 	
+	public boolean checkAlreadySolved(int id, String username) {
+		TestDAO testDB = new TestDAO();
+		return testDB.checkAlreadySolved(id, username);
+	}
 }

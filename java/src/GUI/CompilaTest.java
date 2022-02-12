@@ -58,7 +58,7 @@ public class CompilaTest {
 		frame.setResizable(false);
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(CompilaTest.class.getResource("/Immagini/icona manabi.png")));
 		frame.setBounds(100, 100, 840, 641);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		
@@ -176,10 +176,9 @@ public class CompilaTest {
 				if(controller.t.quesiti[progresso].isOpen) {
 					
 					
-						controller.insertRisposta(controller.t.quesiti[progresso].idQuesito, textRispostaAperta.getText(), 0, controller.t.quesiti[progresso].isOpen);
+						controller.insertRisposta(controller.t.quesiti[progresso].idQuesito, textRispostaAperta.getText(), controller.t.quesiti[progresso].isOpen);
 						progresso++;
-						
-						//salva nel DB						
+											
 						progressBar.setValue(progresso);
 						if(checkProgress(progresso, lunghezzaTest)) {
 							progresso--;
@@ -219,12 +218,19 @@ public class CompilaTest {
 					}
 					
 					if(a) {
-						if(A.isSelected()) {controller.insertRisposta(controller.t.quesiti[progresso].idQuesito, A.getText(), 0, controller.t.quesiti[progresso].isOpen);}
-						else if(B.isSelected()) {controller.insertRisposta(controller.t.quesiti[progresso].idQuesito, A.getText(), 0, controller.t.quesiti[progresso].isOpen);}
-						else if(C.isSelected()) {controller.insertRisposta(controller.t.quesiti[progresso].idQuesito, C.getText(), 0, controller.t.quesiti[progresso].isOpen);}
-						else if(D.isSelected()) {controller.insertRisposta(controller.t.quesiti[progresso].idQuesito, D.getText(), 0, controller.t.quesiti[progresso].isOpen);}
-						else if(E.isSelected()) {controller.insertRisposta(controller.t.quesiti[progresso].idQuesito, E.getText(), 0, controller.t.quesiti[progresso].isOpen);}
+							String risposta = "";
+							
+							if(A.isSelected()) { risposta = A.getText();} 
 						
+							else if(B.isSelected()) {risposta = B.getText();} 
+					
+							else if(C.isSelected()) {risposta = C.getText();} 
+				
+							else if(D.isSelected()) {risposta = D.getText();} 
+			
+							else if(E.isSelected()) {risposta = E.getText();} 
+						
+						controller.insertRisposta(controller.t.quesiti[progresso].idQuesito, risposta, controller.t.quesiti[progresso].isOpen);
 						progresso++;
 						progressBar.setValue(progresso);
 						if(checkProgress(progresso, lunghezzaTest)) {
@@ -233,7 +239,7 @@ public class CompilaTest {
 							TestCompletato next = new TestCompletato(controller);	
 						}
 						textDomanda.setText(controller.t.quesiti[progresso].domanda);
-						//SALVA NEL DB
+						
 						
 						if(controller.t.quesiti[progresso].isOpen) {
 							A.setVisible(false); B.setVisible(false); C.setVisible(false); D.setVisible(false); E.setVisible(false);

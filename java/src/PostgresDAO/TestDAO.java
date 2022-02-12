@@ -184,35 +184,48 @@ public class TestDAO {
 	public String[] returnCompTestName(String username) {
 	
 	PreparedStatement g;
-	int i;
+	boolean copia = false;
+	int i, j, c = 0;
 	int[] id = new int[100];
+	String[] tmp = new String[100];
+	
 	try {
+		
 		g = connessione.prepareStatement(
-				"SELECT id_test from test\r\n"
-				+ "EXCEPT\r\n"
-				+ "SELECT id_test from correzione WHERE\r\n"
-				+ "username_s = '"+username+"';");
+				"SELECT id_test FROM test WHERE id_test IN (SELECT id_test FROM QUESITO_MULTIPLO) OR id_test IN (SELECT id_test FROM QUESITO_APERTO)"); //seleziona test che hanno almeno un quesito
 		
 	ResultSet rs = g.executeQuery();
+	
 	for(i = 0; rs.next(); i++) {
-		id[i] = rs.getInt("id_test");
+		id[i] = rs.getInt("id_test");    //salvo gli id dei test che hanno almeno un quesito (=compilabili)
 
 	}
+//CONTROLLA: SE UNO STUDENTE NON HA FATTO IL TEST NON APPARE IN CORREZIONE => I TEST SONO FISSI!!!!!
 	
-	String[] tmp = new String[i];
-	
-	for(int j = 0; j < i; j++) {
+	for(j = 0; j < i; j++) {
 		g = connessione.prepareStatement(
-				"SELECT nome_test FROM TEST WHERE id_test ="+id[j]);
+				"SELECT nome_test FROM TEST WHERE id_test ="+id[j]+" AND id_test NOT IN (SELECT id_test FROM CORREZIONE WHERE username_s = '')"); //seleziono i test compilabili e che lo studente username non ha ancora svolto
 		rs = g.executeQuery();
 		while(rs.next()) {
 			tmp[j] = rs.getString("nome_test");
 		}
+		if(tmp[j] == null) tmp[j] = "";
 		
+	}
+	String[] output = new String[j];
+	for(int k = 0; k < j; k++) {
+		if(tmp[k].equals("")) copia = false; else copia = true;
+		if(copia) {output[k] = tmp[k]; c++;} 
+	}
+	
+	String[] result = new String[c];
+	
+	for(i = 0; i < c; i++) {
+		result[i] = output[i];
 	}
 	
 	rs.close();
-	return tmp;
+	return result;
 
 	
 	} 
@@ -349,6 +362,30 @@ public class TestDAO {
 
 			}
 		
+		
+	}
+	
+	public boolean checkAlreadySolved(int id, String username) {
+		PreparedStatement g;
+		int check = 0;
+		
+		try {
+			g = connessione.prepareStatement("SELECT id_test FROM CORREZIONE WHERE id_test = "+id+" AND username_s = '"+username+"'");
+			
+		ResultSet rs = g.executeQuery();
+		while(rs.next()) {
+			check = rs.getInt("id_test");
+		}
+		if(check == 0) return true;
+		else return false;
+		
+		} 
+		catch (SQLException e) {
+	
+			e.printStackTrace();
+			return false;
+
+		}
 		
 	}
 }

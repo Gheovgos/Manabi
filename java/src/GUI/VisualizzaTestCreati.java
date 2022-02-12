@@ -16,6 +16,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.Toolkit;
+import java.awt.Font;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 
 public class VisualizzaTestCreati {
 
@@ -35,30 +39,31 @@ public class VisualizzaTestCreati {
 		int max = rs.length;
 		
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VisualizzaTestCreati.class.getResource("/Immagini/icona manabi.png")));
+		frame.setTitle("Manabi");
 		frame.getContentPane().setBackground(Color.WHITE);
-		frame.setBounds(100, 100, 432, 224);
+		frame.setBounds(100, 100, 648, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(VisualizzaTestCreati.class.getResource("/Immagini/manabi classic blu.png")));
+		lblNewLabel.setBounds(5, 11, 214, 52);
+		frame.getContentPane().add(lblNewLabel);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setMaximumRowCount(max);
 		comboBox.setModel(new DefaultComboBoxModel(rs));
 		comboBox.setSelectedIndex(-1);
-		comboBox.setBounds(10, 61, 396, 22);
+		comboBox.setBounds(119, 253, 396, 22);
 		frame.getContentPane().add(comboBox);
 		
 		JTextPane txtpnSelezionaIlTest = new JTextPane();
+		txtpnSelezionaIlTest.setFont(new Font("Tahoma", Font.BOLD, 13));
 		txtpnSelezionaIlTest.setEditable(false);
-		txtpnSelezionaIlTest.setText("Seleziona il test da modificare:");
-		txtpnSelezionaIlTest.setBounds(10, 11, 238, 20);
+		txtpnSelezionaIlTest.setText("ELENCO TEST:");
+		txtpnSelezionaIlTest.setBounds(265, 223, 133, 20);
 		frame.getContentPane().add(txtpnSelezionaIlTest);
-		
-		JTextPane txtpnNonPuoiCreare = new JTextPane();
-		txtpnNonPuoiCreare.setText("Non puoi creare quesiti a test gi\u00E0 esistenti. Creane uno!");
-		txtpnNonPuoiCreare.setEditable(false);
-		txtpnNonPuoiCreare.setVisible(false);
-		txtpnNonPuoiCreare.setBounds(10, 30, 396, 23);
-		frame.getContentPane().add(txtpnNonPuoiCreare);
 		
 		JButton btnNewButton_2 = new JButton("Crea");
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
@@ -70,10 +75,9 @@ public class VisualizzaTestCreati {
 				next.frame.setVisible(true);
 			}
 		});
-		btnNewButton_2.setBounds(164, 94, 89, 23);
+		btnNewButton_2.setBounds(533, 527, 89, 23);
 		frame.getContentPane().add(btnNewButton_2);
 		btnNewButton_2.setVisible(false);
-		btnNewButton_2.setEnabled(false);
 		
 		
 		/*if(CONTROLLA CONDIZIONE) {
@@ -81,8 +85,9 @@ public class VisualizzaTestCreati {
 		}*/
 		
 		JButton btnNewButton = new JButton("Modifica");
+		btnNewButton.setEnabled(false);
 		
-		btnNewButton.setBounds(317, 151, 89, 23);
+		btnNewButton.setBounds(533, 494, 89, 22);
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Indietro");
@@ -92,11 +97,16 @@ public class VisualizzaTestCreati {
 				
 				MenuInsegnante back = new MenuInsegnante(controller);
 				frame.setVisible(false);
-				back.frame.setVisible(true);
+				
 			}
 		});
-		btnNewButton_1.setBounds(10, 151, 89, 23);
+		btnNewButton_1.setBounds(10, 527, 89, 23);
 		frame.getContentPane().add(btnNewButton_1);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon(VisualizzaTestCreati.class.getResource("/Immagini/SFONDO TUTTO.png")));
+		lblNewLabel_1.setBounds(0, -25, 632, 586);
+		frame.getContentPane().add(lblNewLabel_1);
 		
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			

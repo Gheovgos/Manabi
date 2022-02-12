@@ -34,6 +34,8 @@ public class MenuStudente {
  private JTextField txtMettiPuntiSce;
  private JTextField txtUltimoTestSvolto;
  private JTextField txtBenvenuto;
+ private JTextField txtAggiornamiStudentecorrezione;
+ private JTextField txtMettiUltimoTest;
 
  public MenuStudente(Controller c) {
   controller = c;
@@ -188,12 +190,6 @@ public class MenuStudente {
   frmManabi.getContentPane().add(txtUltimoTestSvolto);
   txtUltimoTestSvolto.setColumns(10);
   
-  JButton btnNewButton = new JButton("metti ultimo test svolto");
-  btnNewButton.setOpaque(false);
-  btnNewButton.setBorder(null);
-  btnNewButton.setBounds(20, 451, 593, 34);
-  frmManabi.getContentPane().add(btnNewButton);
-  
   JLabel lblNewLabel_1 = new JLabel("");
   lblNewLabel_1.setIcon(new ImageIcon(MenuStudente.class.getResource("/Immagini/manabi classic blu.png")));
   lblNewLabel_1.setBounds(10, -10, 433, 111);
@@ -211,10 +207,21 @@ public class MenuStudente {
   txtBenvenuto.setColumns(10);
   txtBenvenuto.setBounds(440, 11, 182, 20);
   frmManabi.getContentPane().add(txtBenvenuto);
+  
+  txtAggiornamiStudentecorrezione = new JTextField();
+  txtAggiornamiStudentecorrezione.setText("AGGIORNAMI STUDENTE_CORREZIONE");
+  txtAggiornamiStudentecorrezione.setBounds(226, 511, 236, 20);
+  frmManabi.getContentPane().add(txtAggiornamiStudentecorrezione);
+  txtAggiornamiStudentecorrezione.setColumns(10);
+  
+  txtMettiUltimoTest = new JTextField();
+  txtMettiUltimoTest.setHorizontalAlignment(SwingConstants.CENTER);
+  txtMettiUltimoTest.setText("metti ultimo test svolto");
+  txtMettiUltimoTest.setBorder(null);
+  txtMettiUltimoTest.setOpaque(false);
+  txtMettiUltimoTest.setBounds(20, 449, 593, 20);
+  frmManabi.getContentPane().add(txtMettiUltimoTest);
+  txtMettiUltimoTest.setColumns(10);
  }
 
- public void setVisible(boolean b) {
-  // TODO Auto-generated method stub
-  
- }
 }

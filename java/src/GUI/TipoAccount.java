@@ -97,7 +97,6 @@ public class TipoAccount {
 				else {
 					CreaStudente s = new CreaStudente(c);
 					frame.setVisible(false);
-					s.setVisible(true);
 				}
 					
 			}
@@ -116,8 +115,4 @@ public class TipoAccount {
 
 	}
 
-	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
 }

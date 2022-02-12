@@ -21,7 +21,7 @@ public class Manabi {
 				try {
 					Controller c = new Controller();
 					Accesso window = new Accesso(c); 
-					window.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

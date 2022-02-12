@@ -48,6 +48,32 @@ public class StudenteDAO {
 
 		}
 	}
+	
+	public Studente login(String username) {
+		PreparedStatement login;
+		try {
+			login = connessione.prepareStatement(
+					"SELECT * "
+					+ "FROM Studente "
+					+ "WHERE username_s ='"+username+"'");
+			
+		ResultSet rs = login.executeQuery();
+		while(rs.next()) {
+			s = new Studente(rs.getString("Username_s"), rs.getString("password_s"), rs.getString("nome"), rs.getString("cognome"));
+
+		}
+		rs.close();
+		return s;
+
+		
+		} 
+		catch (SQLException e) {
+	
+			e.printStackTrace();
+			return null;
+
+		}
+	}
 
 
 	public String getUsername(String username) {

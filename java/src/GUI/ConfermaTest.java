@@ -54,7 +54,7 @@ public class ConfermaTest {
 				
 				MenuInsegnante back = new MenuInsegnante(controller);
 				frmManabi.setVisible(false);
-				back.frame.setVisible(true);
+				
 				
 			}
 		});

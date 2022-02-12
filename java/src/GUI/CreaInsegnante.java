@@ -149,7 +149,7 @@ public class CreaInsegnante {
 			public void mouseClicked(MouseEvent e) {
 				TipoAccount tipoAccount = new TipoAccount(controller);
 				frame.setVisible(false);
-				tipoAccount.setVisible(true);
+				
 			}
 		});
 		btnNewButton.setBounds(62, 220, 85, 21);
@@ -259,7 +259,7 @@ public class CreaInsegnante {
 					controller.inizializzaInsegnante();
 					MenuInsegnante next = new MenuInsegnante(controller);
 					frame.setVisible(false);
-					next.frame.setVisible(true);
+					
 				}
 			}
 		});

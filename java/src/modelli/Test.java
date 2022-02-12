@@ -12,7 +12,7 @@ public class Test {
     public Quesiti[] quesiti;
     
     public Test(Integer i, String u, String n, String m, String d) {
-    	id = i; creatoreTest = u; nomeTest = n; materia = m; descrizione = d;
+    	id = i; creatoreTest = u; nomeTest = n; materia = m; descrizione = d; tempo = new Date();
     	
     }
 }
