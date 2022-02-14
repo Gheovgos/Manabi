@@ -136,4 +136,44 @@ public class InsegnanteDAO {
 		
 	}
 	
+	public void aggiornaUtente(String password, String nome, String cognome, boolean who, String oldusername) {
+		PreparedStatement update;
+	
+		
+		
+		if(who) {
+			try {
+				update = connessione.prepareStatement(
+						"UPDATE INSEGNANTE SET password_i = '"+password+"', nome = '"+nome+"', cognome = '"+cognome+"'  WHERE username_i = '"+oldusername+"'");
+				
+			update.executeUpdate();
+			return;
+			
+			} 
+			catch (SQLException e) {
+		
+				e.printStackTrace();
+				return;
+
+			}
+		}
+		else {
+			try {
+				update = connessione.prepareStatement(
+						"UPDATE STUDENTE SET password_s = '"+password+"', nome = '"+nome+"', cognome = '"+cognome+"'  WHERE username_s = '"+oldusername+"'");
+				
+			update.executeUpdate();
+			return;
+			
+			} 
+			catch (SQLException e) {
+		
+				e.printStackTrace();
+				return;
+
+			}
+		}
+		
+	}
+	
 }

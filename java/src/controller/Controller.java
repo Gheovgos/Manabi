@@ -3,7 +3,6 @@ import modelli.*;
 import PostgresDAO.*;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import Database.*;
 
@@ -13,7 +12,6 @@ public class Controller {
 	public Quesiti q;
 	public Studente s = null;
 	public Test t;
-	public Risposta r;
 	public Utente u;
 	public ConnessioneDatabase connessione;
 	
@@ -56,7 +54,6 @@ public class Controller {
 		s = studenteDB.login(username, password);		
 	}
 	
-	public void registraStudente() {}
 	
 	public boolean checkUsername() { //Controllo disponibilità dell'username
 		String s = null, q = null;
@@ -69,6 +66,20 @@ public class Controller {
 		if(s != null) return true;
 
 		return false;
+	}
+	
+	public boolean checkUsername(String username) { //Controllo disponibilità dell'username
+		String s = null, q = null;
+		InsegnanteDAO insegnanteDB = new InsegnanteDAO();
+		StudenteDAO studenteDB = new StudenteDAO();
+		
+		q = studenteDB.getUsername(username);
+		if(q != null) return true;
+		s = insegnanteDB.getUsername(username);
+		if(s != null) return true;
+
+		return false;
+
 	}
 	
 	public void inizializzaInsegnante() {
@@ -130,6 +141,14 @@ public class Controller {
 		
 		return rs;
 				
+	}
+	
+	public String[] returnAllTest(String username) {
+		TestDAO testDB = new TestDAO();
+		String[] rs = testDB.returnAllTest(username);
+		
+		return rs;
+		
 	}
 	
 	public void caricaTest(String nome_test, String username) {
@@ -231,5 +250,59 @@ public class Controller {
 	public boolean checkAlreadySolved(int id, String username) {
 		TestDAO testDB = new TestDAO();
 		return testDB.checkAlreadySolved(id, username);
+	}
+
+	public void updateTest() {
+		TestDAO testDB = new TestDAO();
+		testDB.updateTest(t.id, t.nomeTest, t.materia, t.descrizione);
+	}
+	
+	public boolean hasQ() {
+		TestDAO testDB = new TestDAO();
+		if(testDB.hasQ(t.id)) return true;
+		else return false;
+	}
+	
+	public void aggiornaUtente(String password, String nome, String cognome, boolean who, String oldUsername) {
+		InsegnanteDAO insegnanteDB = new InsegnanteDAO();
+		
+		if(who) insegnanteDB.aggiornaUtente(password, nome, cognome, who, oldUsername);
+		else insegnanteDB.aggiornaUtente(password, nome, cognome, who, oldUsername);
+	}
+
+	public String[] returnAllTestName(String username) {
+		TestDAO testDB = new TestDAO();
+		String[] rs = testDB.returnAllTestName(username);
+		
+		return rs;
+				
+	}
+	
+	public String[] returnAllTestName() {
+		TestDAO testDB = new TestDAO();
+		String[] rs = testDB.returnAllTestName();
+		
+		return rs;
+				
+	}
+	
+	public String[] returnAllMat() {
+		TestDAO testDB = new TestDAO();
+		String[] rs = testDB.returnAllMat();
+		
+		return rs;
+				
+	}
+	
+	public float ottieniVotoTest(String username, int id) {
+		TestDAO testDB = new TestDAO();
+		
+		return testDB.ottieniVotoTest(username, id);
+	}
+	
+	public String ottieniUltimoTestSvolto(String username) {
+		TestDAO testDB = new TestDAO();
+		
+		return testDB.ottieniUltimoTestSvolto(username);
 	}
 }

@@ -13,12 +13,16 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
 import javax.swing.SwingConstants;
+import java.awt.Toolkit;
+import javax.swing.border.LineBorder;
 
 public class DBSettings {
 
 	JFrame frame;
-	private JTextField textOutput;
+	private JTextPane textOutput;
 	Controller controller;
+	private JTextField getUrl;
+	private JTextField getPass;
 
 	public DBSettings(Controller c) {
 		controller = c;
@@ -28,6 +32,8 @@ public class DBSettings {
 
 	private void initialize() {
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(DBSettings.class.getResource("/Immagini/icona manabi.png")));
+		frame.setTitle("Manabi");
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,33 +56,28 @@ public class DBSettings {
 		btnBack.setBounds(10, 227, 89, 23);
 		frame.getContentPane().add(btnBack);
 		
-		textOutput = new JTextField();
+		textOutput = new JTextPane();
+		textOutput.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textOutput.setToolTipText("Console di Output");
-		textOutput.setHorizontalAlignment(SwingConstants.LEFT);
+		
 
 		textOutput.setEditable(false);
 		textOutput.setBounds(10, 73, 414, 130);
 		frame.getContentPane().add(textOutput);
-		textOutput.setColumns(10);
-		
-		JButton nuovoDB = new JButton("Crea DB");
-		nuovoDB.setToolTipText("Se la verifica fallisce, premere qui per la creazione di un nuovo Database.");
-		nuovoDB.setEnabled(false);
-		nuovoDB.setBounds(335, 227, 89, 23);
-		frame.getContentPane().add(nuovoDB);
 		
 		JButton btnNewButton = new JButton("Test connessione");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 
 			public void mouseClicked(MouseEvent e) {
+				
 
 				try {
 					if(controller.checkConnection()) {
 						
-						textOutput.setText("Connessione effettuata con successo.\nNome: "+controller.connessione.nome+"\nConnessione: "+controller.connessione.url+"\nDriver: "+controller.connessione.driver);
+						textOutput.setText("Connessione effettuata con successo.\r\nNome: "+controller.connessione.nome+"\r\nConnessione: "+controller.connessione.url+"\r\nDriver: "+controller.connessione.driver);
 						
 					}
-					else {textOutput.setText("Connessione al Database fallita. Clicca su 'Crea nuovo database' per creare un nuovo DB."); 	nuovoDB.setEnabled(false);}
+					else {textOutput.setText("Connessione al Database fallita.");}
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -88,12 +89,29 @@ public class DBSettings {
 		btnNewButton.setBounds(20, 42, 138, 23);
 		frame.getContentPane().add(btnNewButton);
 		
+		getUrl = new JTextField();
+		getUrl.setText("jdbc:postgresql://localhost:5432/Manabi");
+		getUrl.setBounds(286, 11, 138, 20);
+		frame.getContentPane().add(getUrl);
+		getUrl.setColumns(10);
 		
-		nuovoDB.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
+		getPass = new JTextField();
+		getPass.setText("admin");
+		getPass.setColumns(10);
+		getPass.setBounds(286, 43, 138, 20);
+		frame.getContentPane().add(getPass);
+		
+		JTextPane txtpnInserisciUrl = new JTextPane();
+		txtpnInserisciUrl.setEditable(false);
+		txtpnInserisciUrl.setText("Inserisci URL:");
+		txtpnInserisciUrl.setBounds(181, 11, 77, 20);
+		frame.getContentPane().add(txtpnInserisciUrl);
+		
+		JTextPane txtpnInserisciPassword = new JTextPane();
+		txtpnInserisciPassword.setEditable(false);
+		txtpnInserisciPassword.setText("Inserisci password:");
+		txtpnInserisciPassword.setBounds(181, 42, 99, 20);
+		frame.getContentPane().add(txtpnInserisciPassword);
 		
 
 	}

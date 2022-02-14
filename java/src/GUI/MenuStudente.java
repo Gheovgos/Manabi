@@ -34,8 +34,8 @@ public class MenuStudente {
  private JTextField txtMettiPuntiSce;
  private JTextField txtUltimoTestSvolto;
  private JTextField txtBenvenuto;
- private JTextField txtAggiornamiStudentecorrezione;
  private JTextField txtMettiUltimoTest;
+ private JLabel lblNewLabel;
 
  public MenuStudente(Controller c) {
   controller = c;
@@ -66,6 +66,12 @@ public class MenuStudente {
   frmManabi.getContentPane().add(txtTotali);
   
   JButton btnElencoCorsiSeguiti = new JButton("");
+  btnElencoCorsiSeguiti.addMouseListener(new MouseAdapter() {
+  	@Override
+  	public void mouseClicked(MouseEvent e) {
+  		VisualizaTestSvolti next = new VisualizaTestSvolti(controller);
+  	}
+  });
   btnElencoCorsiSeguiti.setIcon(new ImageIcon(MenuStudente.class.getResource("/Immagini/sfondi/studente1.png")));
   btnElencoCorsiSeguiti.setFont(new Font("Candara", Font.PLAIN, 13));
   btnElencoCorsiSeguiti.setBounds(472, 112, 141, 315);
@@ -87,6 +93,7 @@ public class MenuStudente {
   frmManabi.getContentPane().add(btnNewButton_4);
   
   txtPunti = new JTextField();
+  txtPunti.setEditable(false);
   txtPunti.setBorder(null);
   txtPunti.setOpaque(false);
   txtPunti.setBackground(Color.WHITE);
@@ -101,6 +108,13 @@ public class MenuStudente {
   frmManabi.getContentPane().add(separator);
   
   JButton btnElencoCorsiSeguiti_1 = new JButton("");
+  btnElencoCorsiSeguiti_1.addMouseListener(new MouseAdapter() {
+  	@Override
+  	public void mouseClicked(MouseEvent e) {
+		@SuppressWarnings("unused")
+		UserSettings next = new UserSettings(controller, false);
+  	}
+  });
   btnElencoCorsiSeguiti_1.setIcon(new ImageIcon(MenuStudente.class.getResource("/Immagini/sfondi/studente4.png")));
   btnElencoCorsiSeguiti_1.setFont(new Font("Candara", Font.PLAIN, 13));
   btnElencoCorsiSeguiti_1.setBounds(321, 112, 141, 315);
@@ -120,6 +134,7 @@ public class MenuStudente {
   frmManabi.getContentPane().add(btnElencoCorsiSeguiti_1_1_1);
   
   JButton btnElencoCorsiSeguiti_1_1 = new JButton("");
+ 
   btnElencoCorsiSeguiti_1_1.setIgnoreRepaint(true);
   btnElencoCorsiSeguiti_1_1.setIcon(new ImageIcon(MenuStudente.class.getResource("/Immagini/sfondi/studente2.png")));
   btnElencoCorsiSeguiti_1_1.setFont(new Font("Candara", Font.PLAIN, 13));
@@ -171,9 +186,9 @@ public class MenuStudente {
   frmManabi.getContentPane().add(txtTestSvolti);
   
   txtMettiPuntiSce = new JTextField();
+  txtMettiPuntiSce.setText(String.valueOf(controller.ottieniPunteggioStudente(controller.s.username)));
   txtMettiPuntiSce.setEditable(false);
   txtMettiPuntiSce.setHorizontalAlignment(SwingConstants.CENTER);
-  txtMettiPuntiSce.setText(String.valueOf(controller.ottieniPunteggioStudente(controller.s.username)));
   txtMettiPuntiSce.setBorder(null);
   txtMettiPuntiSce.setOpaque(false);
   txtMettiPuntiSce.setBounds(514, 505, 39, 39);
@@ -205,23 +220,24 @@ public class MenuStudente {
   txtBenvenuto.setForeground(new Color(112, 128, 144));
   txtBenvenuto.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
   txtBenvenuto.setColumns(10);
-  txtBenvenuto.setBounds(440, 11, 182, 20);
+  txtBenvenuto.setBounds(226, 11, 182, 20);
   frmManabi.getContentPane().add(txtBenvenuto);
   
-  txtAggiornamiStudentecorrezione = new JTextField();
-  txtAggiornamiStudentecorrezione.setText("AGGIORNAMI STUDENTE_CORREZIONE");
-  txtAggiornamiStudentecorrezione.setBounds(226, 511, 236, 20);
-  frmManabi.getContentPane().add(txtAggiornamiStudentecorrezione);
-  txtAggiornamiStudentecorrezione.setColumns(10);
-  
   txtMettiUltimoTest = new JTextField();
+  txtMettiUltimoTest.setEditable(false);
   txtMettiUltimoTest.setHorizontalAlignment(SwingConstants.CENTER);
-  txtMettiUltimoTest.setText("metti ultimo test svolto");
+  txtMettiUltimoTest.setText(controller.ottieniUltimoTestSvolto(controller.s.username));
   txtMettiUltimoTest.setBorder(null);
   txtMettiUltimoTest.setOpaque(false);
   txtMettiUltimoTest.setBounds(20, 449, 593, 20);
   frmManabi.getContentPane().add(txtMettiUltimoTest);
   txtMettiUltimoTest.setColumns(10);
+  
+  btnElencoCorsiSeguiti_1_1.addMouseListener(new MouseAdapter() {
+	  	public void mouseClicked(MouseEvent e) {
+	  		CercaCorso next = new CercaCorso(controller);
+	  	}
+	  });
  }
 
 }

@@ -237,7 +237,58 @@ public class TestDAO {
 	}
 }
 		
+	public String[] returnAllTest(String username) {
+		PreparedStatement g;
+		String[] t = new String[100];
+		int i;
+		try {
+			g = connessione.prepareStatement(
+					"SELECT nome_test FROM TEST WHERE username_i = '"+username+"'");
+			
+		ResultSet rs = g.executeQuery();
+		for(i = 0; rs.next(); i++) {
+			t[i] = rs.getString("nome_test");
 	
+		}
+		
+		String[] tmp = new String[i];
+		for(int z = 0; z < i; z++) {
+			tmp[z] = t[z];
+		}
+		
+		rs.close();
+		return tmp;
+
+		
+		} 
+		catch (SQLException e) {
+	
+			e.printStackTrace();
+			return null;
+
+		}
+		
+	}
+
+	public void updateTest(int id, String nomeTest, String materia, String descrizione) {
+		PreparedStatement update;
+		
+		
+		try {
+			update = connessione.prepareStatement(
+					"UPDATE TEST SET nome_test = '"+nomeTest+"', materia_test = '"+materia+"', descrizione = '"+descrizione+"'  WHERE id_test = "+id);
+			
+		update.executeUpdate();
+		return;
+		
+		} 
+		catch (SQLException e) {
+	
+			e.printStackTrace();
+			return;
+
+		}
+	}
 
 	public Test returnTest(String nome_test, String username) {
 		PreparedStatement g;
@@ -365,6 +416,29 @@ public class TestDAO {
 		
 	}
 	
+	public boolean hasQ(int id) {
+		PreparedStatement g;
+
+		
+		try {
+			
+			g = connessione.prepareStatement(
+					"SELECT id_test FROM test WHERE id_test = "+id+" AND id_test IN (SELECT id_test FROM QUESITO_MULTIPLO WHERE id_test = "+id+") OR id_test IN (SELECT id_test FROM QUESITO_APERTO WHERE id_test = "+id+")");
+			
+		ResultSet rs = g.executeQuery();
+
+		if(rs.next()) return true;
+		else return false;
+		} 
+		catch (SQLException e) {
+	
+			e.printStackTrace();
+			return false;
+
+		}
+		
+	}
+	
 	public boolean checkAlreadySolved(int id, String username) {
 		PreparedStatement g;
 		int check = 0;
@@ -388,4 +462,190 @@ public class TestDAO {
 		}
 		
 	}
+
+	public String[] returnAllTestName(String username) {
+		PreparedStatement g;
+		int i;
+		int[] id = new int[100];
+		
+		
+		try {
+
+			g = connessione.prepareStatement("SELECT id_test FROM CORREZIONE WHERE username_s = '"+username+"'");
+			ResultSet rs = g.executeQuery();
+		for(i = 0; rs.next(); i++) {
+			id[i] = rs.getInt("id_test");
+		}
+		
+		String[] tmp = new String[i];
+		for(int j = 0; j < i; j++) {
+			g = connessione.prepareStatement(
+					"SELECT nome_test FROM TEST WHERE id_test ="+id[j]); 
+			rs = g.executeQuery();
+			while(rs.next()) {
+				tmp[j] = rs.getString("nome_test");
+			}
+			
+		}
+		
+		rs.close();
+		return tmp;
+
+		
+		} 
+		catch (SQLException e) {
+
+			e.printStackTrace();
+			return null;
+
+		}
+		
+	}
+
+	public String[] returnAllTestName() {
+		PreparedStatement g;
+		int i;
+		int[] id = new int[100];
+		
+		
+		try {
+
+			g = connessione.prepareStatement("SELECT id_test FROM TEST");
+			ResultSet rs = g.executeQuery();
+		for(i = 0; rs.next(); i++) {
+			id[i] = rs.getInt("id_test");
+		}
+		
+		String[] tmp = new String[i];
+		for(int j = 0; j < i; j++) {
+			g = connessione.prepareStatement(
+					"SELECT nome_test FROM TEST WHERE id_test ="+id[j]); 
+			rs = g.executeQuery();
+			while(rs.next()) {
+				tmp[j] = rs.getString("nome_test");
+			}
+			
+		}
+		
+		rs.close();
+		return tmp;
+
+		
+		} 
+		catch (SQLException e) {
+
+			e.printStackTrace();
+			return null;
+
+		}
+		
+	}
+	
+	public String[] returnAllMat() {
+		PreparedStatement g;
+		int i, c = 0;
+		int[] id = new int[100];
+		
+		
+		try {
+
+			g = connessione.prepareStatement("SELECT id_test FROM TEST");
+			ResultSet rs = g.executeQuery();
+		for(i = 0; rs.next(); i++) {
+			id[i] = rs.getInt("id_test");
+		}
+		
+		String[] tmp = new String[i];
+		for(int j = 0; j < i; j++) {
+			g = connessione.prepareStatement(
+					"SELECT materia_test FROM TEST WHERE id_test ="+id[j]); 
+			rs = g.executeQuery();
+			while(rs.next()) {
+				tmp[j] = rs.getString("materia_test");
+				if(!tmp[j].equals("")) {
+					c++;
+				}
+			}		
+		}
+		String[] output = new String[c];
+		c = 0;
+		for(int j = 0; j < i; j++) {
+			if(tmp[j].equals("")) {}
+			else {
+				output[c] = tmp[j]; c++;
+			}
+		}
+		rs.close();
+		return output;
+
+		
+		} 
+		catch (SQLException e) {
+
+			e.printStackTrace();
+			return null;
+
+		}
+		
+	}
+	
+	public float ottieniVotoTest(String username, int id) {
+		PreparedStatement g;
+		float punteggio = 0;
+		
+		
+		try {
+
+			g = connessione.prepareStatement("SELECT voto_test FROM CORREZIONE WHERE username_s = '"+username+"' AND id_test = "+id);
+			ResultSet rs = g.executeQuery();
+		for(int i = 0; rs.next(); i++) {
+			punteggio = rs.getFloat("voto_test");
+		}
+		
+		
+		return punteggio;
+
+		
+		} 
+		catch (SQLException e) {
+
+			e.printStackTrace();
+			return 0;
+
+		}
+	}
+	
+	public String ottieniUltimoTestSvolto(String username) {
+		PreparedStatement g;
+		String nome_test = "Nessun test svolto di recente";
+		int id = -1;
+		
+		try {
+
+			g = connessione.prepareStatement("SELECT id_test FROM CORREZIONE WHERE username_s = '"+username+"'");
+			ResultSet rs = g.executeQuery();
+			for(int i = 0; rs.next();i++) {
+				id = rs.getInt("id_test");
+
+			}
+			g = connessione.prepareStatement("SELECT nome_test FROM TEST WHERE id_test = "+id);
+			rs = g.executeQuery();
+			
+			while(rs.next()) {
+				nome_test = rs.getString("nome_test");
+			}
+	
+		return nome_test;
+
+		
+		} 
+		catch (SQLException e) {
+
+			e.printStackTrace();
+			return nome_test;
+
+		}
+	}
+	
+	
 }

@@ -1,9 +1,7 @@
 package GUI;
 
-import java.awt.EventQueue;
+
 import controller.*;
-import modelli.Quesiti;
-import modelli.Test;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -19,6 +17,7 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.border.EmptyBorder;
 
 public class MenuInsegnante {
 
@@ -29,8 +28,6 @@ public class MenuInsegnante {
 	private JTextField txtCreaQuesito;
 	private JTextField txtVisualizzaTest;
 	private JTextField txtCorreggiTest;
-	private JTextField txtNonHaiCreato;
-	private JTextField txtNonHaiCreato_1;
 	
 	public MenuInsegnante(Controller c) {
 		controller = c;
@@ -65,6 +62,7 @@ public class MenuInsegnante {
 		frame.getContentPane().add(txtCreaTest);
 		
 		txtBenvenuto = new JTextField();
+		txtBenvenuto.setBorder(new EmptyBorder(0, 0, 0, 0));
 		txtBenvenuto.setBackground(Color.WHITE);
 		txtBenvenuto.setEditable(false);
 		txtBenvenuto.setText("Benvenuto, "+controller.i.username);
@@ -92,6 +90,15 @@ public class MenuInsegnante {
 		frame.getContentPane().add(creaTest);
 		
 		JButton vediTest = new JButton("");
+		vediTest.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				frame.setVisible(false);
+				@SuppressWarnings("unused")
+				VisualizzaTestInsegnante next = new VisualizzaTestInsegnante(controller);
+				
+				
+			}
+		});
 		vediTest.setBackground(new Color(255, 255, 102));
 		vediTest.setBorderPainted(false);
 		vediTest.setIcon(new ImageIcon(MenuInsegnante.class.getResource("/Immagini/photo5778473851175418934.jpg")));
@@ -145,6 +152,14 @@ public class MenuInsegnante {
 		frame.getContentPane().add(logout);
 		
 		JButton apriSettings = new JButton("");
+		apriSettings.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				@SuppressWarnings("unused")
+				UserSettings next = new UserSettings(controller, true);
+			}
+		});
+		apriSettings.setBorder(new EmptyBorder(0, 0, 0, 0));
 		apriSettings.setContentAreaFilled(false);
 		apriSettings.setBorderPainted(false);
 		apriSettings.setIcon(new ImageIcon(MenuInsegnante.class.getResource("/Immagini/settings.png")));
@@ -183,27 +198,5 @@ public class MenuInsegnante {
 		txtCorreggiTest.setColumns(10);
 		txtCorreggiTest.setBounds(473, 495, 149, 20);
 		frame.getContentPane().add(txtCorreggiTest);
-		
-		txtNonHaiCreato = new JTextField();
-		txtNonHaiCreato.setForeground(new Color(255, 99, 71));
-		txtNonHaiCreato.setFont(new Font("Tahoma", Font.BOLD, 11));
-		txtNonHaiCreato.setOpaque(false);
-		txtNonHaiCreato.setBorder(null);
-		txtNonHaiCreato.setEditable(false);
-		txtNonHaiCreato.setText("Non hai creato ancora nessun test! Prima di poterlo visualizzare devi crearne uno.");
-		txtNonHaiCreato.setBounds(139, 526, 471, 20);
-		frame.getContentPane().add(txtNonHaiCreato);
-		txtNonHaiCreato.setColumns(10);
-		
-		txtNonHaiCreato_1 = new JTextField();
-		txtNonHaiCreato_1.setText("Non hai creato ancora nessun test! Prima di poter aggiungere quesiti devi crearlo.");
-		txtNonHaiCreato_1.setOpaque(false);
-		txtNonHaiCreato_1.setForeground(new Color(255, 99, 71));
-		txtNonHaiCreato_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		txtNonHaiCreato_1.setEditable(false);
-		txtNonHaiCreato_1.setColumns(10);
-		txtNonHaiCreato_1.setBorder(null);
-		txtNonHaiCreato_1.setBounds(139, 540, 471, 20);
-		frame.getContentPane().add(txtNonHaiCreato_1);
 	}
 }

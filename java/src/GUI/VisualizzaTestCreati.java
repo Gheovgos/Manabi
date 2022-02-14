@@ -1,20 +1,13 @@
 package GUI;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import controller.*;
 import javax.swing.JTextPane;
 import java.awt.Color;
-import javax.swing.JList;
 import javax.swing.JComboBox;
-import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.AbstractListModel;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Toolkit;
 import java.awt.Font;
@@ -34,6 +27,7 @@ public class VisualizzaTestCreati {
 		frame.setVisible(true);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() {
 		String[] rs = controller.returnTestName(controller.i.username);
 		int max = rs.length;
@@ -79,11 +73,7 @@ public class VisualizzaTestCreati {
 		frame.getContentPane().add(btnNewButton_2);
 		btnNewButton_2.setVisible(false);
 		
-		
-		/*if(CONTROLLA CONDIZIONE) {
-			txtpnNonPuoiCreare.setVisible(true); btnNewButton_2.setVisible(true); btnNewButton_2.setEnabled(true); txtpnSelezionaIlTest.setVisible(false); comboBox.setVisible(false);					
-		}*/
-		
+	
 		JButton btnNewButton = new JButton("Modifica");
 		btnNewButton.setEnabled(false);
 		
@@ -95,6 +85,7 @@ public class VisualizzaTestCreati {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
+				@SuppressWarnings("unused")
 				MenuInsegnante back = new MenuInsegnante(controller);
 				frame.setVisible(false);
 				

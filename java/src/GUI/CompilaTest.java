@@ -142,6 +142,7 @@ public class CompilaTest {
 		
 		Ttempo = new JTextField();
 		Ttempo.setText("Tempo rimanente: "+controller.t.tempo.getTime());
+		Ttempo.setVisible(false);
 		Ttempo.setEditable(false);
 		Ttempo.setBounds(603, 11, 186, 20);
 		frame.getContentPane().add(Ttempo);
@@ -184,6 +185,7 @@ public class CompilaTest {
 							progresso--;
 							frame.setVisible(false);
 							TestCompletato next = new TestCompletato(controller);	
+							return;
 						}
 						
 						textDomanda.setText(controller.t.quesiti[progresso].domanda);
@@ -237,6 +239,7 @@ public class CompilaTest {
 							progresso--;
 							frame.setVisible(false);
 							TestCompletato next = new TestCompletato(controller);	
+							return;
 						}
 						textDomanda.setText(controller.t.quesiti[progresso].domanda);
 						

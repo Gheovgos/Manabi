@@ -1,33 +1,34 @@
 package GUI;
 
+import java.awt.Color;
+import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import controller.*;
-import javax.swing.JComboBox;
-import javax.swing.JTextPane;
-import java.awt.Color;
-import javax.swing.JEditorPane;
-import javax.swing.border.MatteBorder;
-import javax.swing.JButton;
+import java.awt.Toolkit;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.JTextPane;
+import javax.swing.border.MatteBorder;
 import javax.swing.DefaultComboBoxModel;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import java.awt.Toolkit;
+import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
+public class VisualizaTestSvolti {
 
-public class VisualizzaTestDaCompilare {
-
-	JFrame frame;
+	private JFrame frame;
 	Controller controller;
 	
-	public VisualizzaTestDaCompilare(Controller c) {
-		controller = c;
+	public VisualizaTestSvolti(Controller c) {
+		controller  = c;
 		initialize();
 		frame.setVisible(true);
 	}
-	
+
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("Manabi");
@@ -36,20 +37,39 @@ public class VisualizzaTestDaCompilare {
 		frame.setBounds(100, 100, 609, 599);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		String[] rs = controller.returnCompTestName(controller.s.username);
+		String[] rs = controller.returnAllTestName(controller.s.username);
+		
+		
+		JTextPane warn = new JTextPane();
+		warn.setForeground(Color.RED);
+		warn.setText("Non hai svolto nessun test!");
+		warn.setEditable(false);
+		warn.setVisible(false);
+		
+		
+		JTextPane txtpnIlPunteggio = new JTextPane();
+		txtpnIlPunteggio.setEditable(false);
+		txtpnIlPunteggio.setText("Il punteggio \u00E8 parziale. Devi attendere che l'insegnante corregga le tue risposte");
+		txtpnIlPunteggio.setVisible(false);
+		txtpnIlPunteggio.setBounds(109, 506, 362, 43);
+		frame.getContentPane().add(txtpnIlPunteggio);
+		
+		warn.setBounds(319, 47, 241, 20);
+		frame.getContentPane().add(warn);
+		
 		if(rs == null) {
-			System.out.println("No test");
+			warn.setVisible(true);
+			
 		}
 		int max = rs.length;
 		controller.caricaTest(rs[0]);
 		controller.caricaInsegnante(controller.t.creatoreTest);
 		
-		JCheckBox already = new JCheckBox("Hai gi\u00E0 compilato questo test!");
-		already.setSelected(true);
-		already.setBounds(319, 47, 258, 23);
-		frame.getContentPane().add(already);
-		already.setVisible(false);
-		
+		if(controller.checkAlreadySolved(controller.t.id, controller.s.username)) {txtpnIlPunteggio.setVisible(false);}
+		JTextPane textPunt = new JTextPane();
+		textPunt.setText("Punteggio: "+String.valueOf(controller.ottieniVotoTest(controller.s.username, controller.t.id)));
+		textPunt.setBounds(377, 150, 151, 20);
+		frame.getContentPane().add(textPunt);
 		
 		String tempo = controller.t.tempo.toString();
 		tempo = tempo.substring(11, 19);
@@ -62,11 +82,11 @@ public class VisualizzaTestDaCompilare {
 		comboBox.setBounds(10, 47, 299, 22);
 		frame.getContentPane().add(comboBox);
 		
-		JTextPane txtpnElencoDeiTest = new JTextPane();
-		txtpnElencoDeiTest.setText("Elenco dei test da poter compilare: ");
-		txtpnElencoDeiTest.setEditable(false);
-		txtpnElencoDeiTest.setBounds(10, 11, 299, 20);
-		frame.getContentPane().add(txtpnElencoDeiTest);
+		JTextPane txtpnElencoTestSvolti = new JTextPane();
+		txtpnElencoTestSvolti.setText("Elenco dei test svolti: ");
+		txtpnElencoTestSvolti.setEditable(false);
+		txtpnElencoTestSvolti.setBounds(10, 11, 299, 20);
+		frame.getContentPane().add(txtpnElencoTestSvolti);
 		
 		JTextPane textNomeTest = new JTextPane();
 		textNomeTest.setText("Nome test: "+controller.t.nomeTest);
@@ -109,15 +129,14 @@ public class VisualizzaTestDaCompilare {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				MenuStudente back = new MenuStudente(controller);
 				frame.setVisible(false);
 			}
 		});
 		btnNewButton.setBounds(10, 526, 89, 23);
 		frame.getContentPane().add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Compila");
-		btnNewButton_1.addMouseListener(new MouseAdapter() {
+		JButton btnSimula = new JButton("Simula");
+		btnSimula.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int selected = 0;
@@ -125,17 +144,17 @@ public class VisualizzaTestDaCompilare {
 				controller.caricaTest(rs[selected]);
 				controller.caricaInsegnante(controller.t.creatoreTest);
 				
-				controller.addCorrezione(controller.i.username, controller.s.username, controller.t.id);
 				
-				CompilaTest next = new CompilaTest(controller);
+				
+				SimulaTest next = new SimulaTest(controller, false);
 				frame.setVisible(false);
-				next.frame.setVisible(true);
 			}
 		});
-		btnNewButton_1.setBounds(494, 526, 89, 23);
-		frame.getContentPane().add(btnNewButton_1);
+		btnSimula.setBounds(494, 526, 89, 23);
+		frame.getContentPane().add(btnSimula);
 		
 		
+	
 		
 		comboBox.addMouseListener(new MouseAdapter() {
 			@Override
@@ -149,14 +168,7 @@ public class VisualizzaTestDaCompilare {
 				tempo = tempo.substring(11, 19);
 				textNomeTest.setText("Nome test: "+controller.t.nomeTest); editorDescrizione.setText(controller.t.descrizione);
 				txtpnAutore.setText("Autore: "+controller.i.cognome+" "+controller.i.nome); txtpnTempo.setText("Tempo: "+tempo); txtpnMateria.setText("Materia: "+controller.t.materia);
-				if(controller.checkAlreadySolved(controller.t.id, controller.s.username)) {
-					already.setVisible(false);
-					btnNewButton_1.setVisible(true);				
-				}
-				else {
-					already.setVisible(true);
-					btnNewButton_1.setVisible(false);
-				}
+				
 			}
 		});
 		
@@ -171,19 +183,11 @@ public class VisualizzaTestDaCompilare {
 				tempo = tempo.substring(11, 19);
 				textNomeTest.setText("Nome test: "+controller.t.nomeTest); editorDescrizione.setText(controller.t.descrizione);
 				txtpnAutore.setText("Autore: "+controller.i.cognome+" "+controller.i.nome); txtpnTempo.setText("Tempo: "+tempo); txtpnMateria.setText("Materia: "+controller.t.materia);
-				if(controller.checkAlreadySolved(controller.t.id, controller.s.username)) {
-					already.setVisible(false);
-					btnNewButton_1.setVisible(true);				
-				}
-				else {
-					already.setVisible(true);
-					btnNewButton_1.setVisible(false);
-				}
+				
 				
 			}
 		});
 		
-		
-		
 	}
+
 }

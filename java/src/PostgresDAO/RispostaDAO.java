@@ -6,12 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import Database.ConnessioneDatabase;
-import modelli.Risposta;
+
 
 public class RispostaDAO {
 	
 	Connection connessione;
-	Risposta r;
+
 	
 	public RispostaDAO() {
 		try {
