@@ -2,7 +2,7 @@
 
 
 
-![manabi](https://user-images.githubusercontent.com/72210745/152645027-046de5b9-32bc-4dd7-a305-f12378784b1e.png)
+![manabi classic shadow](https://user-images.githubusercontent.com/72210745/154077979-6d91343c-0d41-430c-befb-5b4e8ae496c2.png)
 
 
 
