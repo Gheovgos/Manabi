@@ -1,8 +1,8 @@
 
 
 
+![manabi](https://user-images.githubusercontent.com/72210745/154078187-664ea129-4b4f-41c4-9052-6b781aa42557.png)
 
-![manabi classic shadow](https://user-images.githubusercontent.com/72210745/154077979-6d91343c-0d41-430c-befb-5b4e8ae496c2.png)
 
 
 
