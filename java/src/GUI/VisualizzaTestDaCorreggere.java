@@ -1,7 +1,5 @@
 package GUI;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JTextPane;
 
@@ -34,11 +32,12 @@ public class VisualizzaTestDaCorreggere {
 	}
 
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initialize() {
 		
-		rs = controller.returnTestName(controller.i.username, 0);
+		rs = controller.returnTestName(controller.getI().username, 0);
 		controller.caricaTest(rs[0]);
-		rm = controller.returnStudenti(controller.t.id);
+		rm = controller.returnStudenti(controller.getT().getId());
 		
 		frame = new JFrame();
 		frame.setTitle("Manabi");
@@ -74,9 +73,6 @@ public class VisualizzaTestDaCorreggere {
 		int max = rs.length;
 		username_s = rm[0];
 		
-		
-		
-		
 		comboTest.setMaximumRowCount(max);
 		comboTest.setModel(new DefaultComboBoxModel(rs));
 		comboTest.setSelectedIndex(0);
@@ -102,22 +98,21 @@ public class VisualizzaTestDaCorreggere {
 		
 		
 		correggiButton.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unused")
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int selected = 0;
 				selected = comboTest.getSelectedIndex();
-				controller.caricaTest(rs[selected], controller.i.username);
+				controller.caricaTest(rs[selected], controller.getI().username);
 				controller.caricaStudente(username_s);
 				CorreggiTest next = new CorreggiTest(controller);
 				frame.setVisible(false);
-				
+				frame.dispose();
 			}
 		});
 		correggiButton.setBounds(335, 227, 89, 23);
 		frame.getContentPane().add(correggiButton);
-		
-		
-		
+			
 		comboStud.setModel(new DefaultComboBoxModel(rm));
 		comboStud.setBounds(227, 61, 197, 22);
 		frame.getContentPane().add(comboStud);
@@ -127,7 +122,7 @@ public class VisualizzaTestDaCorreggere {
 				int selected = 0;
 				selected = comboTest.getSelectedIndex();
 				controller.caricaTest(rs[selected]);
-				rm = controller.returnStudenti(controller.t.id);
+				rm = controller.returnStudenti(controller.getT().getId());
 			}
 		});
 		

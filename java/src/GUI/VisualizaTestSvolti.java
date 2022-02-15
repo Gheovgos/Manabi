@@ -1,8 +1,6 @@
 package GUI;
 
 import java.awt.Color;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import controller.*;
 import java.awt.Toolkit;
@@ -15,7 +13,6 @@ import javax.swing.JTextPane;
 import javax.swing.border.MatteBorder;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 public class VisualizaTestSvolti {
@@ -29,6 +26,7 @@ public class VisualizaTestSvolti {
 		frame.setVisible(true);
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("Manabi");
@@ -37,7 +35,7 @@ public class VisualizaTestSvolti {
 		frame.setBounds(100, 100, 609, 599);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		String[] rs = controller.returnAllTestName(controller.s.username);
+		String[] rs = controller.returnAllTestName(controller.getS().username);
 		
 		
 		JTextPane warn = new JTextPane();
@@ -58,20 +56,19 @@ public class VisualizaTestSvolti {
 		frame.getContentPane().add(warn);
 		
 		if(rs == null) {
-			warn.setVisible(true);
-			
+			warn.setVisible(true);		
 		}
 		int max = rs.length;
 		controller.caricaTest(rs[0]);
-		controller.caricaInsegnante(controller.t.creatoreTest);
+		controller.caricaInsegnante(controller.getT().getCreatoreTest());
 		
-		if(controller.checkAlreadySolved(controller.t.id, controller.s.username)) {txtpnIlPunteggio.setVisible(false);}
+		if(controller.checkAlreadySolved(controller.getT().getId(), controller.getS().username)) {txtpnIlPunteggio.setVisible(false);}
 		JTextPane textPunt = new JTextPane();
-		textPunt.setText("Punteggio: "+String.valueOf(controller.ottieniVotoTest(controller.s.username, controller.t.id)));
+		textPunt.setText("Punteggio: "+String.valueOf(controller.ottieniVotoTest(controller.getS().username, controller.getT().getId())));
 		textPunt.setBounds(377, 150, 151, 20);
 		frame.getContentPane().add(textPunt);
 		
-		String tempo = controller.t.tempo.toString();
+		String tempo = controller.getT().getTempo().toString();
 		tempo = tempo.substring(11, 19);
 		
 		
@@ -89,13 +86,13 @@ public class VisualizaTestSvolti {
 		frame.getContentPane().add(txtpnElencoTestSvolti);
 		
 		JTextPane textNomeTest = new JTextPane();
-		textNomeTest.setText("Nome test: "+controller.t.nomeTest);
+		textNomeTest.setText("Nome test: "+controller.getT().getNomeTest());
 		textNomeTest.setEditable(false);
 		textNomeTest.setBounds(10, 96, 129, 20);
 		frame.getContentPane().add(textNomeTest);
 		
 		JTextPane txtpnAutore = new JTextPane();
-		txtpnAutore.setText("Autore: "+controller.i.cognome+" "+controller.i.nome);
+		txtpnAutore.setText("Autore: "+controller.getI().cognome+" "+controller.getI().nome);
 		txtpnAutore.setEditable(false);
 		txtpnAutore.setBounds(227, 96, 140, 43);
 		frame.getContentPane().add(txtpnAutore);
@@ -107,7 +104,7 @@ public class VisualizaTestSvolti {
 		frame.getContentPane().add(txtpnTempo);
 		
 		JEditorPane editorDescrizione = new JEditorPane();
-		editorDescrizione.setText(controller.t.descrizione);
+		editorDescrizione.setText(controller.getT().getDescrizione());
 		editorDescrizione.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		editorDescrizione.setEditable(false);
 		editorDescrizione.setBounds(10, 181, 573, 292);
@@ -120,7 +117,7 @@ public class VisualizaTestSvolti {
 		frame.getContentPane().add(textDesc);
 		
 		JTextPane txtpnMateria = new JTextPane();
-		txtpnMateria.setText("Materia: "+controller.t.materia);
+		txtpnMateria.setText("Materia: "+controller.getT().getMateria());
 		txtpnMateria.setEditable(false);
 		txtpnMateria.setBounds(227, 150, 120, 20);
 		frame.getContentPane().add(txtpnMateria);
@@ -137,17 +134,17 @@ public class VisualizaTestSvolti {
 		
 		JButton btnSimula = new JButton("Simula");
 		btnSimula.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unused")
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int selected = 0;
 				selected = comboBox.getSelectedIndex();
 				controller.caricaTest(rs[selected]);
-				controller.caricaInsegnante(controller.t.creatoreTest);
-				
-				
+				controller.caricaInsegnante(controller.getT().getCreatoreTest());			
 				
 				SimulaTest next = new SimulaTest(controller, false);
 				frame.setVisible(false);
+				frame.dispose();
 			}
 		});
 		btnSimula.setBounds(494, 526, 89, 23);
@@ -163,11 +160,11 @@ public class VisualizaTestSvolti {
 				
 				selected = comboBox.getSelectedIndex();
 				controller.caricaTest(rs[selected]);
-				controller.caricaInsegnante(controller.t.creatoreTest);
-				String tempo = controller.t.tempo.toString();
+				controller.caricaInsegnante(controller.getT().getCreatoreTest());
+				String tempo = controller.getT().getTempo().toString();
 				tempo = tempo.substring(11, 19);
-				textNomeTest.setText("Nome test: "+controller.t.nomeTest); editorDescrizione.setText(controller.t.descrizione);
-				txtpnAutore.setText("Autore: "+controller.i.cognome+" "+controller.i.nome); txtpnTempo.setText("Tempo: "+tempo); txtpnMateria.setText("Materia: "+controller.t.materia);
+				textNomeTest.setText("Nome test: "+controller.getT().getNomeTest()); editorDescrizione.setText(controller.getT().getDescrizione());
+				txtpnAutore.setText("Autore: "+controller.getI().cognome+" "+controller.getI().nome); txtpnTempo.setText("Tempo: "+tempo); txtpnMateria.setText("Materia: "+controller.getT().getMateria());
 				
 			}
 		});
@@ -178,13 +175,11 @@ public class VisualizaTestSvolti {
 				int selected = 0;
 				selected = comboBox.getSelectedIndex();
 				controller.caricaTest(rs[selected]);
-				controller.caricaInsegnante(controller.t.creatoreTest);
-				String tempo = controller.t.tempo.toString();
+				controller.caricaInsegnante(controller.getT().getCreatoreTest());
+				String tempo = controller.getT().getTempo().toString();
 				tempo = tempo.substring(11, 19);
-				textNomeTest.setText("Nome test: "+controller.t.nomeTest); editorDescrizione.setText(controller.t.descrizione);
-				txtpnAutore.setText("Autore: "+controller.i.cognome+" "+controller.i.nome); txtpnTempo.setText("Tempo: "+tempo); txtpnMateria.setText("Materia: "+controller.t.materia);
-				
-				
+				textNomeTest.setText("Nome test: "+controller.getT().getNomeTest()); editorDescrizione.setText(controller.getT().getDescrizione());
+				txtpnAutore.setText("Autore: "+controller.getI().cognome+" "+controller.getI().nome); txtpnTempo.setText("Tempo: "+tempo); txtpnMateria.setText("Materia: "+controller.getT().getMateria());				
 			}
 		});
 		

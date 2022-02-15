@@ -1,15 +1,13 @@
 package PostgresDAO;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 import Database.ConnessioneDatabase;
 import modelli.*;
 
 public class QuesitiDAO {
 	
-	Connection connessione;
-	Quesiti q;
+	private Connection connessione;
 	
 	public QuesitiDAO() {
 		try {

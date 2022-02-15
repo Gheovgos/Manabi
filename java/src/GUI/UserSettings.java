@@ -1,7 +1,5 @@
 package GUI;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 
 import controller.Controller;
@@ -35,6 +33,7 @@ public class UserSettings {
 
 	private void initialize() {
 		frame = new JFrame();
+		frame.setAlwaysOnTop(true);
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(UserSettings.class.getResource("/Immagini/icona manabi.png")));
 		frame.setTitle("Manabi");
@@ -96,16 +95,16 @@ public class UserSettings {
 		txtCon.setBounds(133, 135, 223, 20);
 		frame.getContentPane().add(txtCon);
 		if(isIns) {
-			txtNom.setText(controller.i.nome);
-			txtCon.setText(controller.i.cognome);
+			txtNom.setText(controller.getI().nome);
+			txtCon.setText(controller.getI().cognome);
 			
-			oldUsername = controller.i.username;
+			oldUsername = controller.getI().username;
 		}
 		else {
-			txtNom.setText(controller.s.nome);
-			txtCon.setText(controller.s.cognome);
+			txtNom.setText(controller.getS().nome);
+			txtCon.setText(controller.getS().cognome);
 			
-			oldUsername = controller.s.username;
+			oldUsername = controller.getS().username;
 		}
 		
 		JTextPane txtpnNome = new JTextPane();
@@ -174,14 +173,13 @@ public class UserSettings {
 				if(b && c && d && f)
 				{			
 					if(isIns) {
-						System.out.println("ESEGUO!");
 						controller.aggiornaUtente(cpassword, nome, cognome, isIns, oldUsername);
-						controller.caricaInsegnante(controller.i.username);
+						controller.caricaInsegnante(controller.getI().username);
 						
 					}
 					else {
 						controller.aggiornaUtente(cpassword, nome, cognome, isIns, oldUsername);
-						controller.caricaStudente(controller.s.username);						
+						controller.caricaStudente(controller.getS().username);						
 					}					
 				}
 			}
@@ -196,11 +194,13 @@ public class UserSettings {
 				if(isIns) {
 					
 					frame.setVisible(false);
+					frame.dispose();
 					return;
 				}
 				else {
 					
 					frame.setVisible(false);
+					frame.dispose();
 					return;
 				}
 			}

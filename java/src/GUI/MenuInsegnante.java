@@ -65,7 +65,7 @@ public class MenuInsegnante {
 		txtBenvenuto.setBorder(new EmptyBorder(0, 0, 0, 0));
 		txtBenvenuto.setBackground(Color.WHITE);
 		txtBenvenuto.setEditable(false);
-		txtBenvenuto.setText("Benvenuto, "+controller.i.username);
+		txtBenvenuto.setText("Benvenuto, "+controller.getI().username);
 		txtBenvenuto.setBounds(247, 35, 294, 20);
 		frame.getContentPane().add(txtBenvenuto);
 		txtBenvenuto.setColumns(10);

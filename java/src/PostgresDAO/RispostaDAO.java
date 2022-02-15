@@ -10,7 +10,7 @@ import Database.ConnessioneDatabase;
 
 public class RispostaDAO {
 	
-	Connection connessione;
+	private Connection connessione;
 
 	
 	public RispostaDAO() {

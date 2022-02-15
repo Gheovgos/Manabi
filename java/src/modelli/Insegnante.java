@@ -6,11 +6,5 @@ public Insegnante(String u, String p, String n, String c) {
 	password = p;
 	nome = n;
 	cognome = c;
-	//da aggiornare anche test ecc
-}
-
-
-
-
-
+	}
 }

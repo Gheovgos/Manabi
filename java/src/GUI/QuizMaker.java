@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import controller.*;
@@ -8,14 +7,7 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
-import javax.swing.JSpinner;
 import javax.swing.JEditorPane;
-import javax.swing.JList;
-import javax.swing.border.BevelBorder;
-import javax.swing.AbstractListModel;
-import javax.swing.JFormattedTextField;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SpinnerListModel;
 import javax.swing.border.TitledBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -23,8 +15,6 @@ import java.util.Arrays;
 import java.util.Random;
 import javax.swing.JSlider;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -54,7 +44,6 @@ public class QuizMaker {
 		frame.setVisible(true);
 	}
 
-	@SuppressWarnings("removal")
 	private void initialize() {
 		frame = new JFrame();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(QuizMaker.class.getResource("/Immagini/icona manabi.png")));
@@ -175,9 +164,11 @@ public class QuizMaker {
 		
 		btnNewButton_1 = new JButton("Indietro");
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unused")
 			public void mouseClicked(MouseEvent e) {
 				MenuInsegnante back = new MenuInsegnante(controller);
-				frame.setVisible(false);	
+				frame.setVisible(false);
+				frame.dispose();
 			}
 		});
 		btnNewButton_1.setBounds(10, 527, 89, 23);
@@ -226,8 +217,8 @@ public class QuizMaker {
 					if(Float.parseFloat(inputMin.getText()) >= Float.parseFloat(inputMax.getText())) {minSupMax.setVisible(true); d = false;} else {minSupMax.setVisible(false); d = true;}
 					
 					if(isOpen && a && b && c && d) {
-						controller.inizializzaQuesito(i, controller.t.id, Float.parseFloat(inputMin.getText()),  Float.parseFloat(inputMax.getText()), dtrpnLaDomandaVa.getText(), r, isOpen);
-						txtpnQuesitoSalvaoPer.setText("Quesito aperto salvato per il test \""+controller.t.nomeTest+"\"");
+						controller.inizializzaQuesito(i, controller.getT().getId(), Float.parseFloat(inputMin.getText()),  Float.parseFloat(inputMax.getText()), dtrpnLaDomandaVa.getText(), r, isOpen);
+						txtpnQuesitoSalvaoPer.setText("Quesito aperto salvato per il test \""+controller.getT().getNomeTest()+"\"");
 						txtpnQuesitoSalvaoPer.setVisible(true); }
 					
 				}
@@ -284,11 +275,12 @@ public class QuizMaker {
 						else {warningMul.setVisible(false); f = true; r[0] = textA.getText(); r[1] = textB.getText();  }
 						
 						if(!isOpen && a && b && c && d && f) {
-							controller.inizializzaQuesito(i, controller.t.id, Float.parseFloat(inputMin.getText()),  Float.parseFloat(inputMax.getText()), dtrpnLaDomandaVa.getText(), r, isOpen);
+							controller.inizializzaQuesito(i, controller.getT().getId(), Float.parseFloat(inputMin.getText()),  Float.parseFloat(inputMax.getText()), dtrpnLaDomandaVa.getText(), r, isOpen);
 							warningMul.setVisible(false);
-							txtpnQuesitoSalvaoPer.setText("Quesito multiplo salvato per il test \""+controller.t.nomeTest+"\"");
+							txtpnQuesitoSalvaoPer.setText("Quesito multiplo salvato per il test \""+controller.getT().getNomeTest()+"\"");
 							txtpnQuesitoSalvaoPer.setVisible(true); 
-							//salva nel DB
+							isOpen = true;
+
 						}						
 					}
 					if(slider.getValue() == 3) {
@@ -300,11 +292,11 @@ public class QuizMaker {
 						else {warningMul.setVisible(false); f = true; r[0] = textA.getText(); r[1] = textB.getText(); r[2] = textC.getText();}
 						
 						if(!isOpen && a && b && c && d && f) {
-							controller.inizializzaQuesito(i, controller.t.id, Float.parseFloat(inputMin.getText()),  Float.parseFloat(inputMax.getText()), dtrpnLaDomandaVa.getText(), r, isOpen);
+							controller.inizializzaQuesito(i, controller.getT().getId(), Float.parseFloat(inputMin.getText()),  Float.parseFloat(inputMax.getText()), dtrpnLaDomandaVa.getText(), r, isOpen);
 							warningMul.setVisible(false);
-							txtpnQuesitoSalvaoPer.setText("Quesito multiplo salvato per il test \""+controller.t.nomeTest+"\"");
+							txtpnQuesitoSalvaoPer.setText("Quesito multiplo salvato per il test "+controller.getT().getNomeTest());
 							txtpnQuesitoSalvaoPer.setVisible(true); 
-							//salva nel DB
+							isOpen = true;
 						}						
 					}
 					
@@ -317,11 +309,11 @@ public class QuizMaker {
 						else {warningMul.setVisible(false); f = true; r[0] = textA.getText(); r[1] = textB.getText(); r[2] = textC.getText(); r[3] = textD.getText();}
 						
 						if(!isOpen && a && b && c && d && f) {
-							controller.inizializzaQuesito(i, controller.t.id, Float.parseFloat(inputMin.getText()),  Float.parseFloat(inputMax.getText()), dtrpnLaDomandaVa.getText(), r, isOpen);
+							controller.inizializzaQuesito(i, controller.getT().getId(), Float.parseFloat(inputMin.getText()),  Float.parseFloat(inputMax.getText()), dtrpnLaDomandaVa.getText(), r, isOpen);
 							warningMul.setVisible(false);
-							txtpnQuesitoSalvaoPer.setText("Quesito multiplo salvato per il test \""+controller.t.nomeTest+"\"");
+							txtpnQuesitoSalvaoPer.setText("Quesito multiplo salvato per il test \""+controller.getT().getNomeTest()+"\"");
 							txtpnQuesitoSalvaoPer.setVisible(true); 
-							//salva nel DB
+							isOpen = true;
 						}						
 					}
 					
@@ -334,11 +326,12 @@ public class QuizMaker {
 						else {warningMul.setVisible(false); f = true; r[0] = textA.getText(); r[1] = textB.getText(); r[2] = textC.getText(); r[3] = textD.getText(); r[4] = textE.getText();}
 						
 						if(!isOpen && a && b && c && d && f) {
-							controller.inizializzaQuesito(i, controller.t.id, Float.parseFloat(inputMin.getText()),  Float.parseFloat(inputMax.getText()), dtrpnLaDomandaVa.getText(), r, isOpen);
+							controller.inizializzaQuesito(i, controller.getT().getId(), Float.parseFloat(inputMin.getText()),  Float.parseFloat(inputMax.getText()), dtrpnLaDomandaVa.getText(), r, isOpen);
 							warningMul.setVisible(false);
-							txtpnQuesitoSalvaoPer.setText("Quesito multiplo salvato per il test \""+controller.t.nomeTest+"\"");
+							txtpnQuesitoSalvaoPer.setText("Quesito multiplo salvato per il test "+controller.getT().getNomeTest());
 							txtpnQuesitoSalvaoPer.setVisible(true); 
-							//salva nel DB
+							isOpen = true;
+
 						}						
 					}
 					
@@ -529,7 +522,7 @@ public class QuizMaker {
 		
 		JTextPane txtpnStaiCreandoQuesiti = new JTextPane();
 		txtpnStaiCreandoQuesiti.setFont(new Font("Tahoma", Font.BOLD, 10));
-		txtpnStaiCreandoQuesiti.setText("Stai creando quesiti per il Test \""+controller.t.nomeTest+"\"");
+		txtpnStaiCreandoQuesiti.setText("Stai creando quesiti per il Test \""+controller.getT().getNomeTest()+"\"");
 		txtpnStaiCreandoQuesiti.setEditable(false);
 		txtpnStaiCreandoQuesiti.setBounds(10, 3, 402, 20);
 		frame.getContentPane().add(txtpnStaiCreandoQuesiti);
@@ -615,10 +608,7 @@ public class QuizMaker {
 				}
 				
 			}
-		});
-	
-		
-		
+		});	
 		
 	}
 }

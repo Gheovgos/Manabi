@@ -1,8 +1,6 @@
 package GUI;
 
 import java.awt.EventQueue;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 import controller.Controller;
 
@@ -10,17 +8,16 @@ import controller.Controller;
 public class Manabi {
 
 	private JFrame frame;
+	/*E' la prima classe a esser chiamata. Si occupa della creazione del controller e del passaggio alla prima schermata (quella di accesso)*/
 	
-	/**
-	 * Avvio prima GUI
-	 */
 	public static void main(String[] args) {
-		
+	
 		EventQueue.invokeLater(new Runnable() {
+			@SuppressWarnings("unused")
 			public void run() {
 				try {
-					Controller c = new Controller();
-					Accesso window = new Accesso(c); 
+					Controller c = new Controller(); //Viene inizializzato il controller. Il costruttore e il metood initialize saranno inutili: il controllo verrà passato alla prossima schermata.
+					Accesso window = new Accesso(c);  //si passa alla schermata di accesso
 					
 				} catch (Exception e) {
 					e.printStackTrace();

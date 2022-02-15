@@ -1,7 +1,5 @@
 package GUI;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import controller.*;
 import java.awt.Toolkit;
@@ -19,22 +17,20 @@ import java.util.Collections;
 import java.util.List;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 public class CompilaTest {
 
 	 JFrame frame;
 	Controller controller;
 	private JTextPane textRispostaAperta;
-	int progresso = 0;
+	private int progresso = 0;
 	private JTextField warnNoRisp;
-	String[] rs;
+	private String[] rs;
 	private JTextField Ttempo;
 	
 	public CompilaTest(Controller c) {
 		controller = c;
-		controller.caricaQuesitiTest(controller.t.id);
+		controller.caricaQuesitiTest(controller.getT().getId());
 		initialize();
 		frame.setVisible(true);
 		
@@ -43,15 +39,11 @@ public class CompilaTest {
 	private void initialize() {
 		frame = new JFrame();
 		
-		int lunghezzaTest = controller.t.quesiti.length;
-		rs = controller.t.quesiti[progresso].risposte;
+		int lunghezzaTest = controller.getT().getQuesiti().length;
+		rs = controller.getT().getQuesiti()[progresso].getRisposte();
 		
 		rs = shuffle(rs);
-		
-		//vedi timer
-		
-		
-		
+
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setAlwaysOnTop(true);
 		frame.setTitle("Manabi");
@@ -76,13 +68,13 @@ public class CompilaTest {
 		
 		
 		JTextPane titoloTest = new JTextPane();
-		titoloTest.setText(controller.t.nomeTest);
+		titoloTest.setText(controller.getT().getNomeTest());
 		titoloTest.setEditable(false);
 		titoloTest.setBounds(10, 11, 192, 20);
 		frame.getContentPane().add(titoloTest);
 		
 		JTextPane textDomanda = new JTextPane();
-		textDomanda.setText(controller.t.quesiti[progresso].domanda);
+		textDomanda.setText(controller.getT().getQuesiti()[progresso].getDomanda());
 		
 		textDomanda.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		textDomanda.setBounds(20, 42, 769, 145);
@@ -141,17 +133,14 @@ public class CompilaTest {
 		frame.getContentPane().add(textRispostaAperta);
 		
 		Ttempo = new JTextField();
-		Ttempo.setText("Tempo rimanente: "+controller.t.tempo.getTime());
+		Ttempo.setText("Tempo rimanente: "+controller.getT().getTempo().getTime());
 		Ttempo.setVisible(false);
 		Ttempo.setEditable(false);
 		Ttempo.setBounds(603, 11, 186, 20);
 		frame.getContentPane().add(Ttempo);
 		Ttempo.setColumns(10);
-		
-		
-		
-		
-		if(controller.t.quesiti[0].isOpen) {
+			
+		if(controller.getT().getQuesiti()[0].isOpen()) {
 			A.setVisible(false); B.setVisible(false); C.setVisible(false); D.setVisible(false); E.setVisible(false);
 			textRispostaAperta.setVisible(true);
 			
@@ -172,12 +161,13 @@ public class CompilaTest {
 	
 		Avanti.addMouseListener(new MouseAdapter() {
 			
+			@SuppressWarnings("unused")
 			public void mouseClicked(MouseEvent e) {
 				
-				if(controller.t.quesiti[progresso].isOpen) {
+				if(controller.getT().getQuesiti()[progresso].isOpen()) {
 					
 					
-						controller.insertRisposta(controller.t.quesiti[progresso].idQuesito, textRispostaAperta.getText(), controller.t.quesiti[progresso].isOpen);
+						controller.insertRisposta(controller.getT().getQuesiti()[progresso].getIdQuesito(), textRispostaAperta.getText(), controller.getT().getQuesiti()[progresso].isOpen());
 						progresso++;
 											
 						progressBar.setValue(progresso);
@@ -188,13 +178,13 @@ public class CompilaTest {
 							return;
 						}
 						
-						textDomanda.setText(controller.t.quesiti[progresso].domanda);
-						if(controller.t.quesiti[progresso].isOpen) {
+						textDomanda.setText(controller.getT().getQuesiti()[progresso].getDomanda());
+						if(controller.getT().getQuesiti()[progresso].isOpen()) {
 							A.setVisible(false); B.setVisible(false); C.setVisible(false); D.setVisible(false); E.setVisible(false);
 							textRispostaAperta.setVisible(true);}
 						
 						else {
-							rs = controller.t.quesiti[progresso].risposte;
+							rs = controller.getT().getQuesiti()[progresso].getRisposte();
 							rs = shuffle(rs);
 							if(rs[0].equals("")) { A.setVisible(false); A.setText(rs[0]);}
 							else {A.setVisible(true); A.setText(rs[0]);}
@@ -232,7 +222,7 @@ public class CompilaTest {
 			
 							else if(E.isSelected()) {risposta = E.getText();} 
 						
-						controller.insertRisposta(controller.t.quesiti[progresso].idQuesito, risposta, controller.t.quesiti[progresso].isOpen);
+						controller.insertRisposta(controller.getT().getQuesiti()[progresso].getIdQuesito(), risposta, controller.getT().getQuesiti()[progresso].isOpen());
 						progresso++;
 						progressBar.setValue(progresso);
 						if(checkProgress(progresso, lunghezzaTest)) {
@@ -241,15 +231,15 @@ public class CompilaTest {
 							TestCompletato next = new TestCompletato(controller);	
 							return;
 						}
-						textDomanda.setText(controller.t.quesiti[progresso].domanda);
+						textDomanda.setText(controller.getT().getQuesiti()[progresso].getDomanda());
 						
 						
-						if(controller.t.quesiti[progresso].isOpen) {
+						if(controller.getT().getQuesiti()[progresso].isOpen()) {
 							A.setVisible(false); B.setVisible(false); C.setVisible(false); D.setVisible(false); E.setVisible(false);
 							textRispostaAperta.setVisible(true);}
 						else {
 							A.setSelected(false); B.setSelected(false); C.setSelected(false); D.setSelected(false); E.setSelected(false);
-							rs = controller.t.quesiti[progresso].risposte;
+							rs = controller.getT().getQuesiti()[progresso].getRisposte();
 							rs = shuffle(rs);
 							if(rs[0].equals("")) { A.setVisible(false); A.setText(rs[0]);}
 							else {A.setVisible(true); A.setText(rs[0]);}
@@ -322,23 +312,16 @@ public class CompilaTest {
 			}
 		});
 		
-		frame.addFocusListener(new FocusAdapter() {
-			
-			public void focusGained(FocusEvent e) {
-				
-			}
-		});
-		
 	}
 	
 	
 	
-	public boolean checkProgress(int progresso, int max) {
+	private boolean checkProgress(int progresso, int max) {
 		if(progresso == max) return true;
 		else return false;
 	}
 	
-	public String[] shuffle(String [] rs) {
+	private String[] shuffle(String [] rs) {
 	
 		List<String> shuffle = Arrays.asList(rs);
 

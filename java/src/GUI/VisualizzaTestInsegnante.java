@@ -1,7 +1,6 @@
 package GUI;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -10,7 +9,6 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
@@ -40,6 +38,7 @@ public class VisualizzaTestInsegnante {
 	}
 
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("Manabi");
@@ -48,19 +47,7 @@ public class VisualizzaTestInsegnante {
 		frame.setBounds(100, 100, 609, 599);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		String[] rs = controller.returnAllTest(controller.i.username);
-		if(rs == null) {
-			System.out.println("No test");
-		}
-		
-		int max = rs.length;
-		controller.caricaTest(rs[0]);
-		controller.caricaInsegnante(controller.t.creatoreTest);
-		
-		
-		String tempo = controller.t.tempo.toString();
-		tempo = tempo.substring(11, 19);
-		
+		String[] rs = controller.returnAllTest(controller.getI().username);
 		warn = new JTextField();
 		warn.setBorder(new EmptyBorder(0, 0, 0, 0));
 		warn.setForeground(Color.RED);
@@ -70,6 +57,21 @@ public class VisualizzaTestInsegnante {
 		warn.setBounds(109, 527, 221, 20);
 		frame.getContentPane().add(warn);
 		warn.setColumns(10);
+		
+		if(rs == null) {
+			warn.setText("Non hai creato alcun test!");
+			warn.setVisible(true);
+		}
+		
+		int max = rs.length;
+		
+		controller.caricaTest(rs[0]);
+		controller.caricaInsegnante(controller.getT().getCreatoreTest());
+		
+		
+		String tempo = controller.getT().getTempo().toString();
+		tempo = tempo.substring(11, 19);
+		
 		
 		
 		JComboBox comboBox = new JComboBox();	
@@ -87,7 +89,7 @@ public class VisualizzaTestInsegnante {
 		
 		JTextPane textNomeTest = new JTextPane();
 		textNomeTest.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		textNomeTest.setText(controller.t.nomeTest);
+		textNomeTest.setText(controller.getT().getNomeTest());
 		textNomeTest.setBounds(10, 84, 198, 43);
 		frame.getContentPane().add(textNomeTest);
 		
@@ -98,7 +100,7 @@ public class VisualizzaTestInsegnante {
 		frame.getContentPane().add(txtpnTempo);
 		
 		JEditorPane editorDescrizione = new JEditorPane();
-		editorDescrizione.setText(controller.t.descrizione);
+		editorDescrizione.setText(controller.getT().getDescrizione());
 		editorDescrizione.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		editorDescrizione.setBounds(10, 181, 573, 292);
 		frame.getContentPane().add(editorDescrizione);
@@ -111,16 +113,19 @@ public class VisualizzaTestInsegnante {
 		
 		JTextPane editorMateria = new JTextPane();
 		editorMateria.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		editorMateria.setText(controller.t.descrizione);
+		editorMateria.setText(controller.getT().getMateria());
 		editorMateria.setBounds(218, 84, 149, 43);
 		frame.getContentPane().add(editorMateria);
 		
 		JButton btnNewButton = new JButton("Indietro");
 		btnNewButton.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unused")
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				frame.setVisible(false);
 				MenuInsegnante back = new MenuInsegnante(controller);
+				frame.setVisible(false);
+				frame.dispose();
+
 			}
 		});
 		btnNewButton.setBounds(10, 526, 89, 23);
@@ -130,25 +135,25 @@ public class VisualizzaTestInsegnante {
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int selected = 0;
-				selected = comboBox.getSelectedIndex();
+
 				
-				controller.t.nomeTest = textNomeTest.getText();
-				controller.t.descrizione = editorDescrizione.getText();
-				controller.t.materia = editorMateria.getText();
+				controller.getT().setNomeTest(textNomeTest.getText());
+				controller.getT().setDescrizione(editorDescrizione.getText());
+				controller.getT().setMateria(editorMateria.getText());
 				
 				controller.updateTest();
-				controller.caricaTest(rs[selected]);
+				controller.caricaTest(rs[0]);
 				
 			}
 		});
+		
 		btnNewButton_1.setBounds(494, 526, 89, 23);
 		frame.getContentPane().add(btnNewButton_1);
 		
 		txtID = new JTextField();
 		txtID.setBorder(new EmptyBorder(0, 0, 0, 0));
 		txtID.setBackground(Color.WHITE);
-		txtID.setText("Identificativo: "+controller.t.id);
+		txtID.setText("Identificativo: "+controller.getT().getId());
 		txtID.setEditable(false);
 		txtID.setBounds(336, 32, 167, 20);
 		frame.getContentPane().add(txtID);
@@ -156,6 +161,7 @@ public class VisualizzaTestInsegnante {
 		
 		JButton btnSimula = new JButton("Simula");
 		btnSimula.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unused")
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(!controller.hasQ()) {
@@ -164,7 +170,10 @@ public class VisualizzaTestInsegnante {
 				else {
 					SimulaTest next = new SimulaTest(controller, true);
 					frame.setVisible(false);
+					frame.dispose();
+
 				}
+				
 				
 			}
 		});
@@ -202,11 +211,11 @@ public class VisualizzaTestInsegnante {
 				selected = comboBox.getSelectedIndex();
 				controller.caricaTest(rs[selected]);
 				
-				String tempo = controller.t.tempo.toString();
+				String tempo = controller.getT().getTempo().toString();
 				tempo = tempo.substring(11, 19);
-				txtID.setText("Identificativo: "+controller.t.id);
-				textNomeTest.setText(controller.t.nomeTest); editorDescrizione.setText(controller.t.descrizione);
-				txtpnTempo.setText("Tempo: "+tempo); editorMateria.setText(controller.t.materia); }
+				txtID.setText("Identificativo: "+controller.getT().getId());
+				textNomeTest.setText(controller.getT().getNomeTest()); editorDescrizione.setText(controller.getT().getDescrizione());
+				txtpnTempo.setText("Tempo: "+tempo); editorMateria.setText(controller.getT().getMateria()); }
 		});
 		
 		comboBox.addItemListener(new ItemListener() {
@@ -216,11 +225,11 @@ public class VisualizzaTestInsegnante {
 				selected = comboBox.getSelectedIndex();
 				controller.caricaTest(rs[selected]);
 				
-				String tempo = controller.t.tempo.toString();
-				txtID.setText("Identificativo: "+controller.t.id);
+				String tempo = controller.getT().getTempo().toString();
+				txtID.setText("Identificativo: "+controller.getT().getId());
 				tempo = tempo.substring(11, 19);
-				textNomeTest.setText(controller.t.nomeTest); editorDescrizione.setText(controller.t.descrizione);
-				txtpnTempo.setText("Tempo: "+tempo); editorMateria.setText(controller.t.materia);
+				textNomeTest.setText(controller.getT().getNomeTest()); editorDescrizione.setText(controller.getT().getDescrizione());
+				txtpnTempo.setText("Tempo: "+tempo); editorMateria.setText(controller.getT().getMateria());
 				
 				
 			}

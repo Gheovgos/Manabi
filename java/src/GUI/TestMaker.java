@@ -1,6 +1,5 @@
 package GUI;
 
-import java.awt.EventQueue;
 import controller.*;
 
 import javax.swing.JFrame;
@@ -9,8 +8,6 @@ import java.awt.Color;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -132,10 +129,12 @@ public class TestMaker {
 		btnNewButton.setBorder(null);
 		btnNewButton.setBackground(new Color(176, 196, 222));
 		btnNewButton.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unused")
 			public void mouseClicked(MouseEvent e) {
 				MenuInsegnante back = new MenuInsegnante(controller);
 				frame.setVisible(false);
-				back.frame.setVisible(true); }
+				frame.dispose();
+			}
 		});
 		btnNewButton.setToolTipText("Torna al menu. Le informazioni non verranno salvate.");
 		btnNewButton.setBounds(10, 527, 89, 23);
@@ -194,9 +193,10 @@ public class TestMaker {
 		btnNewButton_1.setBorder(null);
 		btnNewButton_1.setBackground(new Color(176, 196, 222));
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unused")
 			public void mouseClicked(MouseEvent e) {
 				
-				boolean a, b, c = true, esegui = true, l;
+				boolean a, b, c = true, esegui = true;
 				Date tempo = new Date(); 
 				Date tMin = new Date();
 				
@@ -243,12 +243,12 @@ public class TestMaker {
 				
 				if(a && b && c) {
 					
-					controller.t = new Test(Integer.parseInt(textidTest.getText()), controller.i.username, textNome.getText(), textField.getText(), dtrpnDescrizione.getText());
-					controller.t.tempo = tempo;
+					controller.setT(new Test(Integer.parseInt(textidTest.getText()), controller.getI().username, textNome.getText(), textField.getText(), dtrpnDescrizione.getText()));
+					controller.getT().setTempo(tempo);
 					controller.inizializzaTest();
 					ConfermaTest next =new  ConfermaTest(controller);
 					frame.setVisible(false);
-					next.frmManabi.setVisible(true);
+					frame.dispose();
 				}
 				
 

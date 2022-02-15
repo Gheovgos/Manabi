@@ -5,13 +5,10 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-
 import modelli.*;
 
 public class TestDAO {
-	Test t;
-	Connection connessione;
+	private Connection connessione;
 	
 	public TestDAO() {
 		try {
@@ -52,10 +49,10 @@ public class TestDAO {
 	public void insertTest(Test t) {
 		PreparedStatement insert;
 		DateFormat df = new SimpleDateFormat("HH:mm:ss");
-		if(t.tempo == null) {
+		if(t.getTempo() == null) {
 			try {
 				insert = connessione.prepareStatement(
-						"INSERT INTO TEST(ID_TEST, USERNAME_I, NOME_TEST, MATERIA_TEST, DESCRIZIONE) VALUES ('"+t.id+"','"+t.creatoreTest+"','"+t.nomeTest+"', '"+t.materia+"', '"+t.descrizione+"');");
+						"INSERT INTO TEST(ID_TEST, USERNAME_I, NOME_TEST, MATERIA_TEST, DESCRIZIONE) VALUES ('"+t.getId()+"','"+t.getCreatoreTest()+"','"+t.getNomeTest()+"', '"+t.getMateria()+"', '"+t.getDescrizione()+"');");
 				
 			insert.executeUpdate();
 			return;
@@ -69,11 +66,11 @@ public class TestDAO {
 			}
 		}
 			
-		String time = df.format(t.tempo);
+		String time = df.format(t.getTempo());
 		
 		try {
 			insert = connessione.prepareStatement(
-					"INSERT INTO TEST VALUES ('"+t.id+"','"+t.creatoreTest+"','"+t.nomeTest+"','"+time+"', '"+t.materia+"', '"+t.descrizione+"');");
+					"INSERT INTO TEST VALUES ('"+t.getId()+"','"+t.getCreatoreTest()+"','"+t.getNomeTest()+"','"+time+"', '"+t.getMateria()+"', '"+t.getDescrizione()+"');");
 			
 		insert.executeUpdate();
 		
@@ -310,7 +307,7 @@ public class TestDAO {
 				DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 		
 				try {
-					t.tempo = sdf.parse(tmp);
+					t.setTempo(sdf.parse(tmp));
 				} catch (ParseException e1) {
 					e1.printStackTrace();
 				}
@@ -321,7 +318,7 @@ public class TestDAO {
 				DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 		
 				try {
-					t.tempo = sdf.parse(tmp);
+					t.setTempo(sdf.parse(tmp));
 				} catch (ParseException e1) {
 					e1.printStackTrace();
 				}
@@ -362,7 +359,7 @@ public class TestDAO {
 				DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 		
 				try {
-					t.tempo = sdf.parse(tmp);
+					t.setTempo(sdf.parse(tmp));
 				} catch (ParseException e1) {
 					e1.printStackTrace();
 				}
@@ -373,7 +370,7 @@ public class TestDAO {
 				DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 		
 				try {
-					t.tempo = sdf.parse(tmp);
+					t.setTempo(sdf.parse(tmp));
 				} catch (ParseException e1) {
 					e1.printStackTrace();
 				}
@@ -589,6 +586,7 @@ public class TestDAO {
 		
 	}
 	
+	@SuppressWarnings("unused")
 	public float ottieniVotoTest(String username, int id) {
 		PreparedStatement g;
 		float punteggio = 0;
@@ -615,6 +613,7 @@ public class TestDAO {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	public String ottieniUltimoTestSvolto(String username) {
 		PreparedStatement g;
 		String nome_test = "Nessun test svolto di recente";

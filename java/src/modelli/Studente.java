@@ -1,7 +1,8 @@
 package modelli;
 public class Studente extends Utente{
 
-float punteggioStudente;
+@SuppressWarnings("unused")
+private float punteggioStudente;
 
 public Studente(String u, String p, String n, String c) {
 	username = u;

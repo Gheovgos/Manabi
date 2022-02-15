@@ -1,6 +1,4 @@
 package GUI;
-
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,13 +11,11 @@ import controller.*;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class CreaStudente {
 	
-	
-
 	JFrame frame;
 	Controller controller;
 	private JTextField txtInserisciUsername;
@@ -53,6 +49,8 @@ public class CreaStudente {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(CreaStudente.class.getResource("/Immagini/icona manabi.png")));
+		frame.setTitle("Manabi");
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -109,38 +107,39 @@ public class CreaStudente {
 		txtpnUsername_3.setText("PASSWORD");
 		txtpnUsername_3.setFont(new Font("Dubai", Font.BOLD, 13));
 		txtpnUsername_3.setEditable(false);
-		txtpnUsername_3.setBounds(158, 130, 79, 19);
+		txtpnUsername_3.setBounds(146, 133, 79, 19);
 		frame.getContentPane().add(txtpnUsername_3);
 		
 		txtpnUsername_4 = new JTextPane();
 		txtpnUsername_4.setText("CONFERMA PASSWORD");
 		txtpnUsername_4.setFont(new Font("Dubai", Font.BOLD, 13));
 		txtpnUsername_4.setEditable(false);
-		txtpnUsername_4.setBounds(87, 158, 171, 19);
+		txtpnUsername_4.setBounds(74, 162, 161, 19);
 		frame.getContentPane().add(txtpnUsername_4);
 		
 		txtpnUsername_6 = new JTextPane();
 		txtpnUsername_6.setText("UTENTE STUDENTE");
 		txtpnUsername_6.setFont(new Font("Dubai", Font.BOLD, 16));
 		txtpnUsername_6.setEditable(false);
-		txtpnUsername_6.setBounds(42, 10, 149, 29);
+		txtpnUsername_6.setBounds(42, 10, 193, 29);
 		frame.getContentPane().add(txtpnUsername_6);
 		
 		txtpnInserisci = new JTextPane();
 		txtpnInserisci.setText("compila dati");
 		txtpnInserisci.setFont(new Font("Dubai", Font.PLAIN, 13));
 		txtpnInserisci.setEditable(false);
-		txtpnInserisci.setBounds(188, 12, 176, 19);
+		txtpnInserisci.setBounds(235, 10, 176, 25);
 		frame.getContentPane().add(txtpnInserisci);
 		
 		btnNewButton = new JButton("INDIETRO");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		btnNewButton.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unused")
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				TipoAccount tipoAccount = new TipoAccount(controller);
 				frame.setVisible(false);
-				
+				frame.dispose();		
 			}
 		});
 		btnNewButton.setBounds(62, 220, 85, 21);
@@ -210,33 +209,34 @@ public class CreaStudente {
 		btnAvanti = new JButton("AVANTI");
 		btnAvanti.addMouseListener(new MouseAdapter() {
 			//verifica credenziali
+			@SuppressWarnings({ "deprecation", "unused" })
 			public void mouseClicked(MouseEvent e) {
 				
-				boolean a, b, c, d, f, h; //per fare un controllo alla fine (va avanti nella prossima schermata
+				boolean a, b, c, d, f; //per fare un controllo alla fine (va avanti nella prossima schermata
 				String s;
 				
 				controller.assignUsername(txtInserisciUsername.getText());
 				
-				if(controller.checkUsername()) { txtpnUsernameNonDisponibile.setVisible(true); h = false; } else {txtpnUsernameNonDisponibile.setVisible(false); h = true;}
-				if(controller.u.username.length() < 8 || controller.u.username.length() > 25) { txtpnError1.setVisible(true); a = false; }
+				if(controller.checkUsername()) { txtpnUsernameNonDisponibile.setVisible(true); } else {txtpnUsernameNonDisponibile.setVisible(false);}
+				if(controller.getU().username.length() < 8 || controller.getU().username.length() > 25) { txtpnError1.setVisible(true); a = false; }
 				else {txtpnError1.setVisible(false); a = true;}
 
 				controller.assignPassword(passwordField_1.getText());
-				if(controller.u.password.length() < 8 || controller.u.password.length() > 25) {txtpnPasswordNonValida.setVisible(true); b = false;}
+				if(controller.getU().password.length() < 8 || controller.getU().password.length() > 25) {txtpnPasswordNonValida.setVisible(true); b = false;}
 				else {txtpnPasswordNonValida.setVisible(false); b = true;}
 
 
 				controller.assignName(textField_1.getText());
-				if(controller.u.nome.length() < 2) {txtpnNomeNonValido.setVisible(true); c = false;}
+				if(controller.getU().nome.length() < 2) {txtpnNomeNonValido.setVisible(true); c = false;}
 				else {txtpnNomeNonValido.setVisible(false); c = true;}
 				
 				controller.assignSurname(textField.getText());
-				if(controller.u.cognome.length() < 2) {	txtpnCognomeNonValido.setVisible(true); d = false;}
+				if(controller.getU().cognome.length() < 2) {	txtpnCognomeNonValido.setVisible(true); d = false;}
 				else {txtpnCognomeNonValido.setVisible(false); d = true;}
 				
 				s = passwordField.getText();
 
-				if(!controller.u.password.equals(s)) {txtpnLePassowordNon.setVisible(true); f = false;}
+				if(!controller.getU().password.equals(s)) {txtpnLePassowordNon.setVisible(true); f = false;}
 				else {txtpnLePassowordNon.setVisible(false); f = true;}
 				
 				
@@ -245,7 +245,7 @@ public class CreaStudente {
 					controller.inizializzaStudente();
 					MenuStudente next = new MenuStudente(controller);
 					frame.setVisible(false);
-				
+					frame.dispose();
 				}
 			}
 		});

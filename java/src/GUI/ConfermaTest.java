@@ -1,10 +1,7 @@
 package GUI;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import controller.*;
-import modelli.Quesiti;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -50,11 +47,13 @@ public class ConfermaTest {
 		});
 		btnNewButton.addMouseListener(new MouseAdapter() {
 
+			@SuppressWarnings("unused")
 			public void mouseClicked(MouseEvent e) {
 				
 				MenuInsegnante back = new MenuInsegnante(controller);
 				frmManabi.setVisible(false);
-				
+				frmManabi.dispose();
+
 				
 			}
 		});
@@ -63,12 +62,13 @@ public class ConfermaTest {
 		
 		JButton btnNewButton_1 = new JButton("Crea quesiti");
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unused")
 			public void mouseClicked(MouseEvent e) {
-				
-				
+					
 				QuizMaker next = new QuizMaker(controller);
 				frmManabi.setVisible(false);
-				next.frame.setVisible(true);
+				frmManabi.dispose();
+
 			}
 		});
 		btnNewButton_1.setBounds(230, 137, 120, 23);

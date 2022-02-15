@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import java.awt.Toolkit;
 
 public class CreaInsegnante {
 
@@ -27,14 +28,11 @@ public class CreaInsegnante {
 	private JTextPane txtpnUsername_2;
 	private JTextPane txtpnUsername_3;
 	private JTextPane txtpnUsername_4;
-	private JTextPane txtpnUsername_5;
 	private JTextPane txtpnUsername_6;
-	private JTextPane txtpnInserisci;
 	private JTextPane txtpnDatiObbligatori;
 	private JButton btnNewButton;
 	private JButton btnAvanti;
 	private JTextPane txtpnPasswordNonValida;
-	private JTextField textMateria;
 	private JTextPane txtpnCognomeNonValido;
 	private JTextPane txtpnNomeNonValido;
 	private JTextPane txtpnLePassowordNon;
@@ -48,6 +46,8 @@ public class CreaInsegnante {
 
 	private void initialize() {
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(CreaInsegnante.class.getResource("/Immagini/icona manabi.png")));
+		frame.setTitle("Manabi");
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,36 +104,22 @@ public class CreaInsegnante {
 		txtpnUsername_3.setText("PASSWORD*");
 		txtpnUsername_3.setFont(new Font("Dubai", Font.BOLD, 13));
 		txtpnUsername_3.setEditable(false);
-		txtpnUsername_3.setBounds(158, 130, 79, 19);
+		txtpnUsername_3.setBounds(144, 133, 91, 19);
 		frame.getContentPane().add(txtpnUsername_3);
 		
 		txtpnUsername_4 = new JTextPane();
 		txtpnUsername_4.setText("CONFERMA PASSWORD*");
 		txtpnUsername_4.setFont(new Font("Dubai", Font.BOLD, 13));
 		txtpnUsername_4.setEditable(false);
-		txtpnUsername_4.setBounds(87, 158, 171, 19);
+		txtpnUsername_4.setBounds(62, 163, 173, 19);
 		frame.getContentPane().add(txtpnUsername_4);
-		
-		txtpnUsername_5 = new JTextPane();
-		txtpnUsername_5.setText("MATERIA/E");
-		txtpnUsername_5.setFont(new Font("Dubai", Font.BOLD, 13));
-		txtpnUsername_5.setEditable(false);
-		txtpnUsername_5.setBounds(154, 188, 75, 19);
-		frame.getContentPane().add(txtpnUsername_5);
 		
 		txtpnUsername_6 = new JTextPane();
 		txtpnUsername_6.setText("UTENTE INSEGNANTE");
 		txtpnUsername_6.setFont(new Font("Dubai", Font.BOLD, 16));
 		txtpnUsername_6.setEditable(false);
-		txtpnUsername_6.setBounds(42, 10, 165, 29);
+		txtpnUsername_6.setBounds(10, 12, 165, 55);
 		frame.getContentPane().add(txtpnUsername_6);
-		
-		txtpnInserisci = new JTextPane();
-		txtpnInserisci.setText("compila dati");
-		txtpnInserisci.setFont(new Font("Dubai", Font.PLAIN, 13));
-		txtpnInserisci.setEditable(false);
-		txtpnInserisci.setBounds(204, 12, 176, 19);
-		frame.getContentPane().add(txtpnInserisci);
 		
 		txtpnDatiObbligatori = new JTextPane();
 		txtpnDatiObbligatori.setText("(*) dati obbligatori");
@@ -145,11 +131,12 @@ public class CreaInsegnante {
 		btnNewButton = new JButton("INDIETRO");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		btnNewButton.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unused")
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				TipoAccount tipoAccount = new TipoAccount(controller);
 				frame.setVisible(false);
-				
+				frame.dispose();
 			}
 		});
 		btnNewButton.setBounds(62, 220, 85, 21);
@@ -174,11 +161,6 @@ public class CreaInsegnante {
 		txtpnPasswordNonValida.setBounds(341, 132, 75, 20);
 		frame.getContentPane().add(txtpnPasswordNonValida);
 		txtpnPasswordNonValida.setVisible(false);
-		
-		textMateria = new JTextField();
-		textMateria.setBounds(235, 192, 96, 20);
-		frame.getContentPane().add(textMateria);
-		textMateria.setColumns(10);
 		
 		txtpnCognomeNonValido = new JTextPane();
 		txtpnCognomeNonValido.setForeground(Color.RED);
@@ -224,6 +206,7 @@ public class CreaInsegnante {
 		btnAvanti = new JButton("AVANTI");
 		btnAvanti.addMouseListener(new MouseAdapter() {
 			//verifica credenziali
+			@SuppressWarnings({ "deprecation", "unused" })
 			public void mouseClicked(MouseEvent e) {
 				
 				boolean a, b, c, d, f, h; 
@@ -231,35 +214,33 @@ public class CreaInsegnante {
 				controller.assignUsername(txtInserisciUsername.getText());
 				
 				if(controller.checkUsername()) { txtpnUsernameNonDisponibile.setVisible(true); h = false; } else {txtpnUsernameNonDisponibile.setVisible(false); h = true;}
-				if(controller.u.username.length() < 8 || controller.u.username.length() > 25) {txtpnError1.setVisible(true); a = false;}
+				if(controller.getU().username.length() < 8 || controller.getU().username.length() > 25) {txtpnError1.setVisible(true); a = false;}
 				else {txtpnError1.setVisible(false); a = true;}
 
 				controller.assignPassword(passwordField_1.getText());
-				if(controller.u.password.length() < 8 || controller.u.password.length() > 25) {txtpnPasswordNonValida.setVisible(true); b = false;}
+				if(controller.getU().password.length() < 8 || controller.getU().password.length() > 25) {txtpnPasswordNonValida.setVisible(true); b = false;}
 				else {txtpnPasswordNonValida.setVisible(false); b = true;}
 
 
 				controller.assignName(textField_1.getText());
-				if(controller.u.nome.length() < 2) {txtpnNomeNonValido.setVisible(true); c = false;}
+				if(controller.getU().nome.length() < 2) {txtpnNomeNonValido.setVisible(true); c = false;}
 				else {txtpnNomeNonValido.setVisible(false); c = true;}
 				
 				controller.assignSurname(textField.getText());
-				if(controller.u.cognome.length() < 2) {	txtpnCognomeNonValido.setVisible(true); d = false;}
+				if(controller.getU().cognome.length() < 2) {	txtpnCognomeNonValido.setVisible(true); d = false;}
 				else {txtpnCognomeNonValido.setVisible(false); d = true;}
 				
 				s = passwordField.getText();
 
-				if(!controller.u.password.equals(s)) {txtpnLePassowordNon.setVisible(true); f = false;}
+				if(!controller.getU().password.equals(s)) {txtpnLePassowordNon.setVisible(true); f = false;}
 				else {txtpnLePassowordNon.setVisible(false); f = true;}
-				
-				controller.assignMat(textMateria.getText());
-				
+								
 				if(a && b && c && d && f && h)
 				{
 					controller.inizializzaInsegnante();
 					MenuInsegnante next = new MenuInsegnante(controller);
 					frame.setVisible(false);
-					
+					frame.dispose();
 				}
 			}
 		});
@@ -267,10 +248,10 @@ public class CreaInsegnante {
 		btnAvanti.setBounds(157, 220, 85, 21);
 		frame.getContentPane().add(btnAvanti);
 		
-	}
-
-	public void setVisible(boolean b) {
-		// TODO Auto-generated method stub
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(CreaInsegnante.class.getResource("/Immagini/SFONDO TUTTO.png")));
+		lblNewLabel.setBounds(-174, -46, 728, 562);
+		frame.getContentPane().add(lblNewLabel);
 		
 	}
 }

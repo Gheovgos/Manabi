@@ -11,8 +11,6 @@ import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-
-import javax.swing.SwingConstants;
 import java.awt.Toolkit;
 import javax.swing.border.LineBorder;
 
@@ -47,10 +45,12 @@ public class DBSettings {
 		
 		JButton btnBack = new JButton("Indietro");
 		btnBack.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unused")
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Accesso back = new Accesso(controller);
 				frame.setVisible(false);
+				frame.dispose();
 			}
 		});
 		btnBack.setBounds(10, 227, 89, 23);
@@ -74,12 +74,10 @@ public class DBSettings {
 				try {
 					if(controller.checkConnection()) {
 						
-						textOutput.setText("Connessione effettuata con successo.\r\nNome: "+controller.connessione.nome+"\r\nConnessione: "+controller.connessione.url+"\r\nDriver: "+controller.connessione.driver);
-						
-					}
+						textOutput.setText("Connessione effettuata con successo.\r\nNome: "+controller.getConnessione().getNome()+"\r\nConnessione: "+controller.getConnessione().getUrl()+"\r\nDriver: "+controller.getConnessione().getDriver());}
 					else {textOutput.setText("Connessione al Database fallita.");}
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
+					
 					e1.printStackTrace();
 				}
 					

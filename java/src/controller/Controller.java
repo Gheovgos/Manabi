@@ -7,51 +7,48 @@ import java.sql.SQLException;
 import Database.*;
 
 public class Controller {
-	public String tmp;
-	public Insegnante i = null;
-	public Quesiti q;
-	public Studente s = null;
-	public Test t;
-	public Utente u;
-	public ConnessioneDatabase connessione;
+	private Insegnante i = null;
+	@SuppressWarnings("unused")
+	private Quesiti q;
+	private Studente s = null;
+	private Test t;
+	private Utente u;
+	private ConnessioneDatabase connessione;
 	
 	public Controller() {
-		u = new Utente();
+		setU(new Utente());
 	}
 	
 	public boolean checkConnection() throws SQLException {
 		
-		connessione = new ConnessioneDatabase();
+		setConnessione(new ConnessioneDatabase());
 		try {
-			connessione.connection = ConnessioneDatabase.getInstance().getConnection();
+			getConnessione().setConnection(ConnessioneDatabase.getInstance().getConnection());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(connessione.connection == null) return false;
+		if(getConnessione().getConnection() == null) return false;
 		
 		return true;
 		
 	}
 	
-	public void assignUsername(String s) {u.username = s;}
+	public void assignUsername(String s) {getU().username = s;}
 	
-	public void assignPassword(String password) {u.password = password;}
+	public void assignPassword(String password) {getU().password = password;}
 	
-	public void assignName(String name) {u.nome = name;}
+	public void assignName(String name) {getU().nome = name;}
 	
-	public void assignSurname(String surname) {u.cognome = surname;}
-	
-	public void assignMat(String materia) {tmp = materia;} //Salva la materia in una variabile temporanea}
-	
+	public void assignSurname(String surname) {getU().cognome = surname;}
+		
 	public void login(String username, String password) {
 		
 		InsegnanteDAO insegnanteDB = new InsegnanteDAO();		
-		i = insegnanteDB.login(username, password);
-		if(i != null) {return;} //Non c'è bisogno di aprire la connessione in studente, non esisterà un utente con medesime credenziali
+		setI(insegnanteDB.login(username, password));
+		if(getI() != null) {return;} //Non c'è bisogno di aprire la connessione in studente, non esisterà un utente con medesime credenziali
 		
 		StudenteDAO studenteDB = new StudenteDAO();
-		s = studenteDB.login(username, password);		
+		setS(studenteDB.login(username, password));		
 	}
 	
 	
@@ -60,9 +57,9 @@ public class Controller {
 		InsegnanteDAO insegnanteDB = new InsegnanteDAO();
 		StudenteDAO studenteDB = new StudenteDAO();
 		
-		q = studenteDB.getUsername(u.username);
+		q = studenteDB.getUsername(getU().username);
 		if(q != null) return true;
-		s = insegnanteDB.getUsername(u.username);
+		s = insegnanteDB.getUsername(getU().username);
 		if(s != null) return true;
 
 		return false;
@@ -83,15 +80,15 @@ public class Controller {
 	}
 	
 	public void inizializzaInsegnante() {
-		i = new Insegnante(u.username, u.password, u.nome, u.cognome);	
+		setI(new Insegnante(getU().username, getU().password, getU().nome, getU().cognome));	
 		InsegnanteDAO insegnanteDB = new InsegnanteDAO();
-		insegnanteDB.insertInsegnante(i);
+		insegnanteDB.insertInsegnante(getI());
 	}
 	
 	public void inizializzaStudente() {
-		s = new Studente(u.username, u.password, u.nome, u.cognome);
+		setS(new Studente(getU().username, getU().password, getU().nome, getU().cognome));
 		StudenteDAO studenteDB = new StudenteDAO();
-		studenteDB.insertStudente(s);
+		studenteDB.insertStudente(getS());
 	}
 
 	public boolean checkTestId(Integer i) {
@@ -105,7 +102,7 @@ public class Controller {
 	
 	public void inizializzaTest() {
 		TestDAO testDB = new TestDAO();
-		testDB.insertTest(t);
+		testDB.insertTest(getT());
 	}
 
 	public boolean checkQuizId(Integer i, boolean isOpen) {
@@ -154,13 +151,13 @@ public class Controller {
 	public void caricaTest(String nome_test, String username) {
 		TestDAO testDB = new TestDAO();
 		
-		t = testDB.returnTest(nome_test, username);			
+		setT(testDB.returnTest(nome_test, username));			
 	}
 	
 	public void caricaTest(String nome_test) {
 		TestDAO testDB = new TestDAO();
 		
-		t = testDB.returnTest(nome_test);			
+		setT(testDB.returnTest(nome_test));			
 	}
 
 	public float ottieniPunteggioStudente(String username_s) {
@@ -187,7 +184,7 @@ public class Controller {
 	public void caricaInsegnante(String username) {
 		InsegnanteDAO insegnanteDB = new InsegnanteDAO();
 		
-		i = insegnanteDB.login(username);
+		setI(insegnanteDB.login(username));
 	}
 	
 	public void caricaQuesitiTest(int idTest) {
@@ -196,24 +193,24 @@ public class Controller {
 		
 		quantity = quesitiDB.getQuizId(idTest);
 				
-		t.quesiti = new Quesiti[quantity.length];
+		getT().setQuesiti(new Quesiti[quantity.length]);
 		
 		for(int i = 0; i < quantity.length; i++) {
-			t.quesiti[i] = quesitiDB.returnQuiz(quantity[i], idTest);	
+			getT().getQuesiti()[i] = quesitiDB.returnQuiz(quantity[i], idTest);	
 		}
 	}
 	
 	public void insertRisposta(int id_q, String risposta, boolean isOpen) {
 		RispostaDAO rispostaDB = new RispostaDAO();
-		if(isOpen) {rispostaDB.insertRisposta(id_q, s.username, i.username, risposta, isOpen);}
-		else {rispostaDB.insertRisposta(id_q, s.username, i.username, risposta, isOpen);}
+		if(isOpen) {rispostaDB.insertRisposta(id_q, getS().username, getI().username, risposta, isOpen);}
+		else {rispostaDB.insertRisposta(id_q, getS().username, getI().username, risposta, isOpen);}
 		
 	}
 
 	public void caricaStudente(String username) {
 		StudenteDAO studenteDB = new StudenteDAO();
 		
-		s = studenteDB.login(username);
+		setS(studenteDB.login(username));
 	}
 
 	public String[] returnStudenti(int id) {
@@ -254,12 +251,12 @@ public class Controller {
 
 	public void updateTest() {
 		TestDAO testDB = new TestDAO();
-		testDB.updateTest(t.id, t.nomeTest, t.materia, t.descrizione);
+		testDB.updateTest(getT().getId(), getT().getNomeTest(), getT().getMateria(), getT().getDescrizione());
 	}
 	
 	public boolean hasQ() {
 		TestDAO testDB = new TestDAO();
-		if(testDB.hasQ(t.id)) return true;
+		if(testDB.hasQ(getT().getId())) return true;
 		else return false;
 	}
 	
@@ -304,5 +301,45 @@ public class Controller {
 		TestDAO testDB = new TestDAO();
 		
 		return testDB.ottieniUltimoTestSvolto(username);
+	}
+
+	public Insegnante getI() {
+		return i;
+	}
+
+	public void setI(Insegnante i) {
+		this.i = i;
+	}
+
+	public Studente getS() {
+		return s;
+	}
+
+	public void setS(Studente s) {
+		this.s = s;
+	}
+
+	public Test getT() {
+		return t;
+	}
+
+	public void setT(Test t) {
+		this.t = t;
+	}
+
+	public Utente getU() {
+		return u;
+	}
+
+	public void setU(Utente u) {
+		this.u = u;
+	}
+
+	public ConnessioneDatabase getConnessione() {
+		return connessione;
+	}
+
+	public void setConnessione(ConnessioneDatabase connessione) {
+		this.connessione = connessione;
 	}
 }

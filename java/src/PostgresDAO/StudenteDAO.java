@@ -10,8 +10,8 @@ import modelli.*;
 
 public class StudenteDAO {
 
-	Studente s;
-	Connection connessione;
+	private Studente s;
+	private Connection connessione;
 	
 	public StudenteDAO() {
 		try {

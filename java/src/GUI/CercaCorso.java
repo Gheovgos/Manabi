@@ -1,7 +1,6 @@
 package GUI;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -15,10 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.MatteBorder;
 
 import controller.Controller;
@@ -35,6 +31,7 @@ public class CercaCorso {
 	}
 
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initialize() {
 		frame = new JFrame();
 		frame.setTitle("Manabi");
@@ -48,10 +45,10 @@ public class CercaCorso {
 		
 		int max = rs.length;
 		controller.caricaTest(rs[0]);
-		controller.caricaInsegnante(controller.t.creatoreTest);
+		controller.caricaInsegnante(controller.getT().getCreatoreTest());
 		
 		
-		String tempo = controller.t.tempo.toString();
+		String tempo = controller.getT().getTempo().toString();
 		tempo = tempo.substring(11, 19);
 		
 		JTextPane txtpnSelezionaCorso = new JTextPane();
@@ -83,7 +80,7 @@ public class CercaCorso {
 		JTextPane textNomeTest = new JTextPane();
 		textNomeTest.setEditable(false);
 		textNomeTest.setBorder(null);
-		textNomeTest.setText("Nome test: "+controller.t.nomeTest);
+		textNomeTest.setText("Nome test: "+controller.getT().getNomeTest());
 		textNomeTest.setBounds(10, 84, 198, 43);
 		frame.getContentPane().add(textNomeTest);
 		
@@ -95,7 +92,7 @@ public class CercaCorso {
 		
 		JEditorPane editorDescrizione = new JEditorPane();
 		editorDescrizione.setEditable(false);
-		editorDescrizione.setText(controller.t.descrizione);
+		editorDescrizione.setText(controller.getT().getDescrizione());
 		editorDescrizione.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		editorDescrizione.setBounds(10, 181, 573, 292);
 		frame.getContentPane().add(editorDescrizione);
@@ -109,7 +106,7 @@ public class CercaCorso {
 		JTextPane editorMateria = new JTextPane();
 		editorMateria.setEditable(false);
 		editorMateria.setBorder(null);
-		editorMateria.setText("Autore: "+controller.i.cognome+" "+controller.i.nome);
+		editorMateria.setText("Autore: "+controller.getI().cognome+" "+controller.getI().nome);
 		editorMateria.setBounds(218, 84, 149, 43);
 		frame.getContentPane().add(editorMateria);
 		
@@ -118,6 +115,7 @@ public class CercaCorso {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				frame.setVisible(false);
+				frame.dispose();
 			}
 		});
 		btnNewButton.setBounds(10, 526, 89, 23);
@@ -135,9 +133,9 @@ public class CercaCorso {
 				selected = comboBox.getSelectedIndex();
 				controller.caricaTest(rs[selected]);
 				
-				String tempo = controller.t.tempo.toString();
-				tempo = tempo.substring(11, 19); textNomeTest.setText("Nome Test: "+controller.t.nomeTest); editorDescrizione.setText(controller.t.descrizione);
-				txtpnTempo.setText("Tempo: "+tempo); editorMateria.setText("Autore: "+controller.i.cognome+" "+controller.i.nome); }
+				String tempo = controller.getT().getTempo().toString();
+				tempo = tempo.substring(11, 19); textNomeTest.setText("Nome Test: "+controller.getT().getNomeTest()); editorDescrizione.setText(controller.getT().getDescrizione());
+				txtpnTempo.setText("Tempo: "+tempo); editorMateria.setText("Autore: "+controller.getI().cognome+" "+controller.getI().nome); }
 		});
 		
 		comboBox.addItemListener(new ItemListener() {
@@ -147,10 +145,10 @@ public class CercaCorso {
 				selected = comboBox.getSelectedIndex();
 				controller.caricaTest(rs[selected]);
 				
-				String tempo = controller.t.tempo.toString();
+				String tempo = controller.getT().getTempo().toString();
 				tempo = tempo.substring(11, 19);
-				textNomeTest.setText("Nome Test: "+controller.t.nomeTest); editorDescrizione.setText(controller.t.descrizione);
-				txtpnTempo.setText("Tempo: "+tempo); editorMateria.setText("Autore: "+controller.i.cognome+" "+controller.i.nome);
+				textNomeTest.setText("Nome Test: "+controller.getT().getNomeTest()); editorDescrizione.setText(controller.getT().getDescrizione());
+				txtpnTempo.setText("Tempo: "+tempo); editorMateria.setText("Autore: "+controller.getI().cognome+" "+controller.getI().nome);
 				
 				
 			}

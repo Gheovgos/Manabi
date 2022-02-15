@@ -1,7 +1,6 @@
 package GUI;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
@@ -36,7 +35,7 @@ public class SimulaTest {
 	public SimulaTest(Controller c, boolean is) {
 		controller = c;
 		isIns = is;
-		controller.caricaQuesitiTest(controller.t.id);
+		controller.caricaQuesitiTest(controller.getT().getId());
 		initialize();
 		frame.setVisible(true);
 	}
@@ -46,8 +45,8 @@ public class SimulaTest {
 	private void initialize() {
 			frame = new JFrame();
 			
-			int lunghezzaTest = controller.t.quesiti.length;
-			rs = controller.t.quesiti[progresso].risposte;
+			int lunghezzaTest = controller.getT().getQuesiti().length;
+			rs = controller.getT().getQuesiti()[progresso].getRisposte();
 			
 			rs = shuffle(rs);
 						
@@ -75,13 +74,13 @@ public class SimulaTest {
 			
 			
 			JTextPane titoloTest = new JTextPane();
-			titoloTest.setText(controller.t.nomeTest);
+			titoloTest.setText(controller.getT().getNomeTest());
 			titoloTest.setEditable(false);
 			titoloTest.setBounds(10, 11, 192, 20);
 			frame.getContentPane().add(titoloTest);
 			
 			JTextPane textDomanda = new JTextPane();
-			textDomanda.setText(controller.t.quesiti[progresso].domanda);
+			textDomanda.setText(controller.getT().getQuesiti()[progresso].getDomanda());
 			
 			textDomanda.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 			textDomanda.setBounds(20, 42, 769, 145);
@@ -140,7 +139,7 @@ public class SimulaTest {
 			frame.getContentPane().add(textRispostaAperta);
 			
 			Ttempo = new JTextField();
-			Ttempo.setText("Tempo rimanente: "+controller.t.tempo.getTime());
+			Ttempo.setText("Tempo rimanente: "+controller.getT().getTempo().getTime());
 			Ttempo.setEditable(false);
 			Ttempo.setVisible(false);
 			Ttempo.setBounds(603, 11, 186, 20);
@@ -150,7 +149,7 @@ public class SimulaTest {
 			
 			
 			
-			if(controller.t.quesiti[0].isOpen) {
+			if(controller.getT().getQuesiti()[0].isOpen()) {
 				A.setVisible(false); B.setVisible(false); C.setVisible(false); D.setVisible(false); E.setVisible(false);
 				textRispostaAperta.setVisible(true);
 				
@@ -171,28 +170,30 @@ public class SimulaTest {
 		
 			Avanti.addMouseListener(new MouseAdapter() {
 				
+				@SuppressWarnings("unused")
 				public void mouseClicked(MouseEvent e) {
 					
-					if(controller.t.quesiti[progresso].isOpen) {
+					if(controller.getT().getQuesiti()[progresso].isOpen()) {
 							progresso++;
 												
 							progressBar.setValue(progresso);
 							if(checkProgress(progresso, lunghezzaTest)) {
 								progresso--;
 								frame.setVisible(false);
+								frame.dispose();
 								if(isIns) 
 								{VisualizzaTestInsegnante back = new VisualizzaTestInsegnante(controller);}
 								else { VisualizaTestSvolti back = new VisualizaTestSvolti(controller);}
 								return;
 							}
 							
-							textDomanda.setText(controller.t.quesiti[progresso].domanda);
-							if(controller.t.quesiti[progresso].isOpen) {
+							textDomanda.setText(controller.getT().getQuesiti()[progresso].getDomanda());
+							if(controller.getT().getQuesiti()[progresso].isOpen()) {
 								A.setVisible(false); B.setVisible(false); C.setVisible(false); D.setVisible(false); E.setVisible(false);
 								textRispostaAperta.setVisible(true);}
 							
 							else {
-								rs = controller.t.quesiti[progresso].risposte;
+								rs = controller.getT().getQuesiti()[progresso].getRisposte();
 								rs = shuffle(rs);
 								if(rs[0].equals("")) { A.setVisible(false); A.setText(rs[0]);}
 								else {A.setVisible(true); A.setText(rs[0]);}
@@ -236,21 +237,22 @@ public class SimulaTest {
 							if(checkProgress(progresso, lunghezzaTest)) {
 								progresso--;
 								frame.setVisible(false);
+								frame.dispose();
 								if(isIns) 
 								{VisualizzaTestInsegnante back = new VisualizzaTestInsegnante(controller);}
 								else { VisualizaTestSvolti back = new VisualizaTestSvolti(controller);}
 								return;
 								
 							}
-							textDomanda.setText(controller.t.quesiti[progresso].domanda);
+							textDomanda.setText(controller.getT().getQuesiti()[progresso].getDomanda());
 							
 							
-							if(controller.t.quesiti[progresso].isOpen) {
+							if(controller.getT().getQuesiti()[progresso].isOpen()) {
 								A.setVisible(false); B.setVisible(false); C.setVisible(false); D.setVisible(false); E.setVisible(false);
 								textRispostaAperta.setVisible(true);}
 							else {
 								A.setSelected(false); B.setSelected(false); C.setSelected(false); D.setSelected(false); E.setSelected(false);
-								rs = controller.t.quesiti[progresso].risposte;
+								rs = controller.getT().getQuesiti()[progresso].getRisposte();
 								rs = shuffle(rs);
 								if(rs[0].equals("")) { A.setVisible(false); A.setText(rs[0]);}
 								else {A.setVisible(true); A.setText(rs[0]);}

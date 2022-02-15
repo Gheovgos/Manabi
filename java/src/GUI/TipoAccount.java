@@ -1,6 +1,4 @@
 package GUI;
-
-import java.awt.EventQueue;
 import controller.Controller;
 
 import javax.swing.JFrame;
@@ -8,12 +6,12 @@ import javax.swing.JTextPane;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JRadioButton;
-import javax.swing.JToggleButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class TipoAccount {
 
@@ -32,11 +30,12 @@ public class TipoAccount {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(TipoAccount.class.getResource("/Immagini/icona manabi.png")));
+		frame.setTitle("Manabi");
 		
 		JButton btnNewButton = new JButton("CONFERMA");
 		frame.getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 9));
 		
-		//è un po' buggatello RISOLVIMI
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("INSEGNANTE");
 		btnNewButton.addActionListener(new ActionListener() { //deseleziona studente
 			public void actionPerformed(ActionEvent e) {
@@ -61,7 +60,7 @@ public class TipoAccount {
 		txtpnCheTipoDi.setText("CHE TIPO DI ACCOUNT");
 		txtpnCheTipoDi.setFont(new Font("Dubai", Font.BOLD, 13));
 		txtpnCheTipoDi.setEditable(false);
-		txtpnCheTipoDi.setBounds(149, 64, 139, 21);
+		txtpnCheTipoDi.setBounds(135, 64, 196, 21);
 		frame.getContentPane().add(txtpnCheTipoDi);
 		
 		JTextPane txtpnVuoiCreare = new JTextPane();
@@ -82,23 +81,22 @@ public class TipoAccount {
 		rdbtnNewRadioButton.setBackground(Color.WHITE);
 		rdbtnNewRadioButton.setBounds(170, 108, 103, 21);
 		frame.getContentPane().add(rdbtnNewRadioButton);
-		
-	
-		
+			
 		btnNewButton.setEnabled(false);
 		btnNewButton.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unused")
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(rdbtnNewRadioButton.isSelected()) {
 					CreaInsegnante i = new CreaInsegnante(c);
 					frame.setVisible(false);
-					i.setVisible(true);
+					frame.dispose();
 				}
 				else {
 					CreaStudente s = new CreaStudente(c);
 					frame.setVisible(false);
-				}
-					
+					frame.dispose();
+				}					
 			}
 		});
 		
@@ -107,12 +105,7 @@ public class TipoAccount {
 		rdbtnStudente.setBackground(Color.WHITE);
 		rdbtnStudente.setBounds(169, 131, 103, 21);
 		frame.getContentPane().add(rdbtnStudente);
-		
-
-
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
-
-
 	}
 
 }

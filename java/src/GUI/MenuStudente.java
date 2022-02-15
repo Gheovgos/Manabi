@@ -1,19 +1,14 @@
 package GUI;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import controller.*;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import java.awt.Font;
-import javax.swing.JTextPane;
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.JSeparator;
-import javax.swing.JEditorPane;
-import java.awt.Insets;
 import java.awt.Point;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
@@ -35,7 +30,6 @@ public class MenuStudente {
  private JTextField txtUltimoTestSvolto;
  private JTextField txtBenvenuto;
  private JTextField txtMettiUltimoTest;
- private JLabel lblNewLabel;
 
  public MenuStudente(Controller c) {
   controller = c;
@@ -67,7 +61,8 @@ public class MenuStudente {
   
   JButton btnElencoCorsiSeguiti = new JButton("");
   btnElencoCorsiSeguiti.addMouseListener(new MouseAdapter() {
-  	@Override
+  	@SuppressWarnings("unused")
+	@Override
   	public void mouseClicked(MouseEvent e) {
   		VisualizaTestSvolti next = new VisualizaTestSvolti(controller);
   	}
@@ -122,10 +117,12 @@ public class MenuStudente {
   
   JButton btnElencoCorsiSeguiti_1_1_1 = new JButton("");
   btnElencoCorsiSeguiti_1_1_1.addMouseListener(new MouseAdapter() {
-  	public void mouseClicked(MouseEvent e) {
+  	@SuppressWarnings("unused")
+	public void mouseClicked(MouseEvent e) {
   		VisualizzaTestDaCompilare next = new VisualizzaTestDaCompilare(controller);
-  		next.frame.setVisible(true);
   		frmManabi.setVisible(false);
+		frmManabi.dispose();
+
   	}
   });
   btnElencoCorsiSeguiti_1_1_1.setIcon(new ImageIcon(MenuStudente.class.getResource("/Immagini/sfondi/studente3.png")));
@@ -186,7 +183,7 @@ public class MenuStudente {
   frmManabi.getContentPane().add(txtTestSvolti);
   
   txtMettiPuntiSce = new JTextField();
-  txtMettiPuntiSce.setText(String.valueOf(controller.ottieniPunteggioStudente(controller.s.username)));
+  txtMettiPuntiSce.setText(String.valueOf(controller.ottieniPunteggioStudente(controller.getS().username)));
   txtMettiPuntiSce.setEditable(false);
   txtMettiPuntiSce.setHorizontalAlignment(SwingConstants.CENTER);
   txtMettiPuntiSce.setBorder(null);
@@ -214,7 +211,7 @@ public class MenuStudente {
   txtBenvenuto.setEditable(false);
   txtBenvenuto.setBorder(null);
   txtBenvenuto.setOpaque(false);
-  txtBenvenuto.setText("Benvenuto, "+controller.s.username);
+  txtBenvenuto.setText("Benvenuto, "+controller.getS().username);
   txtBenvenuto.setLocation(new Point(0, 12));
   txtBenvenuto.setHorizontalAlignment(SwingConstants.LEFT);
   txtBenvenuto.setForeground(new Color(112, 128, 144));
@@ -226,7 +223,7 @@ public class MenuStudente {
   txtMettiUltimoTest = new JTextField();
   txtMettiUltimoTest.setEditable(false);
   txtMettiUltimoTest.setHorizontalAlignment(SwingConstants.CENTER);
-  txtMettiUltimoTest.setText(controller.ottieniUltimoTestSvolto(controller.s.username));
+  txtMettiUltimoTest.setText(controller.ottieniUltimoTestSvolto(controller.getS().username));
   txtMettiUltimoTest.setBorder(null);
   txtMettiUltimoTest.setOpaque(false);
   txtMettiUltimoTest.setBounds(20, 449, 593, 20);
@@ -234,7 +231,8 @@ public class MenuStudente {
   txtMettiUltimoTest.setColumns(10);
   
   btnElencoCorsiSeguiti_1_1.addMouseListener(new MouseAdapter() {
-	  	public void mouseClicked(MouseEvent e) {
+	  	@SuppressWarnings("unused")
+		public void mouseClicked(MouseEvent e) {
 	  		CercaCorso next = new CercaCorso(controller);
 	  	}
 	  });

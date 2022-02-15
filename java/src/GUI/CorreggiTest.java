@@ -1,16 +1,11 @@
 package GUI;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 
 import controller.Controller;
-import javax.swing.JCheckBox;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
 import java.awt.Color;
 import javax.swing.JTextPane;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JButton;
 import javax.swing.JSpinner;
@@ -32,18 +27,19 @@ public class CorreggiTest {
 	
 	public CorreggiTest(Controller c) {
 		controller = c;
-		controller.caricaQuesitiTest(controller.t.id);
+		controller.caricaQuesitiTest(controller.getT().getId());
 		initialize();
 		frame.setVisible(true);
 	}
 
+	@SuppressWarnings("removal")
 	private void initialize() {
 		
-		for(int i = 0; i < controller.t.quesiti.length; i++) {
-			if(controller.t.quesiti[i].isOpen)
+		for(int i = 0; i < controller.getT().getQuesiti().length; i++) {
+			if(controller.getT().getQuesiti()[i].isOpen())
 				lunghezza++;
 		}
-		while(!controller.t.quesiti[progresso].isOpen && progresso < lunghezza) {
+		while(!controller.getT().getQuesiti()[progresso].isOpen() && progresso < lunghezza) {
 			progresso++;
 		}
 		
@@ -56,7 +52,7 @@ public class CorreggiTest {
 		txtNomeTest = new JTextField();
 		txtNomeTest.setBackground(Color.WHITE);
 		txtNomeTest.setEditable(false);
-		txtNomeTest.setText("TEST: "+controller.t.nomeTest);
+		txtNomeTest.setText("TEST: "+controller.getT().getNomeTest());
 		txtNomeTest.setBounds(10, 11, 364, 20);
 		frame.getContentPane().add(txtNomeTest);
 		txtNomeTest.setColumns(10);
@@ -64,20 +60,20 @@ public class CorreggiTest {
 		textNomeStudente = new JTextField();
 		textNomeStudente.setBackground(Color.WHITE);
 		textNomeStudente.setEditable(false);
-		textNomeStudente.setText("Studente: "+controller.s.cognome+" "+controller.s.nome);
+		textNomeStudente.setText("Studente: "+controller.getS().cognome+" "+controller.getS().nome);
 		textNomeStudente.setBounds(10, 42, 364, 20);
 		frame.getContentPane().add(textNomeStudente);
 		textNomeStudente.setColumns(10);
 		
 		textDomanda = new JTextPane();
 		textDomanda.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		textDomanda.setText(controller.t.quesiti[progresso].domanda);
+		textDomanda.setText(controller.getT().getQuesiti()[progresso].getDomanda());
 		textDomanda.setEditable(false);
 		textDomanda.setBounds(10, 73, 655, 214);
 		frame.getContentPane().add(textDomanda);
 		
 		textRisposta = new JTextPane();
-		textRisposta.setText(controller.caricaRisopsta(controller.t.quesiti[progresso].idQuesito, controller.s.username));
+		textRisposta.setText(controller.caricaRisopsta(controller.getT().getQuesiti()[progresso].getIdQuesito(), controller.getS().username));
 		textRisposta.setEditable(false);
 		textRisposta.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		textRisposta.setBounds(10, 298, 655, 214);
@@ -89,7 +85,7 @@ public class CorreggiTest {
 		frame.getContentPane().add(btnNewButton_1);
 		
 		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(new Float(0), new Float(controller.t.quesiti[progresso].punteggioMin), new Float(controller.t.quesiti[progresso].punteggioMax), new Float(1)));
+		spinner.setModel(new SpinnerNumberModel(new Float(0), new Float(controller.getT().getQuesiti()[progresso].getPunteggioMin()), new Float(controller.getT().getQuesiti()[progresso].getPunteggioMax()), new Float(1)));
 		spinner.setBounds(833, 298, 89, 20);
 		frame.getContentPane().add(spinner);
 		
@@ -108,27 +104,29 @@ public class CorreggiTest {
 		frame.getContentPane().add(textCommento);
 		
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unused")
 			@Override //AVANTI
 			public void mouseClicked(MouseEvent e) {
 				boolean avanti = true;
-				controller.updateRisposta(controller.t.quesiti[progresso].idQuesito, controller.s.username, (Float) spinner.getValue(), textCommento.getText());
+				controller.updateRisposta(controller.getT().getQuesiti()[progresso].getIdQuesito(), controller.getS().username, (Float) spinner.getValue(), textCommento.getText());
 				progresso++;
-				while(!controller.t.quesiti[progresso].isOpen && progresso < lunghezza) {
+				while(!controller.getT().getQuesiti()[progresso].isOpen() && progresso < lunghezza) {
 					progresso++;
 				}
 				
 				if(progresso >= lunghezza) {
-					controller.aggiornaCorrezione(controller.t.id, controller.s.username);
+					controller.aggiornaCorrezione(controller.getT().getId(), controller.getS().username);
 					VisualizzaTestDaCorreggere back = new VisualizzaTestDaCorreggere(controller);
 					frame.setVisible(false);
+					frame.dispose();
 					avanti = false;
 					
 				}
 				
 				if(avanti) {
-					textRisposta.setText(controller.caricaRisopsta(controller.t.quesiti[progresso].idQuesito, controller.s.username));
-					textDomanda.setText(controller.t.quesiti[progresso].domanda);
-					spinner.setModel(new SpinnerNumberModel(new Float(0), new Float(controller.t.quesiti[progresso].punteggioMin), new Float(controller.t.quesiti[progresso].punteggioMax), new Float(1)));
+					textRisposta.setText(controller.caricaRisopsta(controller.getT().getQuesiti()[progresso].getIdQuesito(), controller.getS().username));
+					textDomanda.setText(controller.getT().getQuesiti()[progresso].getDomanda());
+					spinner.setModel(new SpinnerNumberModel(new Float(0), new Float(controller.getT().getQuesiti()[progresso].getPunteggioMin()), new Float(controller.getT().getQuesiti()[progresso].getPunteggioMax()), new Float(1)));
 				}
 				
 			}

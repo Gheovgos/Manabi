@@ -8,8 +8,8 @@ import Database.ConnessioneDatabase;
 
 public class InsegnanteDAO {
 	
-	Insegnante i;
-	Connection connessione;
+	private Insegnante i;
+	private Connection connessione;
 	
 	public InsegnanteDAO() {
 		try {
@@ -18,13 +18,6 @@ public class InsegnanteDAO {
 			System.out.println("Connessione fallita.");
 			e.printStackTrace();
 		}
-	}
-	
-	public boolean Verifica() {
-		if(connessione == null)
-			return false;
-		else
-			return true;
 	}
 	
 	public Insegnante login(String username, String password)

@@ -29,7 +29,7 @@ public class VisualizzaTestCreati {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() {
-		String[] rs = controller.returnTestName(controller.i.username);
+		String[] rs = controller.returnTestName(controller.getI().username);
 		int max = rs.length;
 		
 		frame = new JFrame();
@@ -75,7 +75,6 @@ public class VisualizzaTestCreati {
 		
 	
 		JButton btnNewButton = new JButton("Modifica");
-		btnNewButton.setEnabled(false);
 		
 		btnNewButton.setBounds(533, 494, 89, 22);
 		frame.getContentPane().add(btnNewButton);
@@ -104,7 +103,7 @@ public class VisualizzaTestCreati {
 			public void mouseClicked(MouseEvent e) {
 				int selected = 0;
 				selected = comboBox.getSelectedIndex();
-				controller.caricaTest(rs[selected], controller.i.username);
+				controller.caricaTest(rs[selected], controller.getI().username);
 				QuizMaker next = new QuizMaker(controller);
 				frame.setVisible(false);
 				next.frame.setVisible(true);

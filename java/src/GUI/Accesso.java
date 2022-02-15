@@ -20,10 +20,11 @@ import javax.swing.InputMap;
 import javax.swing.JLabel;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.SystemColor;
 import java.awt.Toolkit;
+
+/*Schermata di accesso. Una volta inserite le credenziali, si potrà accedere alla propria area personale.
+ * Se non si dispongono di credenziali, si può procedere alla creazione di un utente (scegliendone il tipo).*/
 
 public class Accesso {
 
@@ -39,6 +40,7 @@ public class Accesso {
 		frmManabi.setVisible(true);
 	}
 
+	@SuppressWarnings("serial")
 	private void initialize() {
 		frmManabi = new JFrame();
 		frmManabi.setTitle("Manabi");
@@ -55,28 +57,29 @@ public class Accesso {
 		textField.setBounds(259, 290, 222, 19);
 		frmManabi.getContentPane().add(textField);
 		textField.setColumns(10);
-		
-		
-
-	
-		
+			
 		passwordField = new JPasswordField();
-		int condition = JPasswordField.WHEN_FOCUSED;
+		int condition = JPasswordField.WHEN_FOCUSED;  //Qui, semplicemente, viene aggiunto un ascoltatore che passa al login una volta premuto invio. E' uguale al JButton "Accedi".
 		  InputMap iMap = passwordField.getInputMap(condition);
 		  ActionMap aMap = passwordField.getActionMap();
 		  String enter = "enter";
 		  iMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), enter);
 		  aMap.put(enter, new AbstractAction() {
 
-			     public void actionPerformed(ActionEvent arg0) {
-			    	 controller.login(textField.getText(), passwordField.getText()); 
+			     @SuppressWarnings("deprecation")
+				public void actionPerformed(ActionEvent arg0) {
+			    	 controller.login(textField.getText(), passwordField.getText());   //Viene passato al controller la stringa di "username" e "password". Dopodiché, il controller effettuerà una chiamata ai DAO, che si occupperanno di interagire col DB.
 						
-						if(controller.i != null) {
+						if(controller.getI() != null) {        
+							@SuppressWarnings("unused")
 							MenuInsegnante next = new MenuInsegnante(controller);
 							frmManabi.setVisible(false); }
-						if(controller.s != null) {
+						if(controller.getS() != null) {
+							@SuppressWarnings("unused")
 							MenuStudente next = new MenuStudente(controller);
 							frmManabi.setVisible(false);
+							frmManabi.dispose();
+
 						}
 						else {
 							
@@ -118,18 +121,23 @@ public class Accesso {
 		btnNewButton.setBackground(new Color(100, 149, 237));
 		btnNewButton.setBorderPainted(false);
 		btnNewButton.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings({ "deprecation", "unused" })
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
 				controller.login(textField.getText(), passwordField.getText()); 
 				
-				if(controller.i != null) {
-					MenuInsegnante next = new MenuInsegnante(controller);
+				if(controller.getI() != null) {
+					MenuInsegnante next = new MenuInsegnante(controller);  //uguale a sopra!
 					frmManabi.setVisible(false);
+					frmManabi.dispose();
+
 					 }
-				if(controller.s != null) {
+				if(controller.getS() != null) {
 					MenuStudente next = new MenuStudente(controller);
 					frmManabi.setVisible(false);
+					frmManabi.dispose();
+
 					
 				}
 				else {
@@ -157,11 +165,12 @@ public class Accesso {
 		btnIscriviti.setBackground(new Color(100, 149, 237));
 		btnIscriviti.setBorderPainted(false);
 		btnIscriviti.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unused")
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				TipoAccount tipoAccount = new TipoAccount(controller);
 				frmManabi.setVisible(false);
-			
+				frmManabi.dispose();
 			}
 		});
 		btnIscriviti.setFont(new Font("Dialog", Font.BOLD, 9));
@@ -171,11 +180,13 @@ public class Accesso {
 		JLabel Settings = new JLabel("");
 		Settings.setToolTipText("Apri impostazioni DB");
 		Settings.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unused")
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				DBSettings next = new DBSettings(controller);
 				frmManabi.setVisible(false);
-				next.frame.setVisible(true);
+				frmManabi.dispose();
+
 				
 			}
 		});
